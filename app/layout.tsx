@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
-import { Instrument_Sans } from "next/font/google";
+import { Instrument_Sans, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
 const instrumentSans = Instrument_Sans({
   variable: "--font-instrument-sans",
   subsets: ["latin"],
   style: ["normal", "italic"],
+  display: "swap",
+});
+
+// Nav chrome only. Taller x-height and more open apertures than Instrument
+// Sans, which is what makes 15px links legible against a moving background.
+const navSans = Plus_Jakarta_Sans({
+  variable: "--font-nav-sans",
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -30,7 +38,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${instrumentSans.variable} h-full antialiased`}>
+    <html
+      lang="en"
+      className={`${instrumentSans.variable} ${navSans.variable} h-full antialiased`}
+    >
       <body className="min-h-full">{children}</body>
     </html>
   );

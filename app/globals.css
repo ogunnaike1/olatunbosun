@@ -22,6 +22,7 @@
 
   /* ── Type: one family, no sans anywhere ───────────────────── */
   --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-nav: var(--font-nav-sans), ui-sans-serif, system-ui, sans-serif;
 
   --text-h1: clamp(33px, 4.3vw, 58px);
   --text-h1--line-height: 1.06;

@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Palette ──────────────────────────────────────────────────
+     Navy is the ground the page sits on — every dark section is #04044a.
+     Black is demoted to two jobs: text on paper, and the deepest
+     recessions (footer, device screens), where it reads as a hue shift
+     against the navy rather than a second black page. */
+  --color-ink: #04044a;
+  --color-ink-deep: #0e0e0e;
+  --color-paper: #fcfcfb;
+  --color-ink-text: #0e0e0e;
+
+  /* Interactive: blue carries fills and bands, cyan carries text on navy. */
+  --color-accent: #035bfa;
+  --color-accent-on-dark: #01e7ff;
+  --color-accent-bright: #7bf4ff;
+
+  /* Second spot: navy on paper, a lightened blue step for text on navy. */
+  --color-accent-2: #04044a;
+  --color-accent-2-on-dark: #4e8bfa;
+
+  /* ── Type: one family, no sans anywhere ───────────────────── */
+  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --text-h1: clamp(33px, 4.3vw, 58px);
+  --text-h1--line-height: 1.06;
+  --text-h1--letter-spacing: -0.022em;
+
+  --text-h2: clamp(28px, 3.4vw, 46px);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.02em;
+
+  --text-h2-about: clamp(30px, 3.8vw, 52px);
+  --text-h2-about--line-height: 1.08;
+  --text-h2-about--letter-spacing: -0.022em;
+
+  --text-h2-insights: clamp(25px, 2.6vw, 34px);
+  --text-h2-insights--letter-spacing: -0.018em;
+
+  --text-h3-feature: clamp(19px, 1.7vw, 24px);
+  --text-h3-feature--letter-spacing: -0.012em;
+
+  --text-h3-card: clamp(19px, 1.7vw, 24px);
+  --text-h3-card--line-height: 1.25;
+  --text-h3-card--letter-spacing: -0.012em;
+
+  --text-statement: clamp(21px, 2.2vw, 30px);
+  --text-statement--line-height: 1.36;
+
+  --text-stat: clamp(31px, 3.4vw, 46px);
+  --text-stat--letter-spacing: -0.025em;
+
+  --text-lead: clamp(15.5px, 1.1vw, 18px);
+  --text-lead--line-height: 1.6;
+
+  --text-slide-price: clamp(26px, 2.6vw, 34px);
+  --text-slide-price--letter-spacing: -0.02em;
+
+  --text-slide-figure: clamp(30px, 3vw, 40px);
+  --text-slide-figure--letter-spacing: -0.02em;
+
+  --text-slide-pair: clamp(22px, 2vw, 26px);
+
+  /* ── Fluid spacing ────────────────────────────────────────── */
+  --spacing-gutter: clamp(20px, 4vw, 56px);
+  --spacing-section: clamp(72px, 9vw, 132px);
+  --spacing-section-editorial: clamp(78px, 10vw, 150px);
+  --spacing-hero-top: clamp(56px, 8vw, 110px);
+  --spacing-hero-bottom: clamp(40px, 6vw, 80px);
+  --spacing-colgap: clamp(40px, 5vw, 90px);
+  --spacing-glass: clamp(22px, 2.4vw, 32px);
+
+  /* ── Shadow: the only one on the page ─────────────────────── */
+  --shadow-glass: 0 30px 80px -40px rgba(0, 0, 0, 0.9);
+
+  /* Broadsheet is print — square edges. */
+  --radius-none: 0px;
+
+  /* ── Breakpoints ──────────────────────────────────────────── */
+  --breakpoint-tab: 700px;
+  --breakpoint-nav: 1120px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Anchor targets must clear the sticky header. */
+  section[id] {
+    scroll-margin-top: 96px;
+  }
+
+  body {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-sans);
+    font-weight: 400;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-on-dark);
+    outline-offset: 3px;
+  }
+
+  /* Cyan is invisible on the paper sections — focus there uses the blue. */
+  .bg-paper :focus-visible {
+    outline-color: var(--color-accent);
+  }
+
+  ::selection {
+    background: rgba(1, 231, 255, 0.26);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility balance {
+  text-wrap: balance;
+}
+
+@utility pretty {
+  text-wrap: pretty;
+}
+
+/* Ticker marquee: one infinite transform on a max-content row. */
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-track {
+  width: max-content;
+  animation: marquee 46s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}

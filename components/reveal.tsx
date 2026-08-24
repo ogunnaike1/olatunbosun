@@ -3,19 +3,15 @@
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import type { ReactNode } from "react";
 
-/**
- * The page's one scroll-reveal system: 26px rise + fade, 800ms, staggered in
- * groups of six. Honours prefers-reduced-motion by rendering at final state.
- */
 export const revealVariants: Variants = {
-  hidden: { opacity: 0, y: 26 },
+  hidden: { opacity: 0, y: 20 },
   show: (i: number = 0) => ({
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.8,
-      ease: [0.2, 0.7, 0.3, 1],
-      delay: (i % 6) * 0.07,
+      duration: 0.62,
+      ease: [0.22, 0.61, 0.36, 1],
+      delay: Math.min(i, 5) * 0.07,
     },
   }),
 };
@@ -32,9 +28,7 @@ const elements = {
 type RevealProps = {
   children: ReactNode;
   className?: string;
-  /** Stagger index; delay is (index % 6) * 70ms. */
   index?: number;
-  /** Explicit delay in seconds, overriding the index stagger. */
   delay?: number;
   as?: keyof typeof elements;
   style?: React.CSSProperties;
@@ -68,20 +62,46 @@ export function Reveal({
         delay === undefined
           ? revealVariants
           : {
-              hidden: { opacity: 0, y: 26 },
+              hidden: { opacity: 0, y: 20 },
               show: {
                 opacity: 1,
                 y: 0,
-                transition: { duration: 0.8, ease: [0.2, 0.7, 0.3, 1], delay },
+                transition: { duration: 0.62, ease: [0.22, 0.61, 0.36, 1], delay },
               },
             }
       }
       custom={index}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.15, margin: "0px 0px -8% 0px" }}
+      viewport={{ once: true, amount: 0.2, margin: "0px 0px -6% 0px" }}
     >
       {children}
     </Component>
+  );
+}
+
+/** Pill label that opens every section. */
+export function Chip({
+  children,
+  tone = "light",
+}: {
+  children: ReactNode;
+  /** "light" = sitting on stone/cream; "dark" = sitting on deep blue. */
+  tone?: "light" | "dark";
+}) {
+  return (
+    <span
+      className={`chip ${
+        tone === "dark"
+          ? "bg-white/12 text-white ring-1 ring-white/15"
+          : "bg-deep text-cream ring-1 ring-deep"
+      }`}
+    >
+      <span
+        aria-hidden="true"
+        className={`size-1.5 rounded-full ${tone === "dark" ? "bg-pale" : "bg-deep"}`}
+      />
+      {children}
+    </span>
   );
 }

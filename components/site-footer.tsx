@@ -16,41 +16,45 @@ const legal = [
 
 export function SiteFooter() {
   return (
-    <footer className="bg-ink" style={{ padding: "clamp(50px, 6vw, 80px) 0 40px" }}>
-      <div className="mx-auto w-full max-w-[1360px] px-gutter">
+    <footer className="bg-deep text-white">
+      <div
+        className="mx-auto w-full max-w-[1280px] px-gutter"
+        style={{ padding: "clamp(64px, 7vw, 104px) var(--spacing-gutter) 44px" }}
+      >
         <div
-          className="grid"
-          style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-            gap: "clamp(30px, 4vw, 56px)",
-          }}
+          className="grid gap-x-12 gap-y-14"
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))" }}
         >
           <div>
-            <span className="flex items-baseline gap-[10px]">
-              <span className="text-[20px] font-semibold uppercase tracking-[0.16em]">
-                {brand.name}
+            <span className="flex items-center gap-3">
+              <span className="inline-flex size-11 items-center justify-center rounded-chip bg-deep text-[17px] font-extrabold text-white">
+                {brand.name.charAt(0)}
               </span>
-              <span className="inline-block size-[5px] -translate-y-[3px] bg-accent-2-on-dark" />
-              <span className="text-[11px] uppercase tracking-[0.28em] text-paper/50">
-                {brand.role}
+              <span className="flex flex-col leading-none">
+                <span className="text-[18px] font-extrabold tracking-[-0.02em]">
+                  {brand.name}
+                </span>
+                <span className="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-white">
+                  {brand.role}
+                </span>
               </span>
             </span>
-            <p className="mt-5 max-w-[32ch] text-[15.5px] leading-[1.6] text-paper/50">
+            <p className="mt-6 max-w-[34ch] text-[14.5px] leading-[1.7] text-white/70">
               {footerBlurb}
             </p>
           </div>
 
           {footerColumns.map((column) => (
             <div key={column.heading}>
-              <div className="text-[11px] uppercase tracking-[0.24em] text-paper/50">
+              <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-white">
                 {column.heading}
               </div>
-              <ul className="mt-5 flex list-none flex-col gap-[9px] p-0">
+              <ul className="mt-6 flex list-none flex-col gap-3 p-0">
                 {column.links.map((link) => (
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-[15.5px] text-paper/72 transition-colors duration-200 hover:text-accent-on-dark"
+                      className="text-[14.5px] text-white/90 transition-colors duration-300 hover:text-white"
                     >
                       {link.label}
                     </a>
@@ -61,15 +65,15 @@ export function SiteFooter() {
           ))}
 
           <div>
-            <div className="text-[11px] uppercase tracking-[0.24em] text-paper/50">
+            <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-white">
               Get in touch
             </div>
-            <ul className="mt-5 flex list-none flex-col gap-[9px] p-0">
+            <ul className="mt-6 flex list-none flex-col gap-3 p-0">
               {channels.map((channel) => (
                 <li key={channel.name}>
                   <a
                     href={channel.href}
-                    className="text-[15.5px] text-paper/72 transition-colors duration-200 hover:text-accent-on-dark"
+                    className="text-[14.5px] text-white/90 transition-colors duration-300 hover:text-white"
                   >
                     {channel.name}
                   </a>
@@ -78,7 +82,7 @@ export function SiteFooter() {
               <li>
                 <a
                   href={`mailto:${contact.email}`}
-                  className="text-[15.5px] text-paper/72 transition-colors duration-200 hover:text-accent-on-dark"
+                  className="text-[14.5px] text-white/90 transition-colors duration-300 hover:text-white"
                 >
                   {contact.email}
                 </a>
@@ -87,25 +91,27 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mt-[clamp(44px,5vw,72px)] flex flex-wrap items-start justify-between gap-8 border-t border-paper/[0.09] pt-[26px]">
-          <p className="max-w-[70ch] text-[13.5px] leading-[1.6] text-paper/50">
-            <span className="font-semibold text-paper/72">Risk disclaimer.</span>{" "}
+        <div className="mt-[clamp(52px,6vw,88px)] rounded-card bg-white/[0.05] p-6 ring-1 ring-white/10">
+          <p className="m-0 max-w-[86ch] text-[13px] leading-[1.75] text-white/70">
+            <span className="font-bold text-white">Risk disclaimer.</span>{" "}
             {riskDisclaimer}
           </p>
 
-          <div className="flex flex-wrap items-center gap-5 text-[13.5px] text-paper/50">
+          <div className="mt-7 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 text-[13px] text-white/60">
             <span>
-              © {new Date().getFullYear()} {brand.name}
+              © {new Date().getFullYear()} {brand.name}. All rights reserved.
             </span>
-            {legal.map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                className="transition-colors duration-200 hover:text-accent-on-dark"
-              >
-                {link.label}
-              </a>
-            ))}
+            <div className="flex flex-wrap items-center gap-x-7 gap-y-3">
+              {legal.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  className="transition-colors duration-300 hover:text-white"
+                >
+                  {link.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>

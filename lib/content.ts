@@ -23,13 +23,12 @@ export const navLinks = [
   { label: "Home", href: "#top" },
   { label: "About", href: "#about" },
   { label: "Services", href: "#services" },
-  { label: "Performance", href: "#performance" },
+  { label: "Experience", href: "#experience" },
   { label: "How It Works", href: "#how-it-works" },
-  { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
 ];
 
-export const primaryCta = { label: "Work With Us", href: "#contact" };
+export const primaryCta = { label: "Contact Me", href: "#contact" };
 
 export const hero = {
   status: "Available for new clients",
@@ -38,20 +37,23 @@ export const hero = {
   headlineItalic: "Clear process.",
   headlineEnd: "Trusted service.",
   lead: "Olatunbosun works directly with clients who want considered market analysis, structured mentorship and an honest second opinion — not a platform, and not a promise.",
-  primary: { label: "Work With Us", href: "#contact" },
-  secondary: { label: "Explore Services", href: "#services" },
+  primary: { label: "Contact Me", href: "#contact" },
+  secondary: { label: "View Services", href: "#services" },
 };
 
-/** The blue band. Service names, not market prices. */
-export const marqueeItems = [
-  "Market analysis",
-  "One-to-one mentorship",
-  "Trade reviews",
-  "Risk & position sizing",
-  "Weekly market briefing",
-  "Direct communication",
-  "Written, not verbal",
-  "Clear terms up front",
+/** Static credential strip under the hero. Deliberately not a marquee. */
+export const credentials = [
+  { label: "Trading since", value: "2016" },
+  { label: "Focus", value: "Bitcoin & major FX" },
+  { label: "Delivery", value: "Written analysis" },
+  { label: "Access", value: "Direct, no queue" },
+];
+
+/** Three facts sitting under the hero CTAs. */
+export const heroFacts = [
+  { label: "First reply", value: "Within one working day" },
+  { label: "Terms", value: "Agreed in writing" },
+  { label: "Client list", value: "Kept small" },
 ];
 
 export const about = {
@@ -72,6 +74,8 @@ export const about = {
 };
 
 export type Service = {
+  /** Key into the icon map in services-section.tsx */
+  icon: string;
   name: string;
   blurb: string;
   forWho: string;
@@ -88,6 +92,7 @@ export const servicesIntro = {
 
 export const services: Service[] = [
   {
+    icon: "chart",
     name: "Market Analysis",
     blurb:
       "A written read on the instruments you trade — the levels being watched, what would invalidate them, and where the risk sits.",
@@ -99,6 +104,7 @@ export const services: Service[] = [
     ],
   },
   {
+    icon: "mentor",
     name: "One-to-One Mentorship",
     blurb:
       "Structured sessions built around your actual trading, not a generic syllabus. Work starts with what you are doing now and fixes it in order of what is costing you most.",
@@ -111,6 +117,7 @@ export const services: Service[] = [
     ],
   },
   {
+    icon: "review",
     name: "Trade Reviews",
     blurb:
       "You send your recent trades — entries, exits, the reasoning at the time. What comes back is an honest written review of what held up and what did not.",
@@ -123,6 +130,7 @@ export const services: Service[] = [
     ],
   },
   {
+    icon: "risk",
     name: "Risk & Position Sizing Review",
     blurb:
       "A look at how much you are actually risking, how correlated your positions are, and whether your sizing matches the account you are trading.",
@@ -134,6 +142,7 @@ export const services: Service[] = [
     ],
   },
   {
+    icon: "briefing",
     name: "Weekly Market Briefing",
     blurb:
       "A written briefing each week covering what is being watched and why — including the weeks where the honest answer is that the picture is unclear.",
@@ -146,8 +155,8 @@ export const services: Service[] = [
   },
 ];
 
-export const performance = {
-  kicker: "Performance",
+export const experience = {
+  kicker: "Experience",
   headline:
     "A record of the work, not a sales figure. Historical only — nothing here indicates future results.",
   /**

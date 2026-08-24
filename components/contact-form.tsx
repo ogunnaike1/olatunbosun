@@ -4,15 +4,14 @@ import { useState } from "react";
 import { contact, contactMethods, serviceOptions } from "@/lib/content";
 
 const FIELD =
-  "w-full border border-ink-text/25 bg-transparent px-4 py-3 text-[16px] text-ink-text transition-colors duration-200 focus:border-accent focus:outline-none";
-const LABEL = "block text-[10.5px] uppercase tracking-[0.24em] text-ink-text/60";
+  "w-full rounded-btn border border-deep/15 bg-stone px-4 py-3.5 text-[15px] text-deep transition-colors duration-300 focus:border-deep focus:bg-cream focus:outline-none";
+const LABEL = "block text-[11px] font-bold text-deep";
 
 /**
- * No backend is wired up. On submit this composes a pre-filled email to the
- * address in `contact.email` and hands off to the visitor's mail client, so
- * the form is functional from day one. Replace `handleSubmit` with a POST to
- * a real endpoint (or a server action) when one exists — the markup and
- * validation stay as they are.
+ * No backend is wired up. On submit this composes a pre-filled email to
+ * `contact.email` and hands off to the visitor's mail client, so the form
+ * works from day one. Replace `handleSubmit` with a POST to a real endpoint
+ * (or a server action) when one exists — markup and validation stay as-is.
  */
 export function ContactForm() {
   const [sent, setSent] = useState(false);
@@ -30,9 +29,8 @@ export function ContactForm() {
       `${data.get("message")}`,
     ].join("\n");
 
-    const subject = `Enquiry — ${data.get("service")}`;
     window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(
-      subject,
+      `Enquiry — ${data.get("service")}`,
     )}&body=${encodeURIComponent(body)}`;
     setSent(true);
   }
@@ -43,7 +41,13 @@ export function ContactForm() {
         <label className={LABEL} htmlFor="cf-name">
           Name
         </label>
-        <input id="cf-name" name="name" required autoComplete="name" className={`${FIELD} mt-2`} />
+        <input
+          id="cf-name"
+          name="name"
+          required
+          autoComplete="name"
+          className={`${FIELD} mt-2`}
+        />
       </div>
 
       <div>
@@ -105,21 +109,21 @@ export function ContactForm() {
           name="message"
           rows={5}
           required
-          className={`${FIELD} mt-2 resize-y`}
+          className={`${FIELD} mt-2.5 resize-y`}
         />
       </div>
 
-      <div className="flex flex-wrap items-center gap-5">
+      <div className="mt-1 flex flex-wrap items-center gap-6">
         <button
           type="submit"
-          className="bg-accent px-8 py-4 text-[14px] uppercase tracking-[0.12em] text-paper transition-[background-color,transform] duration-[220ms] hover:-translate-y-0.5 hover:bg-ink-text"
+          className="rounded-btn bg-deep px-8 py-4 text-[14px] font-bold text-white transition-colors duration-300 hover:bg-deep-2"
         >
           Send Message
         </button>
-        <p aria-live="polite" className="m-0 text-[13.5px] text-ink-text/66">
+        <p aria-live="polite" className="m-0 max-w-[30ch] text-[13.5px] text-deep">
           {sent
             ? "Your mail app should have opened with the message ready to send."
-            : "Prefer not to use the form? Every channel below reaches us directly."}
+            : "Or use any channel listed — they all reach the same person."}
         </p>
       </div>
     </form>

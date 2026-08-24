@@ -1,52 +1,34 @@
-import { Reveal } from "@/components/reveal";
+import { Chip, Reveal } from "@/components/reveal";
 import { testimonials } from "@/lib/content";
 
 /**
  * Renders nothing until real, client-approved reviews exist in
- * `lib/content.ts`. An empty testimonial wall is better than an invented one.
+ * `lib/content.ts`. An empty testimonial wall beats an invented one.
  */
 export function TestimonialsSection() {
   if (testimonials.length === 0) return null;
 
   return (
-    <section
-      id="testimonials"
-      className="border-t border-ink-text/20 bg-paper text-ink-text"
-      style={{ padding: "clamp(78px, 10vw, 140px) 0" }}
-    >
-      <div className="mx-auto w-full max-w-[1360px] px-gutter">
-        <Reveal
-          className="flex flex-wrap items-center gap-5"
-          style={{ marginBottom: "clamp(34px, 4vw, 58px)" }}
-        >
-          <h2 className="text-h2-insights">In their words</h2>
-          <span className="h-px flex-1 bg-ink-text/20" />
-          <span className="text-[11.5px] uppercase tracking-[0.24em] text-ink-text/60">
-            Client feedback
-          </span>
+    <section id="testimonials" className="bg-cream py-section">
+      <div className="mx-auto w-full max-w-[1280px] px-gutter">
+        <Reveal style={{ marginBottom: "clamp(48px, 5.5vw, 80px)" }}>
+          <Chip>In their words</Chip>
         </Reveal>
 
         <div
-          className="grid"
-          style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "clamp(28px, 3.4vw, 56px)",
-          }}
+          className="grid gap-5"
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))" }}
         >
           {testimonials.map((item, i) => (
-            <Reveal as="article" key={item.name} index={i}>
-              <figure className="m-0 border-t-2 border-ink-text pt-6">
-                <blockquote className="m-0 text-[18px] italic leading-[1.6] text-ink-text/86 pretty">
+            <Reveal as="article" key={item.name} index={i} className="card p-[clamp(24px,2.4vw,34px)]">
+              <figure className="m-0">
+                <blockquote className="m-0 text-[17px] leading-[1.65] text-deep pretty">
                   {item.quote}
                 </blockquote>
-                <figcaption className="mt-6 text-[12.5px] uppercase tracking-[0.14em] text-ink-text/60">
+                <figcaption className="mt-6 flex items-center gap-3 text-[13px] font-bold text-deep">
+                  <span aria-hidden="true" className="h-px w-5 bg-deep" />
                   {item.name}
-                  {item.service && (
-                    <>
-                      {" · "}
-                      <span className="text-accent">{item.service}</span>
-                    </>
-                  )}
+                  {item.service && <span className="font-medium text-deep">· {item.service}</span>}
                 </figcaption>
               </figure>
             </Reveal>

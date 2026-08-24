@@ -2,85 +2,76 @@
 
 @theme {
   /* ── Palette ──────────────────────────────────────────────────
-     Navy is the ground the page sits on — every dark section is #04044a.
-     Black is demoted to two jobs: text on paper, and the deepest
-     recessions (footer, device screens), where it reads as a hue shift
-     against the navy rather than a second black page. */
-  --color-ink: #04044a;
-  --color-ink-deep: #0e0e0e;
-  --color-paper: #fcfcfb;
-  --color-ink-text: #0e0e0e;
+     deep   #305DD0 — dark grounds, headings, primary buttons, links
+     bright #178FD6 — accent: glows, chart fills, icon-chip hovers
+     pale   #CCDDE8 — borders, tinted fills, accent TEXT on deep
+     stone  #EDECE8 — alternating light ground
+     cream  #FFFCF6 — primary card surface / lightest ground
 
-  /* Interactive: blue carries fills and bands, cyan carries text on navy. */
-  --color-accent: #035bfa;
-  --color-accent-on-dark: #01e7ff;
-  --color-accent-bright: #7bf4ff;
+     MEASURED CONTRAST — #305DD0 is a mid-tone, which tightens everything:
+       deep on cream 5.69:1 · deep on stone 4.93:1 · deep on pale 4.18:1
+       white on deep 5.83:1 · pale on deep 4.18:1
+       bright on cream 3.45:1 · white on bright 3.54:1
+     Consequences enforced across the components:
+       · body copy is deep at FULL strength — deep/80 measured only 3.47:1
+       · pale carries LARGE text on deep only (4.18:1 clears the 3:1 bar)
+       · small labels on deep use white, not pale
+       · pills are solid deep with cream text, not pale with deep text
+       · `bright` never carries text on any ground — fills and icons only */
+  --color-deep: #305dd0;
+  --color-bright: #178fd6;
+  --color-pale: #ccdde8;
+  --color-stone: #edece8;
+  --color-cream: #fffcf6;
 
-  /* Second spot: navy on paper, a lightened blue step for text on navy. */
-  --color-accent-2: #04044a;
-  --color-accent-2-on-dark: #4e8bfa;
+  /* Derived: the hover step for primary buttons — a darker deep, so white
+     stays at 8.09:1 through the interaction. */
+  --color-deep-2: #2749a8;
 
-  /* ── Type: one family, no sans anywhere ───────────────────── */
-  --font-sans: var(--font-instrument-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-nav: var(--font-nav-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
 
-  --text-h1: clamp(33px, 4.3vw, 58px);
-  --text-h1--line-height: 1.06;
-  --text-h1--letter-spacing: -0.022em;
+  --text-display: clamp(38px, 4.9vw, 68px);
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.032em;
 
-  --text-h2: clamp(28px, 3.4vw, 46px);
-  --text-h2--line-height: 1.1;
-  --text-h2--letter-spacing: -0.02em;
+  --text-h2: clamp(29px, 3.4vw, 46px);
+  --text-h2--line-height: 1.16;
+  --text-h2--letter-spacing: -0.028em;
 
-  --text-h2-about: clamp(30px, 3.8vw, 52px);
-  --text-h2-about--line-height: 1.08;
-  --text-h2-about--letter-spacing: -0.022em;
+  --text-h3: clamp(19px, 1.5vw, 22px);
+  --text-h3--line-height: 1.35;
+  --text-h3--letter-spacing: -0.015em;
 
-  --text-h2-insights: clamp(25px, 2.6vw, 34px);
-  --text-h2-insights--letter-spacing: -0.018em;
+  --text-quote: clamp(20px, 1.9vw, 26px);
+  --text-quote--line-height: 1.5;
+  --text-quote--letter-spacing: -0.015em;
 
-  --text-h3-feature: clamp(19px, 1.7vw, 24px);
-  --text-h3-feature--letter-spacing: -0.012em;
+  --text-figure: clamp(34px, 3.6vw, 52px);
+  --text-figure--line-height: 1;
+  --text-figure--letter-spacing: -0.03em;
 
-  --text-h3-card: clamp(19px, 1.7vw, 24px);
-  --text-h3-card--line-height: 1.25;
-  --text-h3-card--letter-spacing: -0.012em;
+  --text-lead: clamp(16.5px, 1.2vw, 19px);
+  --text-lead--line-height: 1.65;
 
-  --text-statement: clamp(21px, 2.2vw, 30px);
-  --text-statement--line-height: 1.36;
+  --text-body: 16px;
+  --text-body--line-height: 1.7;
 
-  --text-stat: clamp(31px, 3.4vw, 46px);
-  --text-stat--letter-spacing: -0.025em;
+  --spacing-gutter: clamp(20px, 4vw, 64px);
+  --spacing-section: clamp(76px, 8.5vw, 132px);
+  --spacing-colgap: clamp(40px, 4.5vw, 84px);
 
-  --text-lead: clamp(15.5px, 1.1vw, 18px);
-  --text-lead--line-height: 1.6;
+  --radius-btn: 10px;
+  --radius-card: 16px;
+  --radius-chip: 12px;
+  --radius-pill: 999px;
 
-  --text-slide-price: clamp(26px, 2.6vw, 34px);
-  --text-slide-price--letter-spacing: -0.02em;
+  --shadow-card: 0 1px 2px rgba(48, 93, 208, 0.05), 0 12px 28px -18px rgba(48, 93, 208, 0.24);
+  --shadow-lift: 0 2px 6px rgba(48, 93, 208, 0.07), 0 26px 50px -24px rgba(48, 93, 208, 0.32);
+  --shadow-panel: 0 30px 70px -30px rgba(1, 26, 54, 0.7);
 
-  --text-slide-figure: clamp(30px, 3vw, 40px);
-  --text-slide-figure--letter-spacing: -0.02em;
-
-  --text-slide-pair: clamp(22px, 2vw, 26px);
-
-  /* ── Fluid spacing ────────────────────────────────────────── */
-  --spacing-gutter: clamp(20px, 4vw, 56px);
-  --spacing-section: clamp(72px, 9vw, 132px);
-  --spacing-section-editorial: clamp(78px, 10vw, 150px);
-  --spacing-hero-top: clamp(56px, 8vw, 110px);
-  --spacing-hero-bottom: clamp(40px, 6vw, 80px);
-  --spacing-colgap: clamp(40px, 5vw, 90px);
-  --spacing-glass: clamp(22px, 2.4vw, 32px);
-
-  /* ── Shadow: the only one on the page ─────────────────────── */
-  --shadow-glass: 0 30px 80px -40px rgba(0, 0, 0, 0.9);
-
-  /* Broadsheet is print — square edges. */
-  --radius-none: 0px;
-
-  /* ── Breakpoints ──────────────────────────────────────────── */
-  --breakpoint-tab: 700px;
-  --breakpoint-nav: 1120px;
+  --breakpoint-tab: 760px;
+  --breakpoint-nav: 1060px;
 }
 
 @layer base {
@@ -88,16 +79,26 @@
     scroll-behavior: smooth;
   }
 
-  /* Anchor targets must clear the sticky header. */
   section[id] {
-    scroll-margin-top: 96px;
+    scroll-margin-top: 90px;
   }
 
   body {
-    background: var(--color-ink);
-    color: var(--color-paper);
+    background: var(--color-stone);
+    color: var(--color-deep);
     font-family: var(--font-sans);
     font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 800;
+  }
+
+  h3 {
+    font-weight: 700;
   }
 
   a {
@@ -106,17 +107,12 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-accent-on-dark);
+    outline: 2px solid var(--color-deep);
     outline-offset: 3px;
   }
 
-  /* Cyan is invisible on the paper sections — focus there uses the blue. */
-  .bg-paper :focus-visible {
-    outline-color: var(--color-accent);
-  }
-
   ::selection {
-    background: rgba(1, 231, 255, 0.26);
+    background: rgba(23, 143, 214, 0.26);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -124,6 +120,27 @@
       scroll-behavior: auto;
     }
   }
+}
+
+/* ── Component-level utilities ──────────────────────────────────── */
+
+@utility chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-pill);
+  padding: 0.4rem 0.85rem 0.4rem 0.7rem;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+@utility card {
+  border-radius: var(--radius-card);
+  background: var(--color-cream);
+  border: 1px solid rgba(48, 93, 208, 0.1);
+  box-shadow: var(--shadow-card);
 }
 
 @utility tabular {
@@ -136,25 +153,4 @@
 
 @utility pretty {
   text-wrap: pretty;
-}
-
-/* Ticker marquee: one infinite transform on a max-content row. */
-@keyframes marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.marquee-track {
-  width: max-content;
-  animation: marquee 46s linear infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track {
-    animation: none;
-  }
 }

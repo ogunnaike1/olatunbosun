@@ -1,11 +1,11 @@
 import { AboutSection } from "@/components/about-section";
 import { ContactSection } from "@/components/contact-section";
+import { CredentialsStrip } from "@/components/credentials-strip";
+import { ExperienceSection } from "@/components/experience-section";
 import { FaqSection } from "@/components/faq-section";
 import { FinalCtaSection } from "@/components/final-cta-section";
 import { Hero } from "@/components/hero";
 import { HowItWorksSection } from "@/components/how-it-works-section";
-import { MarqueeBand } from "@/components/marquee-band";
-import { PerformanceSection } from "@/components/performance-section";
 import { ServicesSection } from "@/components/services-section";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -20,15 +20,15 @@ export default function Page() {
       <SiteHeader />
       {/* overflow-x:clip, never hidden — hidden turns this into a scroll
           container and silently kills the sticky columns. */}
-      <div className="overflow-x-clip bg-ink text-paper">
+      <div className="overflow-x-clip">
         <main>
-          {/* Who is this practice → what does it provide → how does a client
-              hire it. Grounds alternate navy → paper so the page never flattens. */}
+          {/* Predominantly light. Navy carries the hero, one interlude
+              (Experience), the closing CTA and the footer — nothing else. */}
           <Hero />
-          <MarqueeBand />
+          <CredentialsStrip />
           <AboutSection />
           <ServicesSection />
-          <PerformanceSection />
+          <ExperienceSection />
           <HowItWorksSection />
           <TrustSection />
           <TestimonialsSection />

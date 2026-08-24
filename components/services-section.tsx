@@ -1,80 +1,101 @@
-import { Reveal } from "@/components/reveal";
+import {
+  ArrowRight,
+  Check,
+  ChartLineUp,
+  ClipboardText,
+  Newspaper,
+  Scales,
+  UsersThree,
+} from "@phosphor-icons/react/dist/ssr";
+import type { Icon } from "@phosphor-icons/react";
+import { Chip, Reveal } from "@/components/reveal";
 import { services, servicesIntro } from "@/lib/content";
+
+const icons: Record<string, Icon> = {
+  chart: ChartLineUp,
+  mentor: UsersThree,
+  review: ClipboardText,
+  risk: Scales,
+  briefing: Newspaper,
+};
 
 export function ServicesSection() {
   return (
-    <section
-      id="services"
-      className="border-t border-ink-text/20 bg-paper text-ink-text"
-      style={{ padding: "clamp(78px, 10vw, 140px) 0" }}
-    >
-      <div className="mx-auto w-full max-w-[1360px] px-gutter">
+    <section id="services" className="bg-cream py-section">
+      <div className="mx-auto w-full max-w-[1280px] px-gutter">
         <Reveal
-          className="max-w-[52ch]"
-          style={{ marginBottom: "clamp(44px, 5vw, 72px)" }}
+          className="max-w-[56ch]"
+          style={{ marginBottom: "clamp(40px, 4.5vw, 68px)" }}
         >
-          <div className="text-[11.5px] uppercase tracking-[0.30em] text-accent">
-            {servicesIntro.kicker}
-          </div>
-          <h2 className="mt-6 text-h2 balance">
-            {servicesIntro.headlineTop}
-            <br />
-            <span className="italic text-accent">{servicesIntro.headlineItalic}</span>
+          <Chip>{servicesIntro.kicker}</Chip>
+          <h2 className="mt-6 text-h2 balance text-deep">
+            {servicesIntro.headlineTop} {servicesIntro.headlineItalic}
           </h2>
-          <p className="mt-7 text-lead text-ink-text/66">{servicesIntro.lead}</p>
+          <p className="mt-5 text-lead text-deep">{servicesIntro.lead}</p>
         </Reveal>
 
         <div
-          className="grid"
-          style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "clamp(30px, 3.4vw, 56px)",
-          }}
+          className="grid gap-5"
+          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(330px, 1fr))" }}
         >
-          {services.map((service, i) => (
-            <Reveal
-              as="article"
-              key={service.name}
-              index={i}
-              className="group flex flex-col border-t-2 border-ink-text pt-6 transition-colors duration-200 hover:border-accent"
-            >
-              <h3 className="text-h3-card balance">{service.name}</h3>
+          {services.map((service, i) => {
+            const IconComponent = icons[service.icon];
+            return (
+              <Reveal
+                as="article"
+                key={service.name}
+                index={i}
+                className="group flex flex-col rounded-card border border-deep/8 bg-stone p-[clamp(24px,2.4vw,34px)] transition-[background-color,box-shadow,transform] duration-300 hover:-translate-y-1 hover:bg-cream hover:shadow-lift"
+              >
+                <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-chip bg-pale text-deep transition-colors duration-300 group-hover:bg-bright group-hover:text-white">
+                  <IconComponent size={23} weight="duotone" aria-hidden="true" />
+                </span>
 
-              <p className="mt-4 text-[16px] leading-[1.6] text-ink-text/66 pretty">
-                {service.blurb}
-              </p>
+                <h3 className="mt-5 text-h3 text-deep balance">{service.name}</h3>
 
-              <div className="mt-7 border-t border-ink-text/20 pt-4">
-                <div className="text-[10.5px] uppercase tracking-[0.24em] text-ink-text/60">
-                  Who it&rsquo;s for
-                </div>
-                <p className="mt-2 text-[15.5px] leading-[1.55] text-ink-text/66">
-                  {service.forWho}
+                <p className="mt-3 text-[15px] leading-[1.65] text-deep pretty">
+                  {service.blurb}
                 </p>
-              </div>
 
-              <div className="mt-6 border-t border-ink-text/20 pt-4">
-                <div className="text-[10.5px] uppercase tracking-[0.24em] text-ink-text/60">
-                  What you receive
+                <div className="mt-5 rounded-chip bg-pale/70 px-4 py-3">
+                  <div className="text-[9.5px] font-bold uppercase tracking-[0.14em] text-deep">
+                    Who it&rsquo;s for
+                  </div>
+                  <p className="mt-1.5 text-[14px] leading-[1.55] text-deep">
+                    {service.forWho}
+                  </p>
                 </div>
-                <ul className="mt-3 flex list-none flex-col gap-2 p-0">
+
+                <ul className="mt-5 flex list-none flex-col gap-2.5 p-0">
                   {service.receives.map((item) => (
-                    <li key={item} className="flex gap-3 text-[15.5px] leading-[1.5]">
-                      <span aria-hidden="true" className="mt-[9px] size-[4px] shrink-0 bg-accent" />
-                      <span className="text-ink-text/66">{item}</span>
+                    <li key={item} className="flex gap-3 text-[14.5px] leading-[1.5]">
+                      <Check
+                        size={15}
+                        weight="bold"
+                        color="#034488"
+                        aria-hidden="true"
+                        className="mt-1 shrink-0"
+                      />
+                      <span className="text-deep">{item}</span>
                     </li>
                   ))}
                 </ul>
-              </div>
 
-              <a
-                href="#contact"
-                className="mt-8 inline-block self-start border-b border-accent pb-1 text-[13px] uppercase tracking-[0.12em] text-accent transition-colors duration-200 hover:border-ink-text hover:text-ink-text"
-              >
-                {servicesIntro.cta}
-              </a>
-            </Reveal>
-          ))}
+                <a
+                  href="#contact"
+                  className="mt-7 inline-flex items-center gap-2 self-start text-[13px] font-bold text-deep transition-colors duration-300 group-hover:text-deep"
+                >
+                  {servicesIntro.cta}
+                  <ArrowRight
+                    size={14}
+                    weight="bold"
+                    aria-hidden="true"
+                    className="transition-transform duration-300 group-hover:translate-x-1"
+                  />
+                </a>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>

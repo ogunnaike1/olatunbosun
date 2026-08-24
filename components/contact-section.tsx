@@ -4,10 +4,11 @@ import {
   Phone,
   TelegramLogo,
   WhatsappLogo,
+  ArrowUpRight,
 } from "@phosphor-icons/react/dist/ssr";
 import type { Icon } from "@phosphor-icons/react";
 import { ContactForm } from "@/components/contact-form";
-import { Reveal } from "@/components/reveal";
+import { Chip, Reveal } from "@/components/reveal";
 import { channels, contact, contactIntro } from "@/lib/content";
 
 const icons: Record<string, Icon> = {
@@ -20,70 +21,62 @@ const icons: Record<string, Icon> = {
 
 export function ContactSection() {
   return (
-    <section
-      id="contact"
-      className="border-t border-ink-text/20 bg-paper text-ink-text"
-      style={{ padding: "clamp(78px, 10vw, 140px) 0 clamp(72px, 9vw, 120px)" }}
-    >
+    <section id="contact" className="bg-stone py-section">
       <div
-        className="mx-auto grid w-full max-w-[1360px] items-start px-gutter"
-        style={{
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "clamp(40px, 5vw, 88px)",
-        }}
+        className="mx-auto grid w-full max-w-[1280px] items-start gap-colgap px-gutter"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(330px, 1fr))" }}
       >
         <Reveal>
-          <div className="text-[11.5px] uppercase tracking-[0.30em] text-accent">
-            {contactIntro.kicker}
-          </div>
-          <h2 className="mt-6 text-h2 balance">
-            {contactIntro.headlineTop}
-            <br />
-            <span className="italic text-accent">{contactIntro.headlineItalic}</span>
+          <Chip>{contactIntro.kicker}</Chip>
+          <h2 className="mt-6 text-h2 balance text-deep">
+            {contactIntro.headlineTop} {contactIntro.headlineItalic}
           </h2>
-          <p className="mt-7 text-lead max-w-[38ch] text-ink-text/66">{contactIntro.lead}</p>
+          <p className="mt-5 max-w-[42ch] text-lead text-deep">{contactIntro.lead}</p>
 
-          {/* Navy tiles on the paper ground — the 1px gap lets the paper through
-              as the hairline, so the grid is drawn by the background itself. */}
-          <div
-            className="mt-11 grid gap-px bg-paper"
-            style={{ gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))" }}
-          >
+          <ul className="mt-9 m-0 grid list-none gap-3 p-0">
             {channels.map((channel, i) => {
               const IconComponent = icons[channel.icon];
               return (
-                <Reveal key={channel.name} index={i} className="bg-ink text-paper">
+                <Reveal as="li" key={channel.name} index={i}>
                   <a
                     href={channel.href}
-                    className="block h-full p-[clamp(18px,2vw,26px)] transition-colors duration-[240ms] hover:bg-accent"
+                    className="group card flex items-center gap-4 p-4 transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5 hover:shadow-lift"
                   >
-                    <IconComponent
-                      size={24}
-                      weight="duotone"
-                      color="#01e7ff"
+                    <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-chip bg-pale text-deep transition-colors duration-300 group-hover:bg-bright group-hover:text-white">
+                      <IconComponent size={20} weight="duotone" aria-hidden="true" />
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-[15px] font-bold text-deep">
+                        {channel.name}
+                      </span>
+                      <span className="block truncate text-[13.5px] text-deep">
+                        {channel.handle}
+                      </span>
+                    </span>
+                    <ArrowUpRight
+                      size={17}
+                      weight="bold"
                       aria-hidden="true"
+                      className="ml-auto shrink-0 text-deep transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                     />
-                    <div className="mt-4 text-[16.5px]">{channel.name}</div>
-                    <div className="mt-1 text-[13px] text-paper/90">{channel.handle}</div>
                   </a>
                 </Reveal>
               );
             })}
-          </div>
+          </ul>
 
-          <p className="mt-8 text-[15px] leading-[1.6] text-ink-text/66">
-            Or email{" "}
+          <p className="mt-7 text-[14.5px] leading-[1.7] text-deep">
+            Prefer email?{" "}
             <a
               href={`mailto:${contact.email}`}
-              className="border-b border-accent/40 text-accent transition-colors duration-200 hover:border-accent"
+              className="font-semibold text-deep underline decoration-deep/30 underline-offset-4 transition-colors duration-300 hover:decoration-deep"
             >
               {contact.email}
             </a>
-            .
           </p>
         </Reveal>
 
-        <Reveal delay={0.08}>
+        <Reveal delay={0.08} className="card p-[clamp(24px,2.8vw,44px)]">
           <ContactForm />
         </Reveal>
       </div>

@@ -17,27 +17,13 @@ export const metadata: Metadata = {
   },
 };
 
-/** 20px line art, one stroke weight, gold. */
-const icons = {
-  phone: (
-    <>
-      <rect x="5.5" y="1.5" width="9" height="17" rx="1.6" fill="none" strokeWidth="1.3" />
-      <line x1="8.6" y1="15.6" x2="11.4" y2="15.6" strokeWidth="1.3" />
-    </>
-  ),
-  whatsapp: (
-    <>
-      <circle cx="10" cy="10" r="8.4" fill="none" strokeWidth="1.3" />
-      <path d="M7 12.5 L5.6 15.4 L8.6 14.1" fill="none" strokeWidth="1.3" />
-    </>
-  ),
-  mail: (
-    <>
-      <rect x="1.6" y="4.4" width="16.8" height="11.2" fill="none" strokeWidth="1.3" />
-      <path d="M1.6 4.4 L10 11 L18.4 4.4" fill="none" strokeWidth="1.3" />
-    </>
-  ),
-};
+/** The one channel, drawn as a speech bubble. 20px, single stroke weight. */
+const whatsappMark = (
+  <>
+    <circle cx="10" cy="10" r="8.4" fill="none" strokeWidth="1.3" />
+    <path d="M7 12.5 L5.6 15.4 L8.6 14.1" fill="none" strokeWidth="1.3" />
+  </>
+);
 
 export default function ContactPage() {
   return (
@@ -93,45 +79,47 @@ export default function ContactPage() {
                   </p>
                 </Reveal>
 
-                {/* Each channel is a full-width row that indents on hover —
-                    the same gesture as a list item stepping forward. */}
-                <Reveal delay={0.12} className="mt-11 flex flex-col">
-                  {contactPage.channels.map((channel, i) => (
-                    <a
-                      key={channel.label}
-                      href={channel.href}
-                      className={`group flex items-center gap-4.5 border-t border-accent/[0.22] px-1.5 py-6 transition-[padding-left,background] duration-500 hover:bg-accent/[0.06] hover:pl-4.5 ${
-                        i === contactPage.channels.length - 1 ? "border-b" : ""
-                      }`}
+                {/* One channel, so it gets the whole row and the number is
+                    printed in full — a visitor verifying an unexpected
+                    message needs to read it, not just tap it. */}
+                <Reveal delay={0.12} className="mt-11">
+                  <a
+                    href={contactPage.channel.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-4.5 border-y border-accent/[0.22] px-1.5 py-7 transition-[padding-left,background] duration-500 hover:bg-accent/[0.06] hover:pl-4.5"
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      aria-hidden="true"
+                      className="shrink-0"
+                      stroke="var(--color-accent)"
                     >
-                      <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        aria-hidden="true"
-                        className="shrink-0"
-                        stroke="var(--color-accent)"
-                      >
-                        {icons[channel.icon]}
-                      </svg>
-                      <span className="flex flex-col gap-1.5">
-                        <span className="label-sm text-on-base-4">{channel.label}</span>
-                        <span className="text-lg text-on-base">{channel.value}</span>
+                      {whatsappMark}
+                    </svg>
+                    <span className="flex flex-col gap-1.5">
+                      <span className="label-sm text-on-base-4">
+                        {contactPage.channel.label}
                       </span>
-                      <span
-                        aria-hidden="true"
-                        className="ml-auto font-mono text-xs text-accent"
-                      >
-                        →
+                      <span className="text-lg text-on-base">
+                        {contactPage.channel.value}
                       </span>
-                    </a>
-                  ))}
+                      <span className="font-mono text-[12.5px] tracking-[0.08em] text-on-base-3">
+                        {contactPage.channel.number}
+                      </span>
+                    </span>
+                    <span aria-hidden="true" className="ml-auto font-mono text-xs text-accent">
+                      →
+                    </span>
+                  </a>
                 </Reveal>
 
                 <Reveal delay={0.2} className="mt-7 flex items-start gap-3">
                   <span aria-hidden="true" className="mt-0.5 h-10 w-px shrink-0 bg-accent" />
                   <p className="label m-0 max-w-[40ch] text-[10px] leading-[1.9] tracking-[0.06em] text-on-base-5">
-                    {contactPage.emailNote}
+                    {contactPage.onlyNote}
                   </p>
                 </Reveal>
               </div>

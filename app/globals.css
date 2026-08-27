@@ -96,6 +96,10 @@
      anything rounder immediately reads as a different site. */
   --radius-edge: 2px;
   --radius-card: 4px;
+  /* The floating WhatsApp button only. Everything else on this site is
+     square by design — this one is round because a floating action that
+     isn't reads as a stray panel. */
+  --radius-pill: 999px;
 
   --breakpoint-tab: 760px;
   --breakpoint-nav: 1060px;
@@ -138,6 +142,10 @@
   /* The hero's breathing bloom, and the halo on the mark's apex dot. */
   --bloom-hero: rgba(232, 184, 75, 0.28);
   --glow-accent: rgba(232, 184, 75, 0.9);
+
+  /* The floating WhatsApp button — it sits over both grounds, so it needs
+     a shadow that reads on either. */
+  --shadow-float: 0 18px 40px -14px rgba(0, 0, 0, 0.75);
 }
 
 /*
@@ -206,6 +214,7 @@
      the hero muddy. */
   --bloom-hero: rgba(232, 184, 75, 0.34);
   --glow-accent: rgba(151, 105, 10, 0.4);
+  --shadow-float: 0 18px 40px -16px rgba(23, 20, 16, 0.45);
 }
 
 @layer base {

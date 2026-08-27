@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Bodoni_Moda, Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
+import { WhatsAppButton } from "@/components/whatsapp-button";
 import { brand, contact, seo } from "@/lib/content";
 import "./globals.css";
 
@@ -54,8 +55,10 @@ const jsonLd = {
   name: brand.full,
   description: seo.ogDescription,
   foundingDate: brand.since,
-  telephone: contact.phoneE164,
-  email: contact.email,
+  // The WhatsApp number, which is the only channel. `sameAs` carries the
+  // wa.me link so the graph points at the one place that is actually his.
+  telephone: contact.e164,
+  sameAs: [`https://wa.me/${contact.whatsapp}`],
   areaServed: "Worldwide",
   knowsAbout: ["Bitcoin", "Digital asset trading", "Market analysis"],
 };
@@ -92,6 +95,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {children}
+        {/* Site-wide, on every page including /contact — WhatsApp is the
+            only channel, so the way in is never more than one tap away. */}
+        <WhatsAppButton />
       </body>
     </html>
   );

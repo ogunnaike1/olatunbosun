@@ -91,11 +91,14 @@ export function Hero() {
               </Link>
             </Enter>
 
-            {/* The three channels, repeated here so the fastest way to reach
-                him is above the fold on every screen size. */}
-            <Enter delay={0.44} className="mt-9 flex flex-wrap items-center gap-x-5.5 gap-y-3">
+            {/* The one channel, above the fold on every screen size. The lit
+                dot is the site's "reachable" signal, and it belongs to the
+                only number that is his. */}
+            <Enter delay={0.44} className="mt-9">
               <a
-                href={contactHref.phone}
+                href={contactHref.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 font-mono text-[11.5px] tracking-[0.06em] text-on-base-3 transition-colors duration-300 hover:text-accent"
               >
                 <span
@@ -103,19 +106,7 @@ export function Hero() {
                   className="size-1.5 rounded-full bg-accent"
                   style={{ boxShadow: "0 0 10px var(--glow-accent)" }}
                 />
-                {contact.phone}
-              </a>
-              <a
-                href={contactHref.whatsapp}
-                className="font-mono text-[11.5px] tracking-[0.06em] text-on-base-3 transition-colors duration-300 hover:text-accent"
-              >
-                WhatsApp
-              </a>
-              <a
-                href={contactHref.email}
-                className="font-mono text-[11.5px] tracking-[0.06em] text-on-base-3 transition-colors duration-300 hover:text-accent"
-              >
-                Email
+                WhatsApp · {contact.number}
               </a>
             </Enter>
           </div>

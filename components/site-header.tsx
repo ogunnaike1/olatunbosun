@@ -10,7 +10,7 @@ import {
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Wordmark } from "@/components/wordmark";
-import { brand, contact, navLinks, primaryCta } from "@/lib/content";
+import { brand, contact, contactHref, navLinks, primaryCta } from "@/lib/content";
 
 /**
  * Fixed, and transparent at rest — the hero's own gradient is the header's
@@ -179,10 +179,13 @@ export function SiteHeader() {
                 </span>
               </Link>
               <a
-                href={contact.phoneHref}
+                href={contactHref.whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
                 className="mt-4.5 font-mono text-[11px] tracking-[0.1em] text-on-base-4"
               >
-                {contact.phone}
+                WhatsApp · {contact.number}
               </a>
             </nav>
           </motion.div>

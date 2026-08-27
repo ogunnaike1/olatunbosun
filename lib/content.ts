@@ -10,7 +10,7 @@
  * the site and none should be added.
  *
  * PLACEHOLDERS — must be replaced before launch:
- *   · contactPage.emailNote — confirm the address is live and delete the note
+ *   · none outstanding — the WhatsApp number in `contact` is live copy
  * There are deliberately no performance figures, no client counts and no
  * testimonials anywhere in this file. Do not invent them.
  */
@@ -29,25 +29,45 @@ export const brand = {
 
 export const seo = {
   title: `${brand.full} — Independent Bitcoin & Digital Asset Trader`,
-  description: `${brand.full} is an independent trader active in Bitcoin and digital asset markets since ${brand.since}, trading to a defined plan with direct client contact throughout. Reach me by email, phone or WhatsApp.`,
+  description: `${brand.full} is an independent trader active in Bitcoin and digital asset markets since ${brand.since}, trading to a defined plan with direct client contact throughout. Reach me on WhatsApp.`,
   ogDescription: `Independent trader in Bitcoin and digital asset markets since ${brand.since}. Trading to a defined plan, with direct client contact.`,
 };
 
+/**
+ * WHATSAPP IS THE ONLY CHANNEL. There is no phone link, no email address
+ * and no contact form endpoint anywhere on this site — one number, one
+ * place to check it, which is also what makes impersonation easy to spot.
+ *
+ * If another channel is ever added it has to be added everywhere at once
+ * (nav, footer, contact page, the "verify it's me" copy), or the
+ * verification advice stops being true.
+ */
 export const contact = {
-  email: "hello@olatunbosunbtc.com",
-  /** Display form. */
-  phone: "+234 705 749 7045",
-  phoneHref: "tel:+2347057497045",
-  /** E.164, for structured data. */
-  phoneE164: "+2347057497045",
+  /** Display form of the WhatsApp number. */
+  number: "+234 705 749 7045",
   /** Digits only, no plus — the form wa.me links take. */
   whatsapp: "2347057497045",
+  /** E.164, for structured data. */
+  e164: "+2347057497045",
 };
 
+/**
+ * Every WhatsApp link opens with this already typed, so the visitor never
+ * faces an empty box. Keep it short, neutral and in the visitor's voice —
+ * they can delete it in one gesture if they'd rather write their own.
+ */
+export const whatsappMessage =
+  "Hello — I found you through your website and I'd like to ask about your Bitcoin trading service.";
+
 export const contactHref = {
-  phone: contact.phoneHref,
-  whatsapp: `https://wa.me/${contact.whatsapp}`,
-  email: `mailto:${contact.email}`,
+  whatsapp: `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`,
+};
+
+/** The floating button, bottom-left on every page. */
+export const whatsappButton = {
+  label: "Message on WhatsApp",
+  /** Shown beside the mark on wider screens. */
+  short: "WhatsApp",
 };
 
 export const navLinks = [
@@ -281,7 +301,7 @@ export const services: Service[] = [
       "Position sizing agreed in advance, not adjusted mid-trade",
       "The reading behind it — levels, structure and context, in plain language",
       "An honest account of what went wrong when something does",
-      "Direct contact throughout, by phone, WhatsApp or email",
+      "Direct contact throughout, on WhatsApp",
     ],
   },
 ];
@@ -477,7 +497,7 @@ export const process = {
   steps: [
     {
       title: "Reach out",
-      body: "Call, WhatsApp or email. Tell me roughly what you're looking for.",
+      body: "Send a WhatsApp message. Tell me roughly what you're looking for.",
     },
     {
       title: "Talk it through",
@@ -523,7 +543,7 @@ export const howItWorksPage = {
     detail: [
       {
         expect: "A reply from me, usually within a day",
-        body: "Phone, WhatsApp or email — whichever you already use. A sentence or two about what you're looking for is enough to start; you don't need to arrive with a plan.",
+        body: "WhatsApp, on the number listed here — it is the only channel I use. A sentence or two about what you're looking for is enough to start; you don't need to arrive with a plan.",
       },
       {
         expect: "An honest read on whether this is a fit",
@@ -558,7 +578,7 @@ export const howItWorksPage = {
       },
       {
         title: "Silence about it",
-        body: "Nothing about this arrangement needs to be kept secret. Check anything unexpected by phone, on the number on this site, before you act on it.",
+        body: "Nothing about this arrangement needs to be kept secret. Check anything unexpected against the WhatsApp number on this site before you act on it.",
       },
     ],
   },
@@ -588,7 +608,7 @@ export const faqPage = {
   kicker: "FAQ",
   headlineTop: "Straight questions,",
   headlineItalic: "straight answers.",
-  lead: "The ones that come up most, answered as they would be answered on the phone. If yours isn't here, send it — a question I can't answer plainly is worth knowing about.",
+  lead: "The ones that come up most, answered the way they would be answered in a message. If yours isn't here, send it — a question I can't answer plainly is worth knowing about.",
   closing: {
     title: "Still asking?",
     body: "Send the question over. There's no obligation attached to it, and you'll get a real answer rather than a brochure.",
@@ -607,7 +627,7 @@ export const faqs = [
   },
   {
     q: "How do I get in touch?",
-    a: "Phone, WhatsApp or email — all three reach me directly, and the numbers on this site are the only ones that are mine. There is no support queue and no one answering on my behalf.",
+    a: "WhatsApp, on the number published on this site. It is the only channel I use — there is no support email, no second account and no one answering on my behalf. That is deliberate: one number is one thing for you to check.",
   },
   {
     q: "How do payments work?",
@@ -627,7 +647,7 @@ export const faqs = [
   },
   {
     q: "How can I verify it's really you?",
-    a: "Confirm anything unexpected by phone on the number listed on this site before you act on it. Impersonation is common in this market — a message, an address or an account carrying my name means nothing until you have checked it against the details here.",
+    a: "Check it against the WhatsApp number published on this site before you act on it. That number is the only one that is mine. Impersonation is common in this market — a message, an address or an account carrying my name means nothing until you have checked it here.",
   },
 ];
 
@@ -659,43 +679,28 @@ export const footer = {
 /* ── Contact page ──────────────────────────────────────────────────────── */
 
 export const contactPage = {
-  title: `Contact — ${brand.full} | Independent Bitcoin Trader`,
-  description: `Contact ${brand.full} directly by phone, WhatsApp, email or written enquiry. Independent Bitcoin and digital asset trader, active since ${brand.since}.`,
+  title: `Contact — ${brand.full} | WhatsApp`,
+  description: `Message ${brand.full} on WhatsApp. One number, answered personally — independent Bitcoin and digital asset trader, active since ${brand.since}.`,
   ogDescription:
-    "Speak directly with an independent Bitcoin and digital asset trader. Phone, WhatsApp, email or written enquiry.",
+    "Message an independent Bitcoin and digital asset trader on WhatsApp. One number, answered personally.",
   kicker: "Contact",
   headline: "Let's talk.",
-  lead: "Have a question or want to discuss a service? Reach out directly. I answer my own messages, usually within a day.",
-  /** PLACEHOLDER — confirm the address is live, then delete this note. */
-  emailNote:
-    "The email address above is a placeholder — send me the real one and I'll swap it in. No payment is ever taken through this site.",
-  channels: [
-    {
-      icon: "phone" as const,
-      label: "Phone",
-      value: contact.phone,
-      href: contactHref.phone,
-    },
-    {
-      icon: "whatsapp" as const,
-      label: "WhatsApp",
-      value: "Message me on WhatsApp",
-      href: contactHref.whatsapp,
-    },
-    {
-      icon: "mail" as const,
-      label: "Email",
-      value: contact.email,
-      href: contactHref.email,
-    },
-  ],
+  lead: "Have a question or want to discuss the service? WhatsApp is the way to reach me — it's the only channel I use, and I answer my own messages, usually within a day.",
+  /** The single channel, stated as such. */
+  channel: {
+    label: "WhatsApp",
+    value: "Message me on WhatsApp",
+    number: contact.number,
+    href: contactHref.whatsapp,
+  },
+  onlyNote:
+    "This number is the only way to reach me. There is no support email and no other account — anything arriving from elsewhere in my name is not me.",
   form: {
-    heading: "Send an enquiry",
-    lead: "A few details are enough. I'll reply on whichever channel you prefer.",
-    replyOptions: ["WhatsApp", "Phone call", "Email"],
-    submit: "Send enquiry",
+    heading: "Rather write it out first?",
+    lead: "Fill this in and it opens WhatsApp with your message already written. Nothing is sent from this page.",
+    submit: "Open WhatsApp",
     privacy:
-      "Your details are used only to reply to this enquiry. Trading carries risk of loss; nothing here is financial advice.",
+      "Nothing is submitted to this website — the button opens WhatsApp with your text ready to send. Trading carries risk of loss; nothing here is financial advice.",
   },
   assurances: [
     {
@@ -704,7 +709,7 @@ export const contactPage = {
     },
     {
       title: "Verify it's me",
-      body: "Only the number and address on this page are mine. If a message or wallet address arrives in my name elsewhere, confirm it by phone before acting.",
+      body: "Only the WhatsApp number on this page is mine. If a message or wallet address arrives in my name from anywhere else, check it here before acting.",
     },
     {
       title: "Ask anything",

@@ -8,39 +8,39 @@ const FIELD =
 const LABEL = "label-sm text-on-base-4";
 
 /**
- * No inbox is wired up. On submit this composes a pre-filled email to
- * `contact.email` and hands off to the visitor's mail client, so the form
- * is useful from day one — and the note underneath says plainly that phone
- * or WhatsApp is faster. Replace `handleSubmit` with a POST to a real
- * endpoint when one exists; the markup and validation stay as they are.
+ * Not a form in the usual sense: nothing is submitted anywhere. It composes
+ * the fields into one WhatsApp message and opens the chat with that text
+ * already written, so the visitor can read it, edit it and send it himself.
+ *
+ * That is deliberate. WhatsApp is the only channel on this site — a form
+ * posting to an inbox would quietly create a second one, and the "one
+ * number, one place to check it" promise would stop being true.
  */
 export function ContactForm() {
-  const [sent, setSent] = useState(false);
+  const [opened, setOpened] = useState(false);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    const body = [
+    const message = [
+      `Hello — I found you through your website.`,
+      "",
       `Name: ${data.get("name")}`,
-      `Email: ${data.get("email")}`,
-      `Phone / WhatsApp: ${data.get("phone") || "—"}`,
-      `Preferred reply: ${data.get("channel")}`,
       "",
       `${data.get("message")}`,
     ].join("\n");
 
-    window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(
-      "Enquiry from olatunbosunbtc.com",
-    )}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    window.open(
+      `https://wa.me/${contact.whatsapp}?text=${encodeURIComponent(message)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+    setOpened(true);
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="panel p-[clamp(24px,3vw,42px)] backdrop-blur-[8px]"
-    >
+    <form onSubmit={handleSubmit} className="panel p-[clamp(24px,3vw,42px)] backdrop-blur-[8px]">
       <h2 className="m-0 text-[clamp(27px,2.7vw,34px)] leading-[1.1] tracking-[-0.012em] text-on-base">
         {contactPage.form.heading}
       </h2>
@@ -48,54 +48,18 @@ export function ContactForm() {
         {contactPage.form.lead}
       </p>
 
-      <div className="mt-8 grid gap-4.5 tab:grid-cols-2">
-        <label className="flex flex-col gap-2.5">
-          <span className={LABEL}>Name</span>
-          <input
-            name="name"
-            required
-            autoComplete="name"
-            placeholder="Your name"
-            className={FIELD}
-          />
-        </label>
-
-        <label className="flex flex-col gap-2.5">
-          <span className={LABEL}>Email</span>
-          <input
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            placeholder="you@example.com"
-            className={FIELD}
-          />
-        </label>
-
-        <label className="flex flex-col gap-2.5">
-          <span className={LABEL}>
-            Phone / WhatsApp <span className="tracking-[0.04em] normal-case">(optional)</span>
-          </span>
-          <input
-            name="phone"
-            type="tel"
-            autoComplete="tel"
-            placeholder="Include country code"
-            className={FIELD}
-          />
-        </label>
-
-        <label className="flex flex-col gap-2.5">
-          <span className={LABEL}>Preferred reply</span>
-          <select name="channel" className={`${FIELD} appearance-none`}>
-            {contactPage.form.replyOptions.map((option) => (
-              <option key={option} value={option} className="bg-char text-on-base">
-                {option}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
+      {/* Two fields only. Anything more is a form pretending the
+          conversation hasn't started yet. */}
+      <label className="mt-8 flex flex-col gap-2.5">
+        <span className={LABEL}>Your name</span>
+        <input
+          name="name"
+          required
+          autoComplete="name"
+          placeholder="Your name"
+          className={FIELD}
+        />
+      </label>
 
       <label className="mt-4.5 flex flex-col gap-2.5">
         <span className={LABEL}>What would you like to discuss?</span>
@@ -118,15 +82,12 @@ export function ContactForm() {
         </span>
       </button>
 
-      {sent && (
-        <div
-          role="status"
-          className="mt-4.5 border border-accent/40 bg-accent/[0.09] p-4"
-        >
-          <div className="label-sm text-accent">Handed to your mail app</div>
+      {opened && (
+        <div role="status" className="mt-4.5 border border-accent/40 bg-accent/[0.09] p-4">
+          <div className="label-sm text-accent">WhatsApp opened</div>
           <p className="mt-2 text-sm leading-[1.65] text-on-base-2">
-            Your email client should have opened with the enquiry ready to send. If it
-            didn&apos;t, phone or WhatsApp reaches me fastest.
+            Your message is written and waiting — read it over and press send. If nothing
+            opened, message {contact.number} directly.
           </p>
         </div>
       )}

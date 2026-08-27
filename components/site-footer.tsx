@@ -31,18 +31,17 @@ export function SiteFooter() {
             </nav>
           </Reveal>
 
-          {/* The three real channels, spelled out rather than iconified — a
-              visitor checking whether a message is genuinely from him should
-              be able to read the number straight off the page. */}
-          <Reveal index={2} className="flex flex-wrap gap-x-6 gap-y-2">
-            <a href={contactHref.phone} className={CHANNEL_LINK}>
-              {contact.phone}
-            </a>
-            <a href={contactHref.whatsapp} className={CHANNEL_LINK}>
-              WhatsApp
-            </a>
-            <a href={contactHref.email} className={CHANNEL_LINK}>
-              {contact.email}
+          {/* The one channel, spelled out rather than iconified — a visitor
+              checking whether a message is genuinely from him should be able
+              to read the number straight off the page. */}
+          <Reveal index={2}>
+            <a
+              href={contactHref.whatsapp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={CHANNEL_LINK}
+            >
+              WhatsApp · {contact.number}
             </a>
           </Reveal>
 

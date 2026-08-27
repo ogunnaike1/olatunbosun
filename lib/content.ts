@@ -51,6 +51,7 @@ export const contactHref = {
 };
 
 export const navLinks = [
+  { label: "Home", href: "/#top" },
   { label: "About", href: "/#about" },
   { label: "Services", href: "/#services" },
   { label: "Experience", href: "/#experience" },
@@ -58,7 +59,7 @@ export const navLinks = [
   { label: "FAQ", href: "/#faq" },
 ];
 
-export const primaryCta = { label: "Get in Touch", href: "/contact" };
+export const primaryCta = { label: "Let's Trade", href: "/contact" };
 
 /* ── Hero ──────────────────────────────────────────────────────────────── */
 
@@ -354,7 +355,7 @@ export const finalCta = {
   headlineTop: "Ready to talk it",
   headlineItalic: "through?",
   body: "Get in touch directly. We'll work out whether what you need is something I can help with — and I'll say so plainly if it isn't.",
-  action: { label: "Get in Touch", href: "/contact" },
+  action: { label: "Let's Trade", href: "/contact" },
 };
 
 export const riskDisclaimer = {

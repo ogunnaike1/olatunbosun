@@ -1,14 +1,15 @@
 import Link from "next/link";
 import { Reveal } from "@/components/reveal";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Wordmark } from "@/components/wordmark";
 import { brand, contact, contactHref, footer } from "@/lib/content";
 
 const CHANNEL_LINK =
-  "font-mono text-[11px] tracking-[0.08em] transition-colors duration-300 hover:text-gold";
+  "font-mono text-[11px] tracking-[0.08em] transition-colors duration-300 hover:text-accent";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-gold/[0.16] bg-ink text-[#8e877c]">
+    <footer className="border-t border-accent/[0.16] bg-base text-on-base-4">
       <div className="mx-auto w-full max-w-[1320px] px-gutter pt-[clamp(50px,5vw,76px)] pb-8">
         <div className="flex flex-col gap-9 tab:flex-row tab:flex-wrap tab:items-end tab:justify-between">
           <Reveal className="max-w-[34ch]">
@@ -22,7 +23,7 @@ export function SiteFooter() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-sm transition-colors duration-300 hover:text-gold"
+                  className="text-sm transition-colors duration-300 hover:text-accent"
                 >
                   {link.label}
                 </Link>
@@ -45,11 +46,17 @@ export function SiteFooter() {
             </a>
           </Reveal>
 
+          {/* The theme switch lives here rather than in the header: it is a
+              preference, not navigation, and the footer is where a reader
+              goes looking for one. */}
           <Reveal
             index={3}
-            className="w-full border-t border-cream/10 pt-5.5 font-mono text-[10px] leading-[1.8] tracking-[0.12em] text-[#6e6862]"
+            className="flex w-full flex-wrap items-center justify-between gap-x-8 gap-y-5 border-t border-on-base/10 pt-5.5"
           >
-            © {new Date().getFullYear()} {brand.full}. {footer.legal}
+            <span className="font-mono text-[10px] leading-[1.8] tracking-[0.12em] text-on-base-5">
+              © {new Date().getFullYear()} {brand.full}. {footer.legal}
+            </span>
+            <ThemeToggle />
           </Reveal>
         </div>
       </div>

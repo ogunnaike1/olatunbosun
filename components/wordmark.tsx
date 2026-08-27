@@ -14,20 +14,20 @@ export function Wordmark({ size = 38 }: { size?: number }) {
         style={{ width: size, height: size }}
       >
         <span
-          className="absolute border border-gold/60"
+          className="absolute border border-accent/60"
           style={{ inset: size * 0.13, transform: "rotate(45deg)" }}
         />
         <span
-          className="absolute top-0 left-1/2 rounded-full bg-gold"
+          className="absolute top-0 left-1/2 rounded-full bg-accent"
           style={{
             width: size * 0.105,
             height: size * 0.105,
             marginLeft: -size * 0.0525,
-            boxShadow: "0 0 8px rgba(232,184,75,.9)",
+            boxShadow: "0 0 8px var(--glow-accent)",
           }}
         />
         <span
-          className="font-display text-gold"
+          className="font-display text-accent"
           style={{ fontSize: size * 0.5, lineHeight: 1 }}
         >
           {brand.monogram}
@@ -36,12 +36,12 @@ export function Wordmark({ size = 38 }: { size?: number }) {
 
       <span className="flex flex-col gap-[3px]">
         <span
-          className="font-display leading-none tracking-[-0.005em] text-cream"
+          className="font-display leading-none tracking-[-0.005em] text-on-base"
           style={{ fontSize: size * 0.58 }}
         >
           {brand.name}
         </span>
-        <span className="font-mono text-[8px] tracking-[0.34em] text-gold uppercase">
+        <span className="font-mono text-[8px] tracking-[0.34em] text-accent uppercase">
           {brand.role}
         </span>
       </span>

@@ -44,14 +44,14 @@ export default function ContactPage() {
     <>
       {/* Sticky rather than fixed, and stripped to a wordmark and a way
           back — this page has one job and no navigation to offer. */}
-      <header className="sticky top-0 z-90 border-b border-gold/[0.22] bg-ink/[0.84] backdrop-blur-[16px] backdrop-saturate-150">
+      <header className="sticky top-0 z-90 border-b border-accent/[0.22] bg-base/[0.84] backdrop-blur-[16px] backdrop-saturate-150">
         <div className="mx-auto flex h-18 w-full max-w-[1320px] items-center justify-between px-gutter">
           <Link href="/#top" aria-label={`${brand.full} — home`}>
             <Wordmark />
           </Link>
           <Link
             href="/#top"
-            className="label inline-flex items-center gap-2.5 text-[10px] tracking-[0.18em] text-mute transition-colors duration-300 hover:text-gold"
+            className="label inline-flex items-center gap-2.5 text-[10px] tracking-[0.18em] text-on-base-3 transition-colors duration-300 hover:text-accent"
           >
             <span aria-hidden="true" className="text-xs">
               ←
@@ -62,7 +62,7 @@ export default function ContactPage() {
       </header>
 
       <main>
-        <section aria-labelledby="c-h" className="ground-ink relative overflow-hidden">
+        <section aria-labelledby="c-h" className="ground-base relative overflow-hidden">
           <div
             aria-hidden="true"
             className="field-lines pointer-events-none absolute inset-0"
@@ -77,18 +77,18 @@ export default function ContactPage() {
                       className="h-px w-8.5 shrink-0"
                       style={{
                         background:
-                          "linear-gradient(90deg, var(--color-gold), rgba(232,184,75,0))",
+                          "linear-gradient(90deg, var(--color-accent), transparent)",
                       }}
                     />
                     <span className="label text-kicker">{contactPage.kicker}</span>
                   </div>
                   <h1
                     id="c-h"
-                    className="mt-6.5 text-[clamp(46px,6.8vw,86px)] leading-none tracking-[-0.02em] text-cream"
+                    className="mt-6.5 text-[clamp(46px,6.8vw,86px)] leading-none tracking-[-0.02em] text-on-base"
                   >
                     {contactPage.headline}
                   </h1>
-                  <p className="mt-6.5 max-w-[42ch] text-[17px] leading-[1.7] text-mute-2">
+                  <p className="mt-6.5 max-w-[42ch] text-[17px] leading-[1.7] text-on-base-2">
                     {contactPage.lead}
                   </p>
                 </Reveal>
@@ -100,7 +100,7 @@ export default function ContactPage() {
                     <a
                       key={channel.label}
                       href={channel.href}
-                      className={`group flex items-center gap-4.5 border-t border-gold/[0.22] px-1.5 py-6 transition-[padding-left,background] duration-500 hover:bg-gold/[0.06] hover:pl-4.5 ${
+                      className={`group flex items-center gap-4.5 border-t border-accent/[0.22] px-1.5 py-6 transition-[padding-left,background] duration-500 hover:bg-accent/[0.06] hover:pl-4.5 ${
                         i === contactPage.channels.length - 1 ? "border-b" : ""
                       }`}
                     >
@@ -110,17 +110,17 @@ export default function ContactPage() {
                         viewBox="0 0 20 20"
                         aria-hidden="true"
                         className="shrink-0"
-                        stroke="var(--color-gold)"
+                        stroke="var(--color-accent)"
                       >
                         {icons[channel.icon]}
                       </svg>
                       <span className="flex flex-col gap-1.5">
-                        <span className="label-sm text-faint">{channel.label}</span>
-                        <span className="text-lg text-cream">{channel.value}</span>
+                        <span className="label-sm text-on-base-4">{channel.label}</span>
+                        <span className="text-lg text-on-base">{channel.value}</span>
                       </span>
                       <span
                         aria-hidden="true"
-                        className="ml-auto font-mono text-xs text-gold"
+                        className="ml-auto font-mono text-xs text-accent"
                       >
                         →
                       </span>
@@ -129,8 +129,8 @@ export default function ContactPage() {
                 </Reveal>
 
                 <Reveal delay={0.2} className="mt-7 flex items-start gap-3">
-                  <span aria-hidden="true" className="mt-0.5 h-10 w-px shrink-0 bg-gold" />
-                  <p className="label m-0 max-w-[40ch] text-[10px] leading-[1.9] tracking-[0.06em] text-[#6e6862]">
+                  <span aria-hidden="true" className="mt-0.5 h-10 w-px shrink-0 bg-accent" />
+                  <p className="label m-0 max-w-[40ch] text-[10px] leading-[1.9] tracking-[0.06em] text-on-base-5">
                     {contactPage.emailNote}
                   </p>
                 </Reveal>
@@ -145,18 +145,18 @@ export default function ContactPage() {
 
         {/* The three things worth knowing before anyone sends money or
             trusts a message claiming to be him. */}
-        <section aria-label="Before you get in touch" className="ground-cream text-ink">
+        <section aria-label="Before you get in touch" className="ground-alt text-on-alt">
           <div
             className="mx-auto grid w-full max-w-[1320px] gap-[clamp(24px,3vw,48px)] px-gutter py-[clamp(52px,6vw,88px)]"
             style={{ gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))" }}
           >
             {contactPage.assurances.map((item, i) => (
               <Reveal key={item.title} index={i}>
-                <div className="font-mono text-[10.5px] tracking-[0.18em] text-gold-deep">
+                <div className="font-mono text-[10.5px] tracking-[0.18em] text-accent-2">
                   {String(i + 1).padStart(2, "0")}
                 </div>
                 <h2 className="mt-4 text-[25px] leading-[1.14]">{item.title}</h2>
-                <p className="mt-3 text-[14.5px] leading-[1.72] text-ink-mute">{item.body}</p>
+                <p className="mt-3 text-[14.5px] leading-[1.72] text-on-alt-3">{item.body}</p>
               </Reveal>
             ))}
           </div>

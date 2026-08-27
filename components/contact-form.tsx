@@ -4,8 +4,8 @@ import { useState } from "react";
 import { contact, contactPage } from "@/lib/content";
 
 const FIELD =
-  "w-full rounded-edge border border-cream/[0.14] bg-ink/50 px-4 py-3.5 text-[15px] text-cream transition-colors duration-300 focus:border-gold focus:outline-none";
-const LABEL = "label-sm text-[#8e877c]";
+  "w-full rounded-edge border border-on-base/[0.14] bg-base/50 px-4 py-3.5 text-[15px] text-on-base transition-colors duration-300 focus:border-accent focus:outline-none";
+const LABEL = "label-sm text-on-base-4";
 
 /**
  * No inbox is wired up. On submit this composes a pre-filled email to
@@ -39,16 +39,12 @@ export function ContactForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="rounded-card border border-gold/[0.24] p-[clamp(24px,3vw,42px)] backdrop-blur-[8px]"
-      style={{
-        background: "linear-gradient(165deg, rgba(245,239,230,.06), rgba(43,43,43,.42))",
-        boxShadow: "var(--shadow-panel), inset 0 1px 0 rgba(245,239,230,.08)",
-      }}
+      className="panel p-[clamp(24px,3vw,42px)] backdrop-blur-[8px]"
     >
-      <h2 className="m-0 text-[clamp(27px,2.7vw,34px)] leading-[1.1] tracking-[-0.012em] text-cream">
+      <h2 className="m-0 text-[clamp(27px,2.7vw,34px)] leading-[1.1] tracking-[-0.012em] text-on-base">
         {contactPage.form.heading}
       </h2>
-      <p className="mt-3 max-w-[42ch] text-[14.5px] leading-[1.7] text-mute">
+      <p className="mt-3 max-w-[42ch] text-[14.5px] leading-[1.7] text-on-base-3">
         {contactPage.form.lead}
       </p>
 
@@ -93,7 +89,7 @@ export function ContactForm() {
           <span className={LABEL}>Preferred reply</span>
           <select name="channel" className={`${FIELD} appearance-none`}>
             {contactPage.form.replyOptions.map((option) => (
-              <option key={option} value={option} className="bg-char text-cream">
+              <option key={option} value={option} className="bg-char text-on-base">
                 {option}
               </option>
             ))}
@@ -125,17 +121,17 @@ export function ContactForm() {
       {sent && (
         <div
           role="status"
-          className="mt-4.5 border border-gold/40 bg-gold/[0.09] p-4"
+          className="mt-4.5 border border-accent/40 bg-accent/[0.09] p-4"
         >
-          <div className="label-sm text-gold">Handed to your mail app</div>
-          <p className="mt-2 text-sm leading-[1.65] text-[#d9cfc0]">
+          <div className="label-sm text-accent">Handed to your mail app</div>
+          <p className="mt-2 text-sm leading-[1.65] text-on-base-2">
             Your email client should have opened with the enquiry ready to send. If it
             didn&apos;t, phone or WhatsApp reaches me fastest.
           </p>
         </div>
       )}
 
-      <p className="mt-4.5 text-[12.5px] leading-[1.75] text-[#6e6862]">
+      <p className="mt-4.5 text-[12.5px] leading-[1.75] text-on-base-5">
         {contactPage.form.privacy}
       </p>
     </form>

@@ -1,89 +1,71 @@
+import Link from "next/link";
 import { Kicker, Reveal } from "@/components/reveal";
-import { services, servicesIntro, type Service } from "@/lib/content";
+import { ServiceIcon } from "@/components/service-icons";
+import { services, servicesIntro } from "@/lib/content";
 
 /**
- * Line-drawn, 28px, one gold element each. Deliberately not an icon set —
- * three marks that read as chart, volume and target at a glance.
+ * ONE service, so this is a single feature block rather than a card grid —
+ * a lone card in a three-column layout reads as two missing cards. The
+ * space that would have gone to siblings goes to the includes list
+ * instead, which is the more useful thing to show anyway.
  */
-const icons: Record<Service["icon"], React.ReactNode> = {
-  trend: (
-    <>
-      <circle cx="14" cy="14" r="13" fill="none" stroke="rgba(245,239,230,.2)" />
-      <path
-        d="M7 18.5 L12 12 L16 15.5 L21.5 8"
-        fill="none"
-        stroke="var(--color-gold)"
-        strokeWidth="1.5"
-      />
-    </>
-  ),
-  bars: (
-    <>
-      <rect x="1" y="1" width="26" height="26" fill="none" stroke="rgba(245,239,230,.2)" />
-      <rect x="7" y="16" width="3.5" height="6" fill="var(--color-gold)" />
-      <rect x="12.5" y="10" width="3.5" height="12" fill="var(--color-gold)" />
-      <rect x="18" y="6" width="3.5" height="16" fill="var(--color-gold-deep)" />
-    </>
-  ),
-  target: (
-    <>
-      <circle cx="14" cy="14" r="13" fill="none" stroke="rgba(245,239,230,.2)" />
-      <circle cx="14" cy="14" r="4.5" fill="var(--color-gold)" />
-    </>
-  ),
-};
-
 export function ServicesSection() {
+  const service = services[0];
+
   return (
     <section
       id="services"
       aria-labelledby="services-h"
-      className="ground-ink-2 relative overflow-hidden"
+      className="ground-base-2 relative overflow-hidden"
     >
       <div className="mx-auto w-full max-w-[1320px] px-gutter py-section">
-        <Reveal className="flex flex-wrap items-end justify-between gap-6.5">
-          <div>
+        <div className="grid items-start gap-colgap nav:grid-cols-[0.8fr_1fr]">
+          <Reveal className="nav:sticky nav:top-[128px]">
             <Kicker>{servicesIntro.kicker}</Kicker>
-            <h2 id="services-h" className="mt-6 max-w-[22ch] text-h2 balance text-cream">
+            <h2 id="services-h" className="mt-6 max-w-[14ch] text-h2 balance text-on-base">
               {servicesIntro.headline}
             </h2>
-          </div>
-          <p className="m-0 max-w-[34ch] text-body text-mute">{servicesIntro.lead}</p>
-        </Reveal>
-
-        {/* Three cards, and the first one leads: it is the actual trading,
-            so it gets the wider column and the larger heading. */}
-        <div className="mt-[clamp(48px,5vw,74px)] grid gap-[clamp(16px,1.6vw,22px)] tab:grid-cols-2 nav:grid-cols-3">
-          {services.map((service, i) => (
-            <Reveal
-              key={service.name}
-              as="article"
-              index={i}
-              className={`card-dark flex min-h-[290px] flex-col justify-between p-[clamp(26px,3vw,40px)] transition-[border-color,box-shadow] duration-500 hover:border-gold/40 hover:shadow-card ${
-                i === 0 ? "tab:col-span-2 nav:col-span-1" : ""
-              }`}
+            <p className="mt-6 max-w-[36ch] text-body text-on-base-3">
+              {servicesIntro.lead}
+            </p>
+            <Link
+              href={servicesIntro.link.href}
+              className="mt-7 inline-flex items-center gap-2.5 border-b border-accent/40 pb-1.5 text-[14.5px] text-on-base transition-colors duration-300 hover:border-accent hover:text-accent"
             >
-              <div className="flex items-start justify-between">
-                <span className="font-mono text-[10px] tracking-[0.18em] text-gold">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true">
-                  {icons[service.icon]}
-                </svg>
-              </div>
+              {servicesIntro.link.label}
+              <span aria-hidden="true" className="font-mono text-xs text-accent">
+                →
+              </span>
+            </Link>
+          </Reveal>
 
-              <div className="mt-11">
-                <h3
-                  className={`m-0 text-cream ${
-                    i === 0 ? "text-[clamp(26px,2.6vw,34px)] leading-[1.1]" : "text-h3"
-                  }`}
-                >
-                  {service.name}
-                </h3>
-                <p className="mt-4 max-w-[44ch] text-body text-mute">{service.blurb}</p>
-              </div>
-            </Reveal>
-          ))}
+          <Reveal
+            as="article"
+            delay={0.12}
+            className="card-surface p-[clamp(26px,3vw,44px)] transition-[border-color,box-shadow] duration-500 hover:border-accent/40 hover:shadow-card"
+          >
+            <ServiceIcon icon={service.icon} size={32} />
+
+            <h3 className="mt-7 max-w-[20ch] text-[clamp(26px,2.8vw,36px)] leading-[1.08] tracking-[-0.014em] balance text-on-base">
+              {service.name}
+            </h3>
+            <p className="mt-5 max-w-[52ch] text-[16px] leading-[1.7] text-on-base-2">
+              {service.blurb}
+            </p>
+
+            {/* Hairline-led, not bulleted — the same drawing language as the
+                rest of the site. */}
+            <ul className="mt-8 flex list-none flex-col gap-3 border-t border-on-base/[0.12] p-0 pt-7">
+              {service.includes.map((item) => (
+                <li key={item} className="flex gap-4">
+                  <span aria-hidden="true" className="mt-2.5 h-px w-4 shrink-0 bg-accent" />
+                  <span className="max-w-[52ch] text-[15px] leading-[1.7] text-on-base-3">
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </div>
       </div>
     </section>

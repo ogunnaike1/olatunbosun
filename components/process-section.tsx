@@ -4,7 +4,7 @@ import { process } from "@/lib/content";
 
 export function ProcessSection() {
   return (
-    <section id="process" aria-labelledby="proc-h" className="ground-cream-2 text-ink">
+    <section id="process" aria-labelledby="proc-h" className="ground-alt-2 text-on-alt">
       <div className="mx-auto w-full max-w-[1320px] px-gutter py-section">
         <Reveal className="max-w-[640px]">
           <Kicker tone="light">{process.kicker}</Kicker>
@@ -22,25 +22,25 @@ export function ProcessSection() {
               {/* The rule runs off to the right of the number, so the four
                   steps read as one line of travel rather than four boxes. */}
               <div className="flex items-center gap-3">
-                <span className="font-mono text-[10.5px] tracking-[0.18em] text-gold-deep">
+                <span className="font-mono text-[10.5px] tracking-[0.18em] text-accent-2">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span aria-hidden="true" className="h-px flex-1 bg-ink/[0.16]" />
+                <span aria-hidden="true" className="h-px flex-1 bg-base/[0.16]" />
               </div>
               <h3 className="mt-5 text-[27px] leading-[1.12]">{step.title}</h3>
-              <p className="mt-3 text-[15px] leading-[1.72] text-ink-mute">{step.body}</p>
+              <p className="mt-3 text-[15px] leading-[1.72] text-on-alt-3">{step.body}</p>
             </Reveal>
           ))}
         </ol>
 
-        {/* The one ink block inside a cream section — it carries the money
-            question, and the answer is "not here". */}
-        <Reveal className="mt-[clamp(44px,4.5vw,64px)] flex flex-wrap items-center justify-between gap-6.5 rounded-card border border-gold/[0.24] bg-ink p-[clamp(26px,3vw,40px)] shadow-[0_40px_80px_-60px_rgba(14,13,12,.9)]">
+        {/* The one block that inverts against its section — it carries the
+            money question, and the answer is "not here". */}
+        <Reveal className="block-invert mt-[clamp(44px,4.5vw,64px)] flex flex-wrap items-center justify-between gap-6.5 p-[clamp(26px,3vw,40px)]">
           <div className="max-w-[52ch]">
-            <h3 className="m-0 text-[clamp(25px,2.5vw,32px)] leading-[1.12] text-cream">
+            <h3 className="m-0 text-[clamp(25px,2.5vw,32px)] leading-[1.12] text-on-base">
               {process.cta.title}
             </h3>
-            <p className="mt-3 text-[15px] leading-[1.72] text-mute">{process.cta.body}</p>
+            <p className="mt-3 text-[15px] leading-[1.72] text-on-base-3">{process.cta.body}</p>
           </div>
           <Link
             href={process.cta.action.href}

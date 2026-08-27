@@ -63,8 +63,8 @@ export function SiteHeader() {
     <header
       className="fixed inset-x-0 top-0 z-90"
       style={{
-        background: solid ? "rgba(14,13,12,0.92)" : "rgba(14,13,12,0)",
-        borderBottom: `1px solid ${solid ? "rgba(232,184,75,0.18)" : "rgba(232,184,75,0)"}`,
+        background: solid ? "var(--nav-bg)" : "transparent",
+        borderBottom: `1px solid ${solid ? "var(--line-accent-soft)" : "transparent"}`,
         backdropFilter: solid ? "saturate(150%) blur(16px)" : "none",
         WebkitBackdropFilter: solid ? "saturate(150%) blur(16px)" : "none",
         transition:
@@ -81,7 +81,7 @@ export function SiteHeader() {
         style={{
           scaleX: progress,
           background:
-            "linear-gradient(90deg, var(--color-gold-deep) 0%, var(--color-gold) 100%)",
+            "linear-gradient(90deg, var(--color-accent-2) 0%, var(--color-accent) 100%)",
           opacity: solid ? 1 : 0,
           transition: "opacity 500ms ease",
         }}
@@ -106,7 +106,7 @@ export function SiteHeader() {
             <Link
               key={link.label}
               href={link.href}
-              className="text-[13.5px] text-[#bfb6aa] transition-colors duration-300 hover:text-cream"
+              className="text-[13.5px] text-on-base-2 transition-colors duration-300 hover:text-on-base"
             >
               {link.label}
             </Link>
@@ -129,7 +129,7 @@ export function SiteHeader() {
           {/* Two rules, gold over cream. They cross into an X when open. */}
           <span
             aria-hidden="true"
-            className="block h-px w-[22px] bg-gold"
+            className="block h-px w-[22px] bg-accent"
             style={{
               transform: open ? "translateY(3.5px) rotate(45deg)" : "none",
               transition: reduced ? undefined : "transform 380ms cubic-bezier(.16,1,.3,1)",
@@ -137,7 +137,7 @@ export function SiteHeader() {
           />
           <span
             aria-hidden="true"
-            className="block h-px w-[22px] bg-cream"
+            className="block h-px w-[22px] bg-card"
             style={{
               transform: open ? "translateY(-3.5px) rotate(-45deg)" : "none",
               transition: reduced ? undefined : "transform 380ms cubic-bezier(.16,1,.3,1)",
@@ -151,7 +151,7 @@ export function SiteHeader() {
           <motion.div
             // max-height + scroll: on a landscape phone the panel is taller
             // than the viewport, and the body is locked behind it.
-            className="max-h-[calc(100dvh-68px)] overflow-y-auto border-t border-gold/[0.18] bg-ink/[0.97] px-gutter pt-2 pb-7 backdrop-blur-[18px] nav:hidden"
+            className="max-h-[calc(100dvh-68px)] overflow-y-auto border-t border-accent/[0.18] bg-base/[0.97] px-gutter pt-2 pb-7 backdrop-blur-[18px] nav:hidden"
             initial={reduced ? false : { opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduced ? undefined : { opacity: 0, y: -12 }}
@@ -163,7 +163,7 @@ export function SiteHeader() {
                   key={link.label}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="border-b border-cream/[0.08] py-4 font-display text-[27px] text-cream"
+                  className="border-b border-on-base/[0.08] py-4 font-display text-[27px] text-on-base"
                 >
                   {link.label}
                 </Link>
@@ -180,7 +180,7 @@ export function SiteHeader() {
               </Link>
               <a
                 href={contact.phoneHref}
-                className="mt-4.5 font-mono text-[11px] tracking-[0.1em] text-[#8e877c]"
+                className="mt-4.5 font-mono text-[11px] tracking-[0.1em] text-on-base-4"
               >
                 {contact.phone}
               </a>

@@ -17,17 +17,17 @@ export function MarketSection() {
   return (
     <section
       aria-label="Market illustration"
-      className="ground-ink-close relative overflow-hidden border-t border-gold/[0.14]"
+      className="ground-base-close relative overflow-hidden border-t border-accent/[0.14]"
     >
       <div className="mx-auto w-full max-w-[1320px] px-gutter py-[clamp(68px,7vw,110px)]">
         <Reveal className="mb-9 flex flex-wrap items-end justify-between gap-5.5">
           <div>
-            <div className="label text-faint">{marketSection.kicker}</div>
-            <h2 className="mt-4 text-[clamp(32px,3.6vw,48px)] leading-[1.04] tracking-[-0.016em] text-cream">
+            <div className="label text-on-base-4">{marketSection.kicker}</div>
+            <h2 className="mt-4 text-[clamp(32px,3.6vw,48px)] leading-[1.04] tracking-[-0.016em] text-on-base">
               {marketSection.headline}
             </h2>
           </div>
-          <p className="label m-0 max-w-[30ch] text-[10px] leading-[1.9] tracking-[0.08em] text-[#6e6862] tab:text-right">
+          <p className="label m-0 max-w-[30ch] text-[10px] leading-[1.9] tracking-[0.08em] text-on-base-5 tab:text-right">
             {marketSection.note}
           </p>
         </Reveal>
@@ -44,17 +44,17 @@ export function MarketSection() {
             >
               <defs>
                 <linearGradient id="bigArea" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="var(--color-gold)" stopOpacity=".22" />
-                  <stop offset="100%" stopColor="var(--color-gold)" stopOpacity="0" />
+                  <stop offset="0%" stopColor="var(--color-accent)" stopOpacity=".22" />
+                  <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0" />
                 </linearGradient>
                 <linearGradient id="bigLine" x1="0" y1="1" x2="1" y2="0">
-                  <stop offset="0%" stopColor="var(--color-gold-deep)" />
-                  <stop offset="55%" stopColor="var(--color-gold)" />
-                  <stop offset="100%" stopColor="var(--color-cream)" />
+                  <stop offset="0%" stopColor="var(--color-accent-2)" />
+                  <stop offset="55%" stopColor="var(--color-accent)" />
+                  <stop offset="100%" stopColor="var(--color-on-base)" />
                 </linearGradient>
               </defs>
 
-              <g stroke="rgba(245,239,230,.07)" strokeWidth="1">
+              <g stroke="var(--grid-line)" strokeWidth="1">
                 {[20, 110, 200, 290, 360].map((y) => (
                   <line key={y} x1="0" y1={y} x2="1200" y2={y} />
                 ))}
@@ -88,7 +88,7 @@ export function MarketSection() {
             {/* Six ticks is one too many below ~760px, where the labels
                 start to touch; the first is dropped there rather than
                 shrinking the type further. */}
-            <div className="label-sm mt-3.5 flex justify-between text-[9.5px] tracking-[0.16em] text-[#6e6862]">
+            <div className="label-sm mt-3.5 flex justify-between text-[9.5px] tracking-[0.16em] text-on-base-5">
               {marketSection.ticks.map((tick, i) => (
                 <span key={tick} className={i === 0 ? "hidden tab:inline" : undefined}>
                   {tick}

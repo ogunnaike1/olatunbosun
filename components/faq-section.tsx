@@ -19,7 +19,7 @@ export function FaqSection() {
     <section
       id="faq"
       aria-labelledby="faq-h"
-      className="border-t border-ink/10 bg-cream text-ink"
+      className="border-t border-on-alt/10 bg-card text-on-alt"
     >
       <div className="mx-auto w-full max-w-[1320px] px-gutter py-section">
         <div className="grid items-start gap-colgap nav:grid-cols-[0.72fr_1fr]">
@@ -28,7 +28,7 @@ export function FaqSection() {
             <h2 id="faq-h" className="mt-6 max-w-[16ch] text-h2 balance">
               {faqIntro.headline}
             </h2>
-            <p className="mt-6 max-w-[36ch] text-[16.5px] leading-[1.7] text-ink-mute">
+            <p className="mt-6 max-w-[36ch] text-[16.5px] leading-[1.7] text-on-alt-3">
               {faqIntro.lead}
             </p>
           </Reveal>
@@ -43,7 +43,7 @@ export function FaqSection() {
                 <Reveal
                   key={faq.q}
                   index={i}
-                  className={`border-t border-ink/[0.14] ${
+                  className={`border-t border-on-alt/[0.14] ${
                     i === faqs.length - 1 ? "border-b" : ""
                   }`}
                 >
@@ -58,7 +58,7 @@ export function FaqSection() {
                     >
                       <span
                         className={`font-display text-[clamp(19px,1.8vw,23px)] leading-[1.28] balance transition-colors duration-300 ${
-                          isOpen ? "text-ink" : "text-ink-soft"
+                          isOpen ? "text-on-alt" : "text-on-alt-2"
                         }`}
                       >
                         {faq.q}
@@ -75,8 +75,8 @@ export function FaqSection() {
                             : "transform 380ms cubic-bezier(.16,1,.3,1)",
                         }}
                       >
-                        <span className="absolute h-px w-3.5 bg-gold-deep" />
-                        <span className="absolute h-3.5 w-px bg-gold-deep" />
+                        <span className="absolute h-px w-3.5 bg-accent-2" />
+                        <span className="absolute h-3.5 w-px bg-accent-2" />
                       </span>
                     </button>
                   </dt>
@@ -92,7 +92,7 @@ export function FaqSection() {
                         exit={reduced ? undefined : { height: 0, opacity: 0 }}
                         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                       >
-                        <p className="m-0 max-w-[62ch] pb-7 text-[15.5px] leading-[1.72] text-ink-mute pretty">
+                        <p className="m-0 max-w-[62ch] pb-7 text-[15.5px] leading-[1.72] text-on-alt-3 pretty">
                           {faq.a}
                         </p>
                       </motion.dd>

@@ -22,16 +22,16 @@ function ChartSlide({ animate }: { animate: boolean }) {
     >
       <defs>
         <linearGradient id="heroArea" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="var(--color-gold)" stopOpacity=".26" />
-          <stop offset="100%" stopColor="var(--color-gold)" stopOpacity="0" />
+          <stop offset="0%" stopColor="var(--color-accent)" stopOpacity=".26" />
+          <stop offset="100%" stopColor="var(--color-accent)" stopOpacity="0" />
         </linearGradient>
         <linearGradient id="heroLine" x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0%" stopColor="var(--color-gold-deep)" />
-          <stop offset="100%" stopColor="var(--color-gold)" />
+          <stop offset="0%" stopColor="var(--color-accent-2)" />
+          <stop offset="100%" stopColor="var(--color-accent)" />
         </linearGradient>
       </defs>
 
-      <g stroke="rgba(245,239,230,.07)" strokeWidth="1">
+      <g stroke="var(--grid-line)" strokeWidth="1">
         {[60, 130, 200, 270].map((y) => (
           <line key={y} x1="0" y1={y} x2="560" y2={y} />
         ))}
@@ -61,7 +61,7 @@ function ChartSlide({ animate }: { animate: boolean }) {
         cx="560"
         cy="28"
         r="4.5"
-        fill="var(--color-gold)"
+        fill="var(--color-accent)"
         initial={animate ? { opacity: 0 } : false}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 1.7 }}
@@ -76,10 +76,10 @@ function ListSlide({ rows }: { rows: { label: string; value: string }[] }) {
       {rows.map((row) => (
         <div
           key={row.label}
-          className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-cream/[0.09] py-3.5 first:border-t-0 first:pt-0"
+          className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-t border-on-base/[0.09] py-3.5 first:border-t-0 first:pt-0"
         >
-          <dt className="label-sm text-faint">{row.label}</dt>
-          <dd className="m-0 text-[15px] text-cream">{row.value}</dd>
+          <dt className="label-sm text-on-base-4">{row.label}</dt>
+          <dd className="m-0 text-[15px] text-on-base">{row.value}</dd>
         </div>
       ))}
     </dl>
@@ -95,10 +95,10 @@ function NotesSlide({
     <ul className="m-0 flex list-none flex-col gap-3.5 p-0">
       {notes.map((entry) => (
         <li key={entry.day} className="flex gap-4">
-          <span className="label-sm w-9 shrink-0 pt-1 text-gold">{entry.day}</span>
+          <span className="label-sm w-9 shrink-0 pt-1 text-accent">{entry.day}</span>
           <span className="flex flex-col gap-1">
-            <span className="text-[14.5px] leading-[1.4] text-cream">{entry.title}</span>
-            <span className="text-[13px] leading-[1.5] text-mute">{entry.note}</span>
+            <span className="text-[14.5px] leading-[1.4] text-on-base">{entry.title}</span>
+            <span className="text-[13px] leading-[1.5] text-on-base-3">{entry.note}</span>
           </span>
         </li>
       ))}
@@ -154,12 +154,7 @@ export function HeroPanel() {
   return (
     <div className="relative">
       <div
-        className="relative rounded-card border border-gold/[0.22] p-[clamp(20px,2.4vw,32px)] backdrop-blur-[8px]"
-        style={{
-          background:
-            "linear-gradient(160deg, rgba(245,239,230,.07) 0%, rgba(43,43,43,.5) 100%)",
-          boxShadow: "var(--shadow-panel), inset 0 1px 0 rgba(245,239,230,.08)",
-        }}
+        className="panel relative p-[clamp(20px,2.4vw,32px)] backdrop-blur-[8px]"
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         onFocusCapture={() => setPaused(true)}
@@ -167,15 +162,15 @@ export function HeroPanel() {
       >
         <div className="mb-5.5 flex items-start justify-between gap-4">
           <div>
-            <div className="label-sm text-[#8e877c]">{slide.kicker}</div>
-            <div className="mt-1.5 font-display text-[clamp(24px,4.6vw,29px)] leading-[1.1] text-cream">
+            <div className="label-sm text-on-base-4">{slide.kicker}</div>
+            <div className="mt-1.5 font-display text-[clamp(24px,4.6vw,29px)] leading-[1.1] text-on-base">
               {slide.title}
             </div>
           </div>
           {/* The disclaimer belongs to the two slides that depict a market.
               On the process slides there is nothing to mistake for data. */}
           {slide.kind !== "list" && (
-            <div className="label-sm text-right leading-[1.8] text-faint">
+            <div className="label-sm text-right leading-[1.8] text-on-base-4">
               {heroPanel.disclaimer.map((line) => (
                 <div key={line}>{line}</div>
               ))}
@@ -208,7 +203,7 @@ export function HeroPanel() {
               className="focus-visible:outline-none"
             >
               {slide.kind !== "chart" && (
-                <p className="mt-0 mb-4 max-w-[42ch] text-[13.5px] leading-[1.6] text-mute">
+                <p className="mt-0 mb-4 max-w-[42ch] text-[13.5px] leading-[1.6] text-on-base-3">
                   {slide.lead}
                 </p>
               )}
@@ -226,7 +221,7 @@ export function HeroPanel() {
           role="tablist"
           aria-label="Hero highlights"
           onKeyDown={onTabKeyDown}
-          className="mt-5 flex gap-2 border-t border-cream/[0.09] pt-4"
+          className="mt-5 flex gap-2 border-t border-on-base/[0.09] pt-4"
         >
           {heroSlides.map((item, i) => {
             const active = i === index;
@@ -245,11 +240,11 @@ export function HeroPanel() {
                 onClick={() => go(i)}
                 className="group flex flex-1 cursor-pointer flex-col gap-2 pb-1 text-left"
               >
-                <span className="relative block h-px w-full bg-cream/[0.14]">
+                <span className="relative block h-px w-full bg-on-base/[0.14]">
                   {/* The active rule fills left-to-right over the dwell
                       time, so the bar doubles as the timer. */}
                   <motion.span
-                    className="absolute inset-y-0 left-0 block origin-left bg-gold"
+                    className="absolute inset-y-0 left-0 block origin-left bg-accent"
                     initial={false}
                     animate={{ scaleX: active ? 1 : 0 }}
                     transition={
@@ -262,7 +257,7 @@ export function HeroPanel() {
                 </span>
                 <span
                   className={`label-sm hidden truncate transition-colors duration-300 tab:block ${
-                    active ? "text-cream" : "text-faint group-hover:text-mute"
+                    active ? "text-on-base" : "text-on-base-4 group-hover:text-on-base-3"
                   }`}
                 >
                   {item.name}
@@ -272,11 +267,11 @@ export function HeroPanel() {
           })}
         </div>
 
-        <div className="mt-5 flex flex-wrap gap-x-7 gap-y-3 border-t border-cream/[0.09] pt-5">
+        <div className="mt-5 flex flex-wrap gap-x-7 gap-y-3 border-t border-on-base/[0.09] pt-5">
           {heroPanel.facts.map((fact) => (
             <div key={fact.label}>
-              <div className="label-sm text-faint">{fact.label}</div>
-              <div className="mt-1.5 text-[13.5px] text-[#e6dfd4]">{fact.value}</div>
+              <div className="label-sm text-on-base-4">{fact.label}</div>
+              <div className="mt-1.5 text-[13.5px] text-on-base">{fact.value}</div>
             </div>
           ))}
         </div>
@@ -286,16 +281,12 @@ export function HeroPanel() {
           narrow ones it returns to the flow underneath, where it has room
           to be read instead of being clipped by the hero's overflow. */}
       <motion.div
-        className="mt-5 rounded-card border border-gold/[0.28] px-6 py-5 backdrop-blur-[14px] nav:absolute nav:-right-4 nav:-bottom-8 nav:mt-0"
-        style={{
-          background: "linear-gradient(150deg, rgba(232,184,75,.16), rgba(43,43,43,.86))",
-          boxShadow: "0 34px 70px -40px rgba(0,0,0,.95)",
-        }}
+        className="glass mt-5 px-6 py-5 backdrop-blur-[14px] nav:absolute nav:-right-4 nav:-bottom-8 nav:mt-0"
         initial={reduced ? false : { opacity: 0, y: 26 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="label-sm text-gold">{heroPanel.glass.kicker}</div>
+        <div className="label-sm text-accent">{heroPanel.glass.kicker}</div>
         <div className="mt-2.5 max-w-[19ch] font-display text-[21px] leading-[1.25]">
           {heroPanel.glass.line}
         </div>
@@ -304,7 +295,7 @@ export function HeroPanel() {
           {[40, 65, 50, 85, 70, 100].map((height, i) => (
             <span
               key={i}
-              className={`w-1 ${height >= 85 ? "bg-gold" : "bg-sand/50"}`}
+              className={`w-1 ${height >= 85 ? "bg-accent" : "bg-sand/50"}`}
               style={{ height: `${height}%` }}
             />
           ))}

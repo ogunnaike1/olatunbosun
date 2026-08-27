@@ -147,8 +147,8 @@ export function Kicker({
         style={{
           background:
             tone === "dark"
-              ? "linear-gradient(90deg, var(--color-gold), rgba(232,184,75,0))"
-              : "var(--color-gold-deep)",
+              ? "linear-gradient(90deg, var(--color-accent), transparent)"
+              : "var(--color-accent-2)",
         }}
       />
       <span className={`label ${tone === "dark" ? "text-kicker" : "text-kicker-2"}`}>

@@ -9,12 +9,12 @@ export function PhilosophySection() {
   return (
     <section
       aria-labelledby="phil-h"
-      className="ground-ink-3 relative overflow-hidden border-t border-gold/[0.14]"
+      className="ground-base-3 relative overflow-hidden border-t border-accent/[0.14]"
     >
       <div className="mx-auto w-full max-w-[1320px] px-gutter py-section">
         <Reveal className="max-w-[660px]">
           <Kicker>{philosophy.kicker}</Kicker>
-          <h2 id="phil-h" className="mt-6 text-h2 balance text-cream">
+          <h2 id="phil-h" className="mt-6 text-h2 balance text-on-base">
             {philosophy.headline}
           </h2>
         </Reveal>
@@ -27,13 +27,13 @@ export function PhilosophySection() {
             <Reveal
               key={rule.label}
               index={i}
-              className="border-t border-gold/[0.28] pt-6"
+              className="border-t border-accent/[0.28] pt-6"
             >
-              <div className="font-mono text-[10.5px] tracking-[0.18em] text-gold">
+              <div className="font-mono text-[10.5px] tracking-[0.18em] text-accent">
                 {String(i + 1).padStart(2, "0")} — {rule.label}
               </div>
-              <h3 className="mt-4.5 text-[28px] leading-[1.14] text-cream">{rule.title}</h3>
-              <p className="mt-3.5 text-[15px] leading-[1.72] text-mute">{rule.body}</p>
+              <h3 className="mt-4.5 text-[28px] leading-[1.14] text-on-base">{rule.title}</h3>
+              <p className="mt-3.5 text-[15px] leading-[1.72] text-on-base-3">{rule.body}</p>
             </Reveal>
           ))}
         </div>

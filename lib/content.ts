@@ -29,8 +29,8 @@ export const brand = {
 
 export const seo = {
   title: `${brand.full} — Independent Bitcoin & Digital Asset Trader`,
-  description: `${brand.full} is an independent trader active in Bitcoin and digital asset markets since ${brand.since}, offering trading services and direct client support. Get in touch by email, phone or WhatsApp.`,
-  ogDescription: `Independent trader in Bitcoin and digital asset markets since ${brand.since}. Trading services and direct client support.`,
+  description: `${brand.full} is an independent trader active in Bitcoin and digital asset markets since ${brand.since}, trading to a defined plan with direct client contact throughout. Reach me by email, phone or WhatsApp.`,
+  ogDescription: `Independent trader in Bitcoin and digital asset markets since ${brand.since}. Trading to a defined plan, with direct client contact.`,
 };
 
 export const contact = {
@@ -52,9 +52,9 @@ export const contactHref = {
 
 export const navLinks = [
   { label: "Home", href: "/#top" },
-  { label: "About", href: "/#about" },
-  { label: "Services", href: "/#services" },
-  { label: "Experience", href: "/#experience" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Experience", href: "/experience" },
   { label: "How It Works", href: "/#process" },
   { label: "FAQ", href: "/#faq" },
 ];
@@ -69,7 +69,7 @@ export const hero = {
   headlineItalic: "Present for the client.",
   lead: `I have traded Bitcoin and digital assets since ${brand.since} — through the quiet stretches as much as the loud ones. Alongside my own trading I take on client work, and I keep the communication direct: you speak to me, not a queue.`,
   primary: primaryCta,
-  secondary: { label: "Explore Services", href: "#services" },
+  secondary: { label: "See the Service", href: "/services" },
 };
 
 /**
@@ -167,6 +167,8 @@ export const focusStrip = {
 export const about = {
   kicker: "About",
   headline: "More than the market.",
+  /** The home section is the summary; the page carries the rest. */
+  link: { label: "More about the practice", href: "/about" },
   body: [
     `I started trading Bitcoin in ${brand.since} and have been in the market every year since. The early lessons were expensive and useful in equal measure: position size matters more than conviction, and the fastest way to lose an account is to need a trade to work.`,
     "What I do now is unglamorous by design. I follow a small number of setups, I size them the same way every time, and I sit out the sessions that don't offer anything. Most of the work is waiting well.",
@@ -179,24 +181,92 @@ export const about = {
   ],
 };
 
+/**
+ * The About page. Deliberately short — three blocks and a way to get in
+ * touch. The home page keeps its own About section as the summary; this is
+ * where the same story is told at slightly greater length, and it should
+ * not grow into a biography.
+ */
+export const aboutPage = {
+  title: `About — ${brand.full} | Independent Bitcoin Trader`,
+  description: `How ${brand.full} trades: a defined method, risk set in advance, and direct contact. Independent in Bitcoin and digital asset markets since ${brand.since}.`,
+  ogDescription: `A defined method, risk set in advance, and direct contact. Independent in Bitcoin and digital assets since ${brand.since}.`,
+  kicker: "About",
+  headlineTop: "One trader,",
+  headlineItalic: "one method.",
+  lead: `No desk, no team, no platform. Since ${brand.since} it has been the same person reading the same small number of setups — and the same person you speak to when you get in touch.`,
+  story: {
+    kicker: "The short version",
+    headline: "How it actually goes.",
+    body: [
+      `I started trading Bitcoin in ${brand.since} and have been in the market every year since — through the quiet stretches as much as the loud ones. The early lessons were expensive and useful in equal measure: position size matters more than conviction, and the fastest way to lose an account is to need a trade to work.`,
+      "What I do now is unglamorous by design. I follow a small number of setups, I size them the same way every time, and I sit out the sessions that don't offer anything. Most of the work is waiting well, and most weeks the honest answer is that there is nothing worth doing.",
+      "Clients get the same plainness. I tell you what I can do, what I can't, and what the risk looks like before anything starts — and you always deal with me directly, for as long as we work together.",
+    ],
+  },
+  /**
+   * The negative space, stated plainly. This section is the reason the page
+   * exists: it is far more useful to a cautious reader than another
+   * paragraph of biography. Do not soften these.
+   */
+  notThis: {
+    kicker: "Just as important",
+    headline: "What this isn't.",
+    items: [
+      {
+        title: "Not a signal service",
+        body: "No alerts to follow, no group to join, no copy-trading.",
+      },
+      {
+        title: "Not managed money",
+        body: "Client funds are never held and no account is ever traded on your behalf.",
+      },
+      {
+        title: "Not a guarantee",
+        body: "Trading can lose money, including all of it. Anyone promising otherwise is selling something else.",
+      },
+      {
+        title: "Not a queue",
+        body: "No support desk, no account manager, no automated sequence. You get me.",
+      },
+    ],
+  },
+  cta: {
+    title: "Questions before anything else?",
+    body: "Ask them. Method, risk, cost, or how a specific situation would be handled — a short conversation tells you more than any page will.",
+    action: primaryCta,
+  },
+};
+
 /* ── Services ──────────────────────────────────────────────────────────── */
 
 export type Service = {
-  /** Key into the icon map in services-section.tsx */
+  /** Key into the icon map in components/service-icons.tsx */
   icon: "trend" | "bars" | "target";
   name: string;
   blurb: string;
+  /** Who it suits — and, by implication, who it doesn't. */
+  forWho: string;
+  /** What is actually handed over. Never an outcome. */
+  includes: string[];
 };
 
 export const servicesIntro = {
-  kicker: "Services",
+  kicker: "Service",
   headline: "What I actually do.",
-  lead: "A short list, kept honest. If something you need isn't here, ask — I'd rather refer you on than overreach.",
+  lead: "One thing. The analysis and the contact that come with it are part of the work, not extras sold alongside it — and if what you need is something else, ask. I'd rather refer you on than overreach.",
+  /** The home section is the summary; the page carries the detail. */
+  link: { label: "See what it includes", href: "/services" },
 };
 
 /**
- * Three, on purpose. A fourth (mentoring, managed accounts, signals) can be
- * added when there is a real one to describe — do not pad this list.
+ * ONE service. That is the whole offer, and it is deliberate — the analysis
+ * and the direct contact are part of this work, not separate products.
+ *
+ * Do not add a second entry to make the page look fuller. If a genuinely
+ * separate service ever exists (mentoring, managed accounts, signals), it
+ * arrives with its own scope, its own risk language and its own page copy —
+ * never as padding.
  */
 export const services: Service[] = [
   {
@@ -204,20 +274,56 @@ export const services: Service[] = [
     name: "Bitcoin & digital asset trading",
     blurb:
       "Active participation in Bitcoin and a small number of selected digital assets, traded to a defined plan with position sizing set in advance. No promises of return — only a clear method and clear risk.",
-  },
-  {
-    icon: "bars",
-    name: "Market analysis",
-    blurb:
-      "The reading behind the trading — levels, structure and context, explained in plain terms so you understand why a decision was made.",
-  },
-  {
-    icon: "target",
-    name: "Client support",
-    blurb:
-      "Reachable on phone, WhatsApp or email. Questions answered by me, in normal language, for as long as we work together.",
+    forWho:
+      "People who want a trader with a stated method rather than a platform with a dashboard.",
+    includes: [
+      "A defined plan: entry, size and exit set before the position exists",
+      "Position sizing agreed in advance, not adjusted mid-trade",
+      "The reading behind it — levels, structure and context, in plain language",
+      "An honest account of what went wrong when something does",
+      "Direct contact throughout, by phone, WhatsApp or email",
+    ],
   },
 ];
+
+/**
+ * The service page. The offer, then the two things people actually want to
+ * know next — how it is priced and how it starts. There are no prices on
+ * this site and none should be added: everything is scoped and quoted in
+ * writing, per person.
+ */
+export const servicesPage = {
+  title: `Service — ${brand.full} | Bitcoin & Digital Asset Trading`,
+  description: `What ${brand.full} offers: Bitcoin and digital asset trading to a defined plan, with the analysis behind it and direct contact throughout. Scoped and agreed in writing before anything starts.`,
+  ogDescription:
+    "Bitcoin and digital asset trading to a defined plan, with the analysis behind it and direct contact throughout.",
+  kicker: "Service",
+  headlineTop: "One thing,",
+  headlineItalic: "done properly.",
+  lead: "No tiers, no bundles, no subscription — and no menu of extras. One service, described plainly enough that you can tell whether you need it, and told plainly if you don't.",
+  detail: {
+    forWho: "Who it's for",
+    includes: "What it includes",
+  },
+  pricing: {
+    kicker: "Cost",
+    headline: "How pricing works.",
+    body: [
+      "There are no prices on this page, and that is deliberate. What a piece of work costs depends on its scope, and quoting a number before we have agreed the scope would be guesswork dressed up as a price list.",
+      "So: we talk, the scope is written down, and a figure is agreed against it in writing before anything begins. Nothing is charged through this website, and payment details are only ever arranged directly with me.",
+    ],
+    points: [
+      { label: "Quoted", value: "Per piece of work" },
+      { label: "Agreed", value: "In writing, first" },
+      { label: "Charged", value: "Never through this site" },
+    ],
+  },
+  cta: {
+    title: "Not sure it's what you need?",
+    body: "Describe the situation and I'll tell you plainly whether this is a fit — including when it isn't, which is an answer worth having too.",
+    action: primaryCta,
+  },
+};
 
 /* ── Philosophy ────────────────────────────────────────────────────────── */
 
@@ -259,7 +365,8 @@ export const experience = {
   kicker: "Experience",
   headline: "Experience & market focus.",
   lead: "No performance claims on this page. What follows is simply where I spend my time and how long I've been doing it.",
-  link: { label: "Ask about specifics", href: "/contact" },
+  /** The home section is the summary; the page carries the years. */
+  link: { label: "The years, one by one", href: "/experience" },
   rows: [
     { label: "Active since", value: brand.since },
     { label: "Primary market", value: "Bitcoin / USD" },
@@ -267,6 +374,90 @@ export const experience = {
     { label: "Specialisation", value: "Risk-defined swing entries" },
     { label: "Client contact", value: "Direct, one to one" },
   ],
+};
+
+/**
+ * The experience page.
+ *
+ * THE RULE FOR THIS PAGE: it describes what the MARKET did and what I did
+ * in response. It never states an outcome, a return, a win rate or an
+ * account balance, because none of that has been evidenced here. The
+ * market conditions named below are public record; the lessons are mine.
+ *
+ * If verified records ever exist they belong in a conversation first, and
+ * on this page only with their basis and period stated in full.
+ */
+export const experiencePage = {
+  title: `Experience — ${brand.full} | Bitcoin Trader Since ${brand.since}`,
+  description: `Where the time has gone since ${brand.since}: the market conditions each year, and what they changed about how I trade. No performance claims.`,
+  ogDescription: `The years since ${brand.since}, and what each one changed about the method. No performance claims.`,
+  kicker: "Experience",
+  headlineTop: "Years in,",
+  headlineItalic: "not returns out.",
+  lead: `Most trading pages lead with a number. This one can't — nothing here has been audited, and an unaudited figure is marketing. What I can set out is where the time has gone since ${brand.since}, and what each stretch of market changed about how I work.`,
+  timeline: {
+    kicker: "The years",
+    headline: "What each one taught.",
+    note: "Market conditions described here are public record. What I took from them is mine, and neither is a claim about results.",
+    years: [
+      {
+        year: "2021",
+        title: "The loud year",
+        body: "I came in while everything was moving and mistook a rising market for a working method. The lesson arrived quickly and expensively: position size matters more than conviction.",
+      },
+      {
+        year: "2022",
+        title: "The year that taught most",
+        body: "A long, grinding drawdown across the whole asset class. It removed any remaining appetite for trades I could not define in advance — and it is where sizing rules stopped being theory.",
+      },
+      {
+        year: "2023",
+        title: "The quiet stretch",
+        body: "Ranges, thin volume, and very little worth doing. Learning to sit out without getting restless was harder than learning to enter, and more useful.",
+      },
+      {
+        year: "2024",
+        title: "Attention returns",
+        body: "Noise came back, and with it the temptation to trade someone else's thesis. The answer was the one that has held since: the same small number of setups, sized the same way.",
+      },
+      {
+        year: `2025 — today`,
+        title: "Same method",
+        body: "Nothing new to report, which is the point. The work now is repetition, record-keeping, and being straight with the people I work with.",
+      },
+    ],
+  },
+  /**
+   * The honest half. This section is the reason the page can be trusted —
+   * do not soften it, and do not add an "audited" claim that is not true.
+   */
+  evidence: {
+    kicker: "Straight answer",
+    headline: "What I can and can't show you.",
+    can: {
+      heading: "What I can",
+      items: [
+        "Talk you through the method in detail, before you commit to anything",
+        "Explain how a specific situation would be handled, and what would invalidate it",
+        "Tell you what I got wrong recently, and what it cost in risk terms",
+        "Put the scope, the terms and the risk in writing before anything starts",
+      ],
+    },
+    cannot: {
+      heading: "What I can't",
+      items: [
+        "Show an audited track record — there isn't one published, and I won't imply otherwise",
+        "Quote a return, a win rate or a monthly figure",
+        "Promise that a method that has worked will keep working",
+        "Guarantee any outcome at all, on any timeframe",
+      ],
+    },
+  },
+  cta: {
+    title: "Ask the hard questions first.",
+    body: "The useful test isn't a page of figures — it's whether the answers hold up when you push on them. Push on them.",
+    action: primaryCta,
+  },
 };
 
 export const marketSection = {
@@ -317,7 +508,7 @@ export const faqIntro = {
 export const faqs = [
   {
     q: "What exactly do you offer?",
-    a: "Three things: trading in Bitcoin and a small number of selected digital assets, the market analysis behind it, and direct support while we work together. There is no subscription, no tier list and no package you have to buy into.",
+    a: "One thing: trading in Bitcoin and a small number of selected digital assets, to a defined plan. The analysis behind it and the direct contact while we work together are part of that, not separate products — so there is no subscription, no tier list and no package you have to buy into.",
   },
   {
     q: "Do you guarantee a return?",
@@ -367,7 +558,7 @@ export const footer = {
   blurb: `Independent trading in Bitcoin and digital assets since ${brand.since}. Stay connected. Stay informed.`,
   links: [
     { label: "Home", href: "/#top" },
-    { label: "Services", href: "/#services" },
+    { label: "Services", href: "/services" },
     { label: "FAQ", href: "/#faq" },
     { label: "Risk disclaimer", href: "/#disclaimer" },
   ],

@@ -60,12 +60,27 @@ const jsonLd = {
   knowsAbout: ["Bitcoin", "Digital asset trading", "Market analysis"],
 };
 
+/**
+ * Runs before first paint, so the page never flashes the wrong theme.
+ * A stored choice wins; otherwise the OS preference decides, defaulting to
+ * dark — the brand's home ground. Kept in sync with THEME_KEY in
+ * components/theme-toggle.tsx.
+ */
+const themeScript = `(function(){try{var t=localStorage.getItem("obtc-theme");if(t!=="light"&&t!=="dark"){t=window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.setAttribute("data-theme",t)}catch(e){document.documentElement.setAttribute("data-theme","dark")}})()`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
+    // suppressHydrationWarning: the script above sets `data-theme` on this
+    // element before React hydrates, so the attribute legitimately differs
+    // from what the server rendered.
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${bodoni.variable} ${hanken.variable} ${jetbrains.variable} h-full`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="min-h-full">
         <script
           type="application/ld+json"

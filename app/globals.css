@@ -1,51 +1,58 @@
 @import "tailwindcss";
 
+/*
+  THEMING — every colour below is a ROLE, not a hue.
+
+    base      the primary ground (dark mode: near-black; light: warm paper)
+    on-base   text on that ground, in four steps of emphasis
+    alt       the alternating ground the page cuts to (About, How It Works, FAQ)
+    on-alt    text on the alternating ground, four steps
+    accent    gold, at whatever darkness the current ground can carry
+    card      a raised cell sitting on `alt`
+
+  Component classes name the ROLE (`text-on-base`, `bg-alt`), never the hue,
+  which is what lets the whole site invert by swapping the values below.
+
+  The gold BUTTON is the one deliberate exception: it keeps the same gradient
+  and the same near-black label in both themes, because a gold button reads
+  as a gold button on paper as much as on ink.
+*/
+
 @theme {
-  /* ── Palette ──────────────────────────────────────────────────
-     ink       #0E0D0C — the ground the whole site sits on
-     gold      #E8B84B — accent: rules, kickers, figures, button top stop
-     gold-deep #B8860B — button bottom stop, kicker on cream
-     cream     #F5EFE6 — body text on ink; the light sections' ground
-     sand      #D9B8A3 — secondary accent, used sparingly
-     char      #2B2B2B — the lighter half of every dark card gradient
+  /* ── Dark: the default, and the brand's home ground ────────────
+     MEASURED CONTRAST on base #0E0D0C:
+       on-base 16.6:1 · on-base-2 9.6:1 · on-base-3 6.4:1
+       on-base-4 4.6:1 · on-base-5 3.9:1  (both UPPERCASE MONO ONLY)
+       accent 10.4:1 · kicker 5.6:1
+     And on alt #F5EFE6:
+       on-alt 16.6:1 · on-alt-2 11.9:1 · on-alt-3 9.7:1 · on-alt-4 5.6:1
+       kicker-2 4.6:1 (labels only) */
+  --color-base: #0e0d0c;
+  --color-on-base: #f5efe6;
+  --color-on-base-2: #b9afa2;
+  --color-on-base-3: #9c9488;
+  --color-on-base-4: #7c756b;
+  --color-on-base-5: #6e6862;
 
-     MEASURED CONTRAST — the dark ground is near-black, so everything
-     placed on it clears AA comfortably:
-       cream on ink 16.6:1 · gold on ink 10.4:1
-       mute on ink   6.4:1 · faint on ink 4.6:1 (UPPERCASE LABELS ONLY)
-       ink on gold  10.4:1 · ink on cream 16.6:1
-     And on the cream sections:
-       ink-soft on cream 11.9:1 · gold-deep on cream 4.6:1 (labels only)
-     Consequences enforced across the components:
-       · `faint` and `gold-deep` never carry running prose — they are for
-         mono labels at tracking, where the eye needs shape not weight
-       · body copy on ink is `mute`; leads are `mute-2`
-       · gold is never a background for text except the gradient button,
-         which is always ink-on-gold */
-  --color-ink: #0e0d0c;
-  --color-gold: #e8b84b;
-  --color-gold-deep: #b8860b;
-  --color-cream: #f5efe6;
-  --color-sand: #d9b8a3;
-  --color-char: #2b2b2b;
+  --color-alt: #f5efe6;
+  --color-on-alt: #0e0d0c;
+  --color-on-alt-2: #3b3733;
+  --color-on-alt-3: #4a4540;
+  --color-on-alt-4: #6b6155;
 
-  /* Text ramps. `mute-2` is the lead paragraph; `mute` the body; `faint`
-     the mono labels. Same family of warm greys so nothing reads cold. */
-  --color-mute-2: #b9afa2;
-  --color-mute: #9c9488;
-  --color-faint: #7c756b;
-
-  /* The two kicker colours — gold dimmed enough to sit under a headline
-     without competing with it. `kicker` on ink 5.6:1, `kicker-2` on cream
-     4.6:1; both carry 10px UPPERCASE mono only. */
+  --color-accent: #e8b84b;
+  --color-accent-2: #b8860b;
   --color-kicker: #c9a055;
   --color-kicker-2: #8a6e32;
 
-  /* On the cream sections. `ink-soft` is body copy — full ink at 17px
-     reads heavy against a warm ground. */
-  --color-ink-soft: #3b3733;
-  --color-ink-mute: #4a4540;
-  --color-ink-faint: #6b6155;
+  --color-card: #f5efe6;
+  --color-sand: #d9b8a3;
+  --color-char: #2b2b2b;
+
+  /* Fixed regardless of theme — see the button note above. */
+  --color-btn-from: #e8b84b;
+  --color-btn-to: #b8860b;
+  --color-btn-fg: #0e0d0c;
 
   /* Bodoni carries every headline; Hanken every piece of running text;
      JetBrains Mono every label, figure and eyebrow. Three families, three
@@ -90,18 +97,121 @@
   --radius-edge: 2px;
   --radius-card: 4px;
 
-  --shadow-panel: 0 50px 110px -60px rgba(0, 0, 0, 0.9);
-  --shadow-lift: 0 20px 46px -18px rgba(232, 184, 75, 0.6);
-  --shadow-card: 0 30px 70px -46px rgba(232, 184, 75, 0.55);
-
   --breakpoint-tab: 760px;
   --breakpoint-nav: 1060px;
+}
+
+/*
+  Values that differ between the two themes but are not colour TOKENS —
+  blooms, panel gradients, shadows and hairline alphas. Declared on :root so
+  a single `[data-theme]` block can restate them.
+*/
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bloom-a: rgba(232, 184, 75, 0.2);
+  --bloom-b: rgba(184, 134, 11, 0.18);
+  --bloom-c: rgba(217, 184, 163, 0.12);
+  --bloom-alt: rgba(217, 184, 163, 0.55);
+
+  /* Hairlines and fills, expressed against whichever ground they sit on. */
+  --line-on-base: rgba(245, 239, 230, 0.12);
+  --line-accent: rgba(232, 184, 75, 0.22);
+  --line-accent-soft: rgba(232, 184, 75, 0.16);
+  --fill-on-base: rgba(245, 239, 230, 0.05);
+  --fill-accent: rgba(232, 184, 75, 0.08);
+
+  --panel-bg: linear-gradient(160deg, rgba(245, 239, 230, 0.07) 0%, rgba(43, 43, 43, 0.5) 100%);
+  --panel-shadow: 0 50px 110px -60px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(245, 239, 230, 0.08);
+  --glass-bg: linear-gradient(150deg, rgba(232, 184, 75, 0.16), rgba(43, 43, 43, 0.86));
+  --glass-shadow: 0 34px 70px -40px rgba(0, 0, 0, 0.95);
+  --card-bg: linear-gradient(165deg, rgba(245, 239, 230, 0.05), rgba(43, 43, 43, 0.28));
+  --shadow-lift: 0 20px 46px -18px rgba(232, 184, 75, 0.6);
+  --shadow-card: 0 30px 70px -46px rgba(232, 184, 75, 0.55);
+  --shadow-block: 0 40px 80px -60px rgba(14, 13, 12, 0.9);
+
+  --stripe: rgba(245, 239, 230, 0.035);
+  --grid-line: rgba(245, 239, 230, 0.07);
+  --nav-bg: rgba(14, 13, 12, 0.92);
+
+  /* The hero's breathing bloom, and the halo on the mark's apex dot. */
+  --bloom-hero: rgba(232, 184, 75, 0.28);
+  --glow-accent: rgba(232, 184, 75, 0.9);
+}
+
+/*
+  Light. Not an inversion: the page keeps its two grounds and its
+  alternation, both moved up into the light. Gold has to darken to stay
+  legible on paper — that is what `accent` is for, and why no component
+  hard-codes #E8B84B.
+
+  MEASURED CONTRAST on base #faf6ef:
+    on-base 15.9:1 · on-base-2 8.9:1 · on-base-3 6.3:1
+    on-base-4 4.9:1 · on-base-5 4.2:1  (UPPERCASE MONO ONLY)
+    accent 4.9:1 · kicker 4.7:1
+  On alt #efe7d9:
+    on-alt 14.4:1 · on-alt-2 10.4:1 · on-alt-3 8.5:1 · on-alt-4 4.9:1
+*/
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --color-base: #faf6ef;
+  --color-on-base: #171410;
+  --color-on-base-2: #443e36;
+  --color-on-base-3: #5a5249;
+  --color-on-base-4: #6f675c;
+  --color-on-base-5: #7a7166;
+
+  --color-alt: #efe7d9;
+  --color-on-alt: #171410;
+  --color-on-alt-2: #3b3733;
+  --color-on-alt-3: #4a4540;
+  --color-on-alt-4: #665e52;
+
+  --color-accent: #97690a;
+  --color-accent-2: #7a5406;
+  --color-kicker: #8a6e32;
+  --color-kicker-2: #7a5d26;
+
+  --color-card: #fffdf8;
+  --color-sand: #a97f57;
+  --color-char: #e3dacb;
+
+  --bloom-a: rgba(232, 184, 75, 0.22);
+  --bloom-b: rgba(184, 134, 11, 0.14);
+  --bloom-c: rgba(217, 184, 163, 0.3);
+  --bloom-alt: rgba(217, 184, 163, 0.42);
+
+  --line-on-base: rgba(23, 20, 16, 0.14);
+  --line-accent: rgba(151, 105, 10, 0.28);
+  --line-accent-soft: rgba(151, 105, 10, 0.2);
+  --fill-on-base: rgba(23, 20, 16, 0.04);
+  --fill-accent: rgba(151, 105, 10, 0.08);
+
+  --panel-bg: linear-gradient(160deg, rgba(255, 253, 248, 0.95) 0%, rgba(239, 231, 217, 0.9) 100%);
+  --panel-shadow: 0 40px 90px -60px rgba(23, 20, 16, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --glass-bg: linear-gradient(150deg, rgba(232, 184, 75, 0.3), rgba(255, 253, 248, 0.94));
+  --glass-shadow: 0 30px 60px -40px rgba(23, 20, 16, 0.35);
+  --card-bg: linear-gradient(165deg, rgba(255, 253, 248, 0.9), rgba(239, 231, 217, 0.7));
+  --shadow-lift: 0 20px 46px -20px rgba(151, 105, 10, 0.45);
+  --shadow-card: 0 26px 60px -44px rgba(23, 20, 16, 0.45);
+  --shadow-block: 0 40px 80px -60px rgba(23, 20, 16, 0.4);
+
+  --stripe: rgba(23, 20, 16, 0.035);
+  --grid-line: rgba(23, 20, 16, 0.08);
+  --nav-bg: rgba(250, 246, 239, 0.92);
+
+  /* Softer on paper: a bloom this size at dark-mode alpha turns the top of
+     the hero muddy. */
+  --bloom-hero: rgba(232, 184, 75, 0.34);
+  --glow-accent: rgba(151, 105, 10, 0.4);
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    background: var(--color-ink);
+    background: var(--color-base);
     -webkit-text-size-adjust: 100%;
   }
 
@@ -111,12 +221,17 @@
   }
 
   body {
-    background: var(--color-ink);
-    color: var(--color-cream);
+    background: var(--color-base);
+    color: var(--color-on-base);
     font-family: var(--font-sans);
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    /* The theme swap itself, so switching is a dissolve rather than a
+       flash. Section grounds carry the same transition below. */
+    transition:
+      background-color 400ms ease,
+      color 400ms ease;
   }
 
   h1,
@@ -136,17 +251,17 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 2px solid var(--color-accent);
     outline-offset: 3px;
   }
 
   ::selection {
-    background: var(--color-gold);
-    color: var(--color-ink);
+    background: var(--color-accent);
+    color: var(--color-base);
   }
 
   ::placeholder {
-    color: #6e6862;
+    color: var(--color-on-base-5);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -170,61 +285,56 @@
 }
 
 /* ── Grounds ─────────────────────────────────────────────────────
-   Each dark section is ink plus its own arrangement of gold blooms, so
-   the page reads as one continuous field rather than a stack of boxes.
-   Every bloom is a low-alpha wash over ink — none of them lighten the
-   ground enough to move the contrast figures in the token note. */
+   Each section is its ground colour plus its own arrangement of blooms, so
+   the page reads as one continuous field rather than a stack of boxes. The
+   bloom alphas are theme variables; the geometry is not. */
 
-@utility ground-ink {
+@utility ground-base {
   background:
-    radial-gradient(1100px 640px at 10% -10%, rgba(232, 184, 75, 0.2), transparent 62%),
-    radial-gradient(900px 620px at 92% 6%, rgba(184, 134, 11, 0.18), transparent 66%),
-    radial-gradient(760px 520px at 46% 116%, rgba(217, 184, 163, 0.12), transparent 70%),
-    var(--color-ink);
+    radial-gradient(1100px 640px at 10% -10%, var(--bloom-a), transparent 62%),
+    radial-gradient(900px 620px at 92% 6%, var(--bloom-b), transparent 66%),
+    radial-gradient(760px 520px at 46% 116%, var(--bloom-c), transparent 70%),
+    var(--color-base);
 }
 
-@utility ground-ink-2 {
+@utility ground-base-2 {
   background:
-    radial-gradient(900px 520px at 84% -12%, rgba(232, 184, 75, 0.16), transparent 64%),
-    radial-gradient(700px 500px at 4% 60%, rgba(184, 134, 11, 0.12), transparent 66%),
-    var(--color-ink);
+    radial-gradient(900px 520px at 84% -12%, var(--bloom-a), transparent 64%),
+    radial-gradient(700px 500px at 4% 60%, var(--bloom-b), transparent 66%),
+    var(--color-base);
 }
 
-@utility ground-ink-3 {
+@utility ground-base-3 {
   background:
-    radial-gradient(820px 620px at 6% 18%, rgba(184, 134, 11, 0.22), transparent 62%),
-    radial-gradient(760px 560px at 96% 88%, rgba(217, 184, 163, 0.14), transparent 64%),
-    var(--color-ink);
+    radial-gradient(820px 620px at 6% 18%, var(--bloom-b), transparent 62%),
+    radial-gradient(760px 560px at 96% 88%, var(--bloom-c), transparent 64%),
+    var(--color-base);
 }
 
-@utility ground-ink-close {
+@utility ground-base-close {
   background:
-    radial-gradient(1000px 560px at 50% 120%, rgba(232, 184, 75, 0.16), transparent 66%),
-    var(--color-ink);
+    radial-gradient(1000px 560px at 50% 120%, var(--bloom-a), transparent 66%),
+    var(--color-base);
 }
 
-/* The two cream sections. Sand bloom in opposite corners so they don't
+/* The two alternating sections. Bloom in opposite corners so they don't
    read as the same slab repeated. */
-@utility ground-cream {
+@utility ground-alt {
   background:
-    radial-gradient(760px 520px at 92% -6%, rgba(217, 184, 163, 0.55), transparent 62%),
-    var(--color-cream);
+    radial-gradient(760px 520px at 92% -6%, var(--bloom-alt), transparent 62%),
+    var(--color-alt);
 }
 
-@utility ground-cream-2 {
+@utility ground-alt-2 {
   background:
-    radial-gradient(700px 480px at 8% 0%, rgba(217, 184, 163, 0.5), transparent 60%),
-    var(--color-cream);
+    radial-gradient(700px 480px at 8% 0%, var(--bloom-alt), transparent 60%),
+    var(--color-alt);
 }
 
 /* Vertical pinstripes over the hero. Decorative, pointer-events:none at
    the call site. */
 @utility field-lines {
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(245, 239, 230, 0.035) 0 1px,
-    transparent 1px 116px
-  );
+  background: repeating-linear-gradient(90deg, var(--stripe) 0 1px, transparent 1px 116px);
 }
 
 /* ── Components ─────────────────────────────────────────────────── */
@@ -239,7 +349,7 @@
   text-transform: uppercase;
 }
 
-/* Smaller sibling for figures' captions inside cards. */
+/* Smaller sibling, for captions inside cards. */
 @utility label-sm {
   font-family: var(--font-mono);
   font-size: 9px;
@@ -248,15 +358,21 @@
   text-transform: uppercase;
 }
 
-/* The primary action, everywhere. Ink on gold at 10.4:1, and the lift on
-   hover is transform-only so it never repaints the gradient. */
+/* The short rule that opens a kicker, fading out into the ground. */
+@utility kicker-rule {
+  background: linear-gradient(90deg, var(--color-accent), transparent);
+}
+
+/* The primary action, everywhere — and the one element that does NOT
+   change with the theme. The lift on hover is transform-only so it never
+   repaints the gradient. */
 @utility btn-gold {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
   border-radius: var(--radius-edge);
-  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-deep) 100%);
-  color: var(--color-ink);
+  background: linear-gradient(135deg, var(--color-btn-from) 0%, var(--color-btn-to) 100%);
+  color: var(--color-btn-fg);
   font-weight: 500;
   transition:
     transform 450ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -268,25 +384,50 @@
   box-shadow: var(--shadow-lift);
 }
 
-/* Secondary action: hairline gold, filled only on hover. */
+/* Secondary action: hairline accent, filled only on hover. */
 @utility btn-ghost {
   display: inline-flex;
   align-items: center;
   gap: 0.625rem;
   border-radius: var(--radius-edge);
-  border: 1px solid rgba(232, 184, 75, 0.35);
-  background: rgba(245, 239, 230, 0.02);
-  color: var(--color-cream);
+  border: 1px solid var(--line-accent);
+  background: var(--fill-on-base);
+  color: var(--color-on-base);
   transition:
     background 450ms ease,
     border-color 450ms ease;
 }
 
-/* The dark card used by services, the hero panel and the contact form. */
-@utility card-dark {
+/* The raised card used by services and the philosophy blocks. */
+@utility card-surface {
   border-radius: var(--radius-card);
-  background: linear-gradient(165deg, rgba(245, 239, 230, 0.05), rgba(43, 43, 43, 0.28));
-  border: 1px solid rgba(245, 239, 230, 0.09);
+  background: var(--card-bg);
+  border: 1px solid var(--line-on-base);
+}
+
+/* The hero carousel card and the contact form share one treatment. */
+@utility panel {
+  border-radius: var(--radius-card);
+  background: var(--panel-bg);
+  border: 1px solid var(--line-accent);
+  box-shadow: var(--panel-shadow);
+}
+
+/* The small overhanging card on the hero panel. */
+@utility glass {
+  border-radius: var(--radius-card);
+  background: var(--glass-bg);
+  border: 1px solid var(--line-accent);
+  box-shadow: var(--glass-shadow);
+}
+
+/* The one block that inverts against its section — the payment note in How
+   It Works. It stays a `base` block on an `alt` ground in both themes. */
+@utility block-invert {
+  border-radius: var(--radius-card);
+  background: var(--color-base);
+  border: 1px solid var(--line-accent);
+  box-shadow: var(--shadow-block);
 }
 
 /* Figures. Every call site is numerals, so mono rides along with the

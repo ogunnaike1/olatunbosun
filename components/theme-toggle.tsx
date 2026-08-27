@@ -11,10 +11,10 @@ export const THEME_KEY = "obtc-theme";
  * Dark / light switch.
  *
  * The applied theme is a `data-theme` attribute on <html>; every colour in
- * globals.css is a role token that swaps with it. The choice is remembered
- * in localStorage; a visitor who has never chosen gets whatever their OS
- * asks for, resolved by the inline script in the document head so the page
- * never paints the wrong theme first.
+ * globals.css is a role token that swaps with it. Dark is the default and
+ * the OS preference is not consulted — see the inline script in
+ * app/layout.tsx. Only an explicit choice here moves it, and that choice is
+ * remembered in localStorage for later visits.
  *
  * Rendered as a two-position control rather than a single icon button:
  * both destinations are visible, so nobody has to click to find out what it

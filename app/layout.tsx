@@ -62,11 +62,14 @@ const jsonLd = {
 
 /**
  * Runs before first paint, so the page never flashes the wrong theme.
- * A stored choice wins; otherwise the OS preference decides, defaulting to
- * dark — the brand's home ground. Kept in sync with THEME_KEY in
- * components/theme-toggle.tsx.
+ *
+ * DARK IS THE DEFAULT — the OS preference is deliberately not consulted.
+ * Ink is the brand's home ground, and a light-mode machine should still
+ * meet the site as it was designed. Only an explicit choice from the
+ * footer toggle moves it, and that choice then wins on every later visit.
+ * Kept in sync with THEME_KEY in components/theme-toggle.tsx.
  */
-const themeScript = `(function(){try{var t=localStorage.getItem("obtc-theme");if(t!=="light"&&t!=="dark"){t=window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark"}document.documentElement.setAttribute("data-theme",t)}catch(e){document.documentElement.setAttribute("data-theme","dark")}})()`;
+const themeScript = `(function(){var t="dark";try{if(localStorage.getItem("obtc-theme")==="light"){t="light"}}catch(e){}document.documentElement.setAttribute("data-theme",t)})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

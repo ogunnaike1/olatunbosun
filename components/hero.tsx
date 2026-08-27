@@ -1,97 +1,127 @@
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+"use client";
+
+import { motion, useReducedMotion } from "motion/react";
+import Link from "next/link";
+import type { ReactNode } from "react";
 import { HeroPanel } from "@/components/hero-panel";
-import { Chip } from "@/components/reveal";
-import { hero, heroFacts } from "@/lib/content";
+import { contact, contactHref, hero } from "@/lib/content";
+
+/** Staggered rise, timed off the hero's own sequence rather than scroll. */
+function Enter({
+  children,
+  delay,
+  className,
+}: {
+  children: ReactNode;
+  delay: number;
+  className?: string;
+}) {
+  const reduced = useReducedMotion();
+  if (reduced) return <div className={className}>{children}</div>;
+
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 26 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1.05, delay, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export function Hero() {
   return (
-    <section
-      id="top"
-      className="relative flex items-center overflow-hidden bg-deep text-white"
-      style={{
-        minHeight: "100svh",
-        paddingTop: "clamp(126px, 14vh, 180px)",
-        paddingBottom: "clamp(56px, 7vw, 96px)",
-      }}
-    >
-      {/* Soft depth behind the panel — one wash, not a light show. */}
+    <section id="top" aria-labelledby="hero-h" className="ground-ink relative overflow-hidden">
+      <div aria-hidden="true" className="field-lines pointer-events-none absolute inset-0" />
+      {/* The one thing on the page that moves on its own: a slow bloom
+          behind the headline. Opacity only, so it costs a composite. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute -top-40 left-1/2 -ml-[410px] h-[420px] w-[820px] blur-[20px] motion-safe:animate-[breathe_9s_ease-in-out_infinite]"
         style={{
-          background:
-            "radial-gradient(900px 620px at 82% 18%, rgba(23,143,214,0.55), transparent 62%), radial-gradient(700px 500px at 8% 92%, rgba(204,221,232,0.14), transparent 60%)",
+          background: "radial-gradient(closest-side, rgba(232,184,75,.28), transparent)",
         }}
       />
 
-      <div
-        className="relative mx-auto grid w-full max-w-[1280px] items-center px-gutter"
-        style={{
-          gridTemplateColumns: "repeat(auto-fit, minmax(380px, 1fr))",
-          gap: "clamp(44px, 5vw, 84px)",
-        }}
-      >
-        <div>
-          <Chip tone="dark">{hero.status}</Chip>
+      <div className="relative mx-auto w-full max-w-[1320px] px-gutter pt-[clamp(132px,16vh,200px)] pb-[clamp(64px,8vw,110px)]">
+        <div className="grid items-center gap-[clamp(48px,6vw,76px)] nav:grid-cols-[1fr_1.02fr]">
+          <div className="max-w-[660px]">
+            <Enter delay={0.05}>
+              <div className="flex items-center gap-3.5">
+                <span
+                  aria-hidden="true"
+                  className="h-px w-8.5 shrink-0"
+                  style={{
+                    background: "linear-gradient(90deg, var(--color-gold), rgba(232,184,75,0))",
+                  }}
+                />
+                <span className="label text-kicker">{hero.eyebrow}</span>
+              </div>
+            </Enter>
 
-          <h1
-            className="text-display balance"
-            style={{ margin: "clamp(22px,2.6vw,30px) 0 clamp(20px,2.4vw,28px)" }}
-          >
-            {hero.headlineTop}
-            <br />
-            <span className="text-pale">{hero.headlineItalic}</span>
-            <br />
-            {hero.headlineEnd}
-          </h1>
+            <Enter delay={0.14}>
+              <h1 id="hero-h" className="mt-7 text-hero balance text-cream">
+                {hero.headlineTop}
+                <br />
+                <span className="text-gold italic">{hero.headlineItalic}</span>
+              </h1>
+            </Enter>
 
-          <p
-            className="text-lead max-w-[52ch] text-white/90"
-            style={{ marginBottom: "clamp(30px, 3.4vw, 42px)" }}
-          >
-            {hero.lead}
-          </p>
+            <Enter delay={0.24}>
+              <p className="mt-7 max-w-[52ch] text-lead text-mute-2">{hero.lead}</p>
+            </Enter>
 
-          <div className="flex flex-wrap gap-3.5">
-            <a
-              href={hero.primary.href}
-              className="group inline-flex items-center gap-2.5 rounded-btn bg-cream px-7 py-4 text-[14px] font-bold text-deep transition-colors duration-300 hover:bg-stone"
-            >
-              {hero.primary.label}
-              <ArrowRight
-                size={16}
-                weight="bold"
-                aria-hidden="true"
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
-            </a>
-            <a
-              href={hero.secondary.href}
-              className="inline-flex items-center rounded-btn bg-white/10 px-7 py-4 text-[14px] font-bold text-white ring-1 ring-white/20 transition-colors duration-300 hover:bg-white/16"
-            >
-              {hero.secondary.label}
-            </a>
+            <Enter delay={0.34} className="mt-9.5 flex flex-wrap gap-3.5">
+              <Link
+                href={hero.primary.href}
+                className="btn-gold px-7.5 py-4.5 text-[15px] hover:btn-gold-hover"
+              >
+                {hero.primary.label}
+                <span aria-hidden="true" className="font-mono text-xs">
+                  →
+                </span>
+              </Link>
+              <a
+                href={hero.secondary.href}
+                className="btn-ghost px-7 py-4.5 text-[15px] hover:border-gold hover:bg-gold/[0.08]"
+              >
+                {hero.secondary.label}
+              </a>
+            </Enter>
+
+            {/* The three channels, repeated here so the fastest way to reach
+                him is above the fold on every screen size. */}
+            <Enter delay={0.44} className="mt-9 flex flex-wrap items-center gap-x-5.5 gap-y-3">
+              <a
+                href={contactHref.phone}
+                className="inline-flex items-center gap-2.5 font-mono text-[11.5px] tracking-[0.06em] text-mute transition-colors duration-300 hover:text-gold"
+              >
+                <span
+                  aria-hidden="true"
+                  className="size-1.5 rounded-full bg-gold"
+                  style={{ boxShadow: "0 0 10px rgba(232,184,75,.9)" }}
+                />
+                {contact.phone}
+              </a>
+              <a
+                href={contactHref.whatsapp}
+                className="font-mono text-[11.5px] tracking-[0.06em] text-mute transition-colors duration-300 hover:text-gold"
+              >
+                WhatsApp
+              </a>
+              <a
+                href={contactHref.email}
+                className="font-mono text-[11.5px] tracking-[0.06em] text-mute transition-colors duration-300 hover:text-gold"
+              >
+                Email
+              </a>
+            </Enter>
           </div>
 
-          <dl
-            className="mt-[clamp(36px,4vw,56px)] grid gap-3"
-            style={{ gridTemplateColumns: "repeat(auto-fit, minmax(168px, 1fr))" }}
-          >
-            {heroFacts.map((fact) => (
-              <div
-                key={fact.label}
-                className="rounded-chip bg-white/[0.07] p-4 ring-1 ring-white/12"
-              >
-                <dt className="text-[9.5px] font-bold uppercase tracking-[0.14em] text-white">
-                  {fact.label}
-                </dt>
-                <dd className="m-0 mt-2 text-[15px] font-semibold text-white">{fact.value}</dd>
-              </div>
-            ))}
-          </dl>
+          <HeroPanel />
         </div>
-
-        <HeroPanel />
       </div>
     </section>
   );

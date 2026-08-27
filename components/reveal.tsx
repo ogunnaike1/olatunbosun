@@ -1,17 +1,25 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "motion/react";
-import type { ReactNode } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  useTransform,
+  type Variants,
+} from "motion/react";
+import { useRef, type ReactNode } from "react";
 
+/** The one entrance on the site: a short rise, staggered by index. */
 export const revealVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 24 },
   show: (i: number = 0) => ({
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.62,
-      ease: [0.22, 0.61, 0.36, 1],
-      delay: Math.min(i, 5) * 0.07,
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1],
+      delay: Math.min(i, 5) * 0.1,
     },
   }),
 };
@@ -62,11 +70,11 @@ export function Reveal({
         delay === undefined
           ? revealVariants
           : {
-              hidden: { opacity: 0, y: 20 },
+              hidden: { opacity: 0, y: 24 },
               show: {
                 opacity: 1,
                 y: 0,
-                transition: { duration: 0.62, ease: [0.22, 0.61, 0.36, 1], delay },
+                transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], delay },
               },
             }
       }
@@ -80,28 +88,72 @@ export function Reveal({
   );
 }
 
-/** Pill label that opens every section. */
-export function Chip({
+/**
+ * Scroll-linked drift. The element travels `distance` pixels against the
+ * scroll across the span where its section is on screen — enough to give
+ * the page depth, never enough to leave a gap where content should be.
+ *
+ * Transform only, and spring-smoothed so a fast wheel scroll doesn't snap
+ * it. Under reduced motion it renders a plain div and reads no scroll at
+ * all.
+ */
+export function Parallax({
   children,
-  tone = "light",
+  distance = 40,
+  className,
 }: {
   children: ReactNode;
-  /** "light" = sitting on stone/cream; "dark" = sitting on deep blue. */
-  tone?: "light" | "dark";
+  /** Total travel in px across the whole pass. Keep it under ~60. */
+  distance?: number;
+  className?: string;
+}) {
+  const reduced = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const raw = useTransform(scrollYProgress, [0, 1], [distance / 2, -distance / 2]);
+  const y = useSpring(raw, { stiffness: 120, damping: 30, restDelta: 0.5 });
+
+  if (reduced) return <div className={className}>{children}</div>;
+
+  return (
+    <motion.div ref={ref} className={className} style={{ y }}>
+      {children}
+    </motion.div>
+  );
+}
+
+/**
+ * The eyebrow that opens every section: a short rule that fades out into
+ * the ground, then the label. On ink the rule is a gradient (it has
+ * somewhere to fade *to*); on cream a flat gold-deep hairline, because a
+ * gradient to transparent over a warm ground just looks dirty.
+ */
+export function Kicker({
+  children,
+  tone = "dark",
+}: {
+  children: ReactNode;
+  /** "dark" = sitting on ink; "light" = sitting on cream. */
+  tone?: "dark" | "light";
 }) {
   return (
-    <span
-      className={`chip ${
-        tone === "dark"
-          ? "bg-white/12 text-white ring-1 ring-white/15"
-          : "bg-deep text-cream ring-1 ring-deep"
-      }`}
-    >
+    <div className="flex items-center gap-3.5">
       <span
         aria-hidden="true"
-        className={`size-1.5 rounded-full ${tone === "dark" ? "bg-pale" : "bg-deep"}`}
+        className="h-px w-8.5 shrink-0"
+        style={{
+          background:
+            tone === "dark"
+              ? "linear-gradient(90deg, var(--color-gold), rgba(232,184,75,0))"
+              : "var(--color-gold-deep)",
+        }}
       />
-      {children}
-    </span>
+      <span className={`label ${tone === "dark" ? "text-kicker" : "text-kicker-2"}`}>
+        {children}
+      </span>
+    </div>
   );
 }

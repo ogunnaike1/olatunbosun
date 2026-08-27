@@ -1,57 +1,41 @@
-import { ArrowRight } from "@phosphor-icons/react/dist/ssr";
+import Link from "next/link";
 import { Reveal } from "@/components/reveal";
-import { finalCta } from "@/lib/content";
+import { finalCta, riskDisclaimer } from "@/lib/content";
 
+/**
+ * The close: one invitation, then the risk disclaimer in full. The
+ * disclaimer is not a footnote and is not collapsed — it carries its own
+ * heading and its own anchor, because the footer links to it.
+ */
 export function FinalCtaSection() {
   return (
-    <section aria-label="Get in touch" className="bg-cream pb-section">
-      <div className="mx-auto w-full max-w-[1280px] px-gutter">
-        <Reveal
-          className="relative overflow-hidden rounded-card bg-deep p-[clamp(32px,4.5vw,80px)] text-white"
-          style={{ boxShadow: "var(--shadow-lift)" }}
-        >
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0"
-            style={{
-              background:
-                "radial-gradient(620px 420px at 88% 12%, rgba(23,143,214,0.6), transparent 62%)",
-            }}
-          />
-
-          <div
-            className="relative grid items-center gap-x-12 gap-y-8"
-            style={{ gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))" }}
+    <section id="disclaimer" aria-labelledby="cta-h" className="ground-ink-3 border-t border-gold/[0.14]">
+      <div className="mx-auto w-full max-w-[1320px] px-gutter py-section">
+        <Reveal className="max-w-[820px]">
+          <h2 id="cta-h" className="text-h2 balance text-cream">
+            {finalCta.headlineTop}{" "}
+            <span className="text-gold italic">{finalCta.headlineItalic}</span>
+          </h2>
+          <p className="mt-7 max-w-[54ch] text-lead text-mute-2">{finalCta.body}</p>
+          <Link
+            href={finalCta.action.href}
+            className="btn-gold mt-9 px-7.5 py-4.5 text-[15px] hover:btn-gold-hover"
           >
-            <div>
-              <h2 className="text-h2 balance">
-                {finalCta.headlineTop}{" "}
-                <span className="text-pale">{finalCta.headlineItalic}</span>
-              </h2>
-              <p className="mt-5 max-w-[46ch] text-lead text-white/90">{finalCta.body}</p>
-            </div>
+            {finalCta.action.label}
+            <span aria-hidden="true" className="font-mono text-xs">
+              →
+            </span>
+          </Link>
+        </Reveal>
 
-            <div className="flex flex-wrap gap-3.5 tab:justify-end">
-              <a
-                href={finalCta.cta.href}
-                className="group inline-flex items-center gap-2.5 rounded-btn bg-cream px-8 py-4 text-[14px] font-bold text-deep transition-colors duration-300 hover:bg-stone"
-              >
-                {finalCta.cta.label}
-                <ArrowRight
-                  size={16}
-                  weight="bold"
-                  aria-hidden="true"
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                />
-              </a>
-              <a
-                href="#services"
-                className="inline-flex items-center rounded-btn bg-white/10 px-8 py-4 text-[14px] font-bold text-white ring-1 ring-white/20 transition-colors duration-300 hover:bg-white/16"
-              >
-                View Services
-              </a>
-            </div>
-          </div>
+        <Reveal
+          delay={0.12}
+          className="mt-[clamp(52px,6vw,88px)] border-t border-cream/[0.12] pt-8"
+        >
+          <h3 className="label m-0 text-gold">{riskDisclaimer.heading}</h3>
+          <p className="mt-4 max-w-[86ch] text-[13.5px] leading-[1.8] text-[#8e877c]">
+            {riskDisclaimer.body}
+          </p>
         </Reveal>
       </div>
     </section>

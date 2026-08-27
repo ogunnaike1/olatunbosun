@@ -1,86 +1,57 @@
-"use client";
-
-import { animate, useInView, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
-import { Chip, Reveal } from "@/components/reveal";
+import Link from "next/link";
+import { Kicker, Reveal } from "@/components/reveal";
 import { experience } from "@/lib/content";
 
-type Stat = (typeof experience.stats)[number];
-
-function format(value: number, decimals: number) {
-  return value.toLocaleString("en-US", {
-    minimumFractionDigits: decimals,
-    maximumFractionDigits: decimals,
-  });
-}
-
-function Counter({ stat, start }: { stat: Stat; start: boolean }) {
-  const reduced = useReducedMotion();
-  const [display, setDisplay] = useState(() => format(0, stat.decimals));
-  const done = useRef(false);
-
-  useEffect(() => {
-    if (!start || reduced || done.current) return;
-    done.current = true;
-    const controls = animate(0, stat.value, {
-      duration: 1.4,
-      ease: [0.22, 0.61, 0.36, 1],
-      onUpdate: (v) => setDisplay(format(v, stat.decimals)),
-    });
-    return () => controls.stop();
-  }, [start, stat.value, stat.decimals, reduced]);
-
-  return <>{reduced ? format(stat.value, stat.decimals) : display}</>;
-}
-
-/** One of the two dark interludes in an otherwise light page. */
+/**
+ * A definition list, not a stat block. There are deliberately no figures
+ * here — see the note in lib/content.ts. Anything numeric added later must
+ * arrive with its basis stated alongside it.
+ */
 export function ExperienceSection() {
-  const gridRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(gridRef, { once: true, amount: 0.3 });
-
   return (
-    <section id="experience" className="relative overflow-hidden bg-deep py-section text-white">
-      <div className="mx-auto w-full max-w-[1280px] px-gutter">
-        <Reveal className="max-w-[56ch]" style={{ marginBottom: "clamp(48px, 5.5vw, 80px)" }}>
-          <Chip tone="dark">{experience.kicker}</Chip>
-          <p className="mt-6 text-quote font-semibold text-white balance">
-            {experience.headline}
-          </p>
-        </Reveal>
-
-        <div
-          ref={gridRef}
-          className="grid gap-4"
-          style={{ gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))" }}
-        >
-          {experience.stats.map((stat, i) => (
-            <Reveal
-              key={stat.label}
-              index={i}
-              className="rounded-card bg-white/[0.07] p-6 ring-1 ring-white/12"
+    <section
+      id="experience"
+      aria-labelledby="exp-h"
+      className="border-t border-gold/[0.14] bg-ink"
+    >
+      <div className="mx-auto w-full max-w-[1320px] px-gutter py-section">
+        <div className="grid gap-colgap nav:grid-cols-[0.85fr_1fr]">
+          <Reveal>
+            <Kicker>{experience.kicker}</Kicker>
+            <h2 id="exp-h" className="mt-6 max-w-[20ch] text-h2 balance text-cream">
+              {experience.headline}
+            </h2>
+            <p className="mt-6.5 max-w-[48ch] text-[16.5px] leading-[1.7] text-mute">
+              {experience.lead}
+            </p>
+            <Link
+              href={experience.link.href}
+              className="mt-7.5 inline-flex items-center gap-2.5 border-b border-gold/40 pb-1.5 text-[14.5px] text-cream transition-colors duration-300 hover:border-gold hover:text-gold"
             >
-              <div className="flex items-baseline text-figure font-extrabold tabular text-white">
-                <span>
-                  <Counter stat={stat} start={inView} />
-                </span>
-                {stat.suffix && <span className="text-pale">{stat.suffix}</span>}
-              </div>
-              <div className="mt-3 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
-                {stat.label}
-              </div>
-            </Reveal>
-          ))}
-        </div>
+              {experience.link.label}
+              <span aria-hidden="true" className="font-mono text-xs text-gold">
+                →
+              </span>
+            </Link>
+          </Reveal>
 
-        {/* The honesty line. Stays until verified records replace the figures. */}
-        <Reveal
-          className="mt-[clamp(32px,3.6vw,52px)] max-w-[80ch] rounded-card bg-white/[0.05] p-5 ring-1 ring-white/10"
-          delay={0.1}
-        >
-          <p className="m-0 text-[13.5px] leading-[1.7] text-white/70">
-            {experience.disclaimerNote}
-          </p>
-        </Reveal>
+          <dl className="m-0">
+            {experience.rows.map((row, i) => (
+              <Reveal
+                key={row.label}
+                index={i}
+                className={`flex flex-wrap items-baseline justify-between gap-4 border-t border-cream/[0.12] py-6 ${
+                  i === experience.rows.length - 1 ? "border-b" : ""
+                }`}
+              >
+                <dt className="label w-[170px] shrink-0 text-[10.5px] tracking-[0.16em] text-faint">
+                  {row.label}
+                </dt>
+                <dd className="m-0 font-display text-figure text-cream">{row.value}</dd>
+              </Reveal>
+            ))}
+          </dl>
+        </div>
       </div>
     </section>
   );

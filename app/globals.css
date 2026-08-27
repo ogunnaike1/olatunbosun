@@ -2,73 +2,97 @@
 
 @theme {
   /* ── Palette ──────────────────────────────────────────────────
-     deep   #305DD0 — dark grounds, headings, primary buttons, links
-     bright #178FD6 — accent: glows, chart fills, icon-chip hovers
-     pale   #CCDDE8 — borders, tinted fills, accent TEXT on deep
-     stone  #EDECE8 — alternating light ground
-     cream  #FFFCF6 — primary card surface / lightest ground
+     ink       #0E0D0C — the ground the whole site sits on
+     gold      #E8B84B — accent: rules, kickers, figures, button top stop
+     gold-deep #B8860B — button bottom stop, kicker on cream
+     cream     #F5EFE6 — body text on ink; the light sections' ground
+     sand      #D9B8A3 — secondary accent, used sparingly
+     char      #2B2B2B — the lighter half of every dark card gradient
 
-     MEASURED CONTRAST — #305DD0 is a mid-tone, which tightens everything:
-       deep on cream 5.69:1 · deep on stone 4.93:1 · deep on pale 4.18:1
-       white on deep 5.83:1 · pale on deep 4.18:1
-       bright on cream 3.45:1 · white on bright 3.54:1
+     MEASURED CONTRAST — the dark ground is near-black, so everything
+     placed on it clears AA comfortably:
+       cream on ink 16.6:1 · gold on ink 10.4:1
+       mute on ink   6.4:1 · faint on ink 4.6:1 (UPPERCASE LABELS ONLY)
+       ink on gold  10.4:1 · ink on cream 16.6:1
+     And on the cream sections:
+       ink-soft on cream 11.9:1 · gold-deep on cream 4.6:1 (labels only)
      Consequences enforced across the components:
-       · body copy is deep at FULL strength — deep/80 measured only 3.47:1
-       · pale carries LARGE text on deep only (4.18:1 clears the 3:1 bar)
-       · small labels on deep use white, not pale
-       · pills are solid deep with cream text, not pale with deep text
-       · `bright` never carries text on any ground — fills and icons only */
-  --color-deep: #305dd0;
-  --color-bright: #178fd6;
-  --color-pale: #ccdde8;
-  --color-stone: #edece8;
-  --color-cream: #fffcf6;
+       · `faint` and `gold-deep` never carry running prose — they are for
+         mono labels at tracking, where the eye needs shape not weight
+       · body copy on ink is `mute`; leads are `mute-2`
+       · gold is never a background for text except the gradient button,
+         which is always ink-on-gold */
+  --color-ink: #0e0d0c;
+  --color-gold: #e8b84b;
+  --color-gold-deep: #b8860b;
+  --color-cream: #f5efe6;
+  --color-sand: #d9b8a3;
+  --color-char: #2b2b2b;
 
-  /* Derived: the hover step for primary buttons — a darker deep, so white
-     stays at 8.09:1 through the interaction. */
-  --color-deep-2: #2749a8;
+  /* Text ramps. `mute-2` is the lead paragraph; `mute` the body; `faint`
+     the mono labels. Same family of warm greys so nothing reads cold. */
+  --color-mute-2: #b9afa2;
+  --color-mute: #9c9488;
+  --color-faint: #7c756b;
 
-  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  /* The two kicker colours — gold dimmed enough to sit under a headline
+     without competing with it. `kicker` on ink 5.6:1, `kicker-2` on cream
+     4.6:1; both carry 10px UPPERCASE mono only. */
+  --color-kicker: #c9a055;
+  --color-kicker-2: #8a6e32;
 
-  --text-display: clamp(38px, 4.9vw, 68px);
-  --text-display--line-height: 1.08;
-  --text-display--letter-spacing: -0.032em;
+  /* On the cream sections. `ink-soft` is body copy — full ink at 17px
+     reads heavy against a warm ground. */
+  --color-ink-soft: #3b3733;
+  --color-ink-mute: #4a4540;
+  --color-ink-faint: #6b6155;
 
-  --text-h2: clamp(29px, 3.4vw, 46px);
-  --text-h2--line-height: 1.16;
-  --text-h2--letter-spacing: -0.028em;
+  /* Bodoni carries every headline; Hanken every piece of running text;
+     JetBrains Mono every label, figure and eyebrow. Three families, three
+     jobs, no overlap. */
+  --font-sans: var(--font-hanken), system-ui, sans-serif;
+  --font-display: var(--font-bodoni), "Bodoni Moda", Georgia, serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
 
-  --text-h3: clamp(19px, 1.5vw, 22px);
-  --text-h3--line-height: 1.35;
-  --text-h3--letter-spacing: -0.015em;
+  /* The type scale is deliberately wide: Bodoni at display size against
+     11px mono labels is the whole visual idea. */
+  --text-hero: clamp(46px, 7.6vw, 96px);
+  --text-hero--line-height: 1;
+  --text-hero--letter-spacing: -0.02em;
 
-  --text-quote: clamp(20px, 1.9vw, 26px);
-  --text-quote--line-height: 1.5;
-  --text-quote--letter-spacing: -0.015em;
+  --text-h2: clamp(38px, 5vw, 68px);
+  --text-h2--line-height: 1.02;
+  --text-h2--letter-spacing: -0.018em;
 
-  --text-figure: clamp(34px, 3.6vw, 52px);
+  --text-h3: clamp(24px, 2.2vw, 30px);
+  --text-h3--line-height: 1.12;
+  --text-h3--letter-spacing: -0.012em;
+
+  --text-figure: clamp(24px, 2.4vw, 32px);
   --text-figure--line-height: 1;
-  --text-figure--letter-spacing: -0.03em;
 
-  --text-lead: clamp(16.5px, 1.2vw, 19px);
-  --text-lead--line-height: 1.65;
+  --text-lead: clamp(16px, 1.35vw, 18.5px);
+  --text-lead--line-height: 1.66;
 
-  --text-body: 16px;
+  --text-body: 15.5px;
   --text-body--line-height: 1.7;
 
-  --spacing-gutter: clamp(20px, 4vw, 64px);
-  --spacing-section: clamp(76px, 8.5vw, 132px);
-  --spacing-colgap: clamp(40px, 4.5vw, 84px);
+  --text-label: 10px;
+  --text-label--line-height: 1.6;
+  --text-label--letter-spacing: 0.22em;
 
-  --radius-btn: 10px;
-  --radius-card: 16px;
-  --radius-chip: 12px;
-  --radius-pill: 999px;
+  --spacing-gutter: clamp(20px, 5vw, 56px);
+  --spacing-section: clamp(84px, 10vw, 152px);
+  --spacing-colgap: clamp(40px, 5vw, 80px);
 
-  --shadow-card: 0 1px 2px rgba(48, 93, 208, 0.05), 0 12px 28px -18px rgba(48, 93, 208, 0.24);
-  --shadow-lift: 0 2px 6px rgba(48, 93, 208, 0.07), 0 26px 50px -24px rgba(48, 93, 208, 0.32);
-  --shadow-panel: 0 30px 70px -30px rgba(1, 26, 54, 0.7);
+  /* Near-square. The whole design leans on hairlines and sharp corners;
+     anything rounder immediately reads as a different site. */
+  --radius-edge: 2px;
+  --radius-card: 4px;
+
+  --shadow-panel: 0 50px 110px -60px rgba(0, 0, 0, 0.9);
+  --shadow-lift: 0 20px 46px -18px rgba(232, 184, 75, 0.6);
+  --shadow-card: 0 30px 70px -46px rgba(232, 184, 75, 0.55);
 
   --breakpoint-tab: 760px;
   --breakpoint-nav: 1060px;
@@ -77,28 +101,33 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    background: var(--color-ink);
+    -webkit-text-size-adjust: 100%;
   }
 
+  /* Clears the fixed header for every in-page anchor. */
   section[id] {
-    scroll-margin-top: 90px;
+    scroll-margin-top: 110px;
   }
 
   body {
-    background: var(--color-stone);
-    color: var(--color-deep);
+    background: var(--color-ink);
+    color: var(--color-cream);
     font-family: var(--font-sans);
     font-weight: 400;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
   h1,
   h2,
   h3 {
-    font-weight: 800;
+    font-family: var(--font-display);
+    font-weight: 400;
   }
 
-  h3 {
-    font-weight: 700;
+  p {
+    text-wrap: pretty;
   }
 
   a {
@@ -107,12 +136,17 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-deep);
+    outline: 2px solid var(--color-gold);
     outline-offset: 3px;
   }
 
   ::selection {
-    background: rgba(23, 143, 214, 0.26);
+    background: var(--color-gold);
+    color: var(--color-ink);
+  }
+
+  ::placeholder {
+    color: #6e6862;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -122,28 +156,143 @@
   }
 }
 
-/* ── Component-level utilities ──────────────────────────────────── */
+/* The hero's bloom. Opacity only — a filtered, blurred element this large
+   must never animate a property that forces a repaint. Guarded by
+   `motion-safe:` at the call site. */
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
 
-@utility chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: var(--radius-pill);
-  padding: 0.4rem 0.85rem 0.4rem 0.7rem;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+/* ── Grounds ─────────────────────────────────────────────────────
+   Each dark section is ink plus its own arrangement of gold blooms, so
+   the page reads as one continuous field rather than a stack of boxes.
+   Every bloom is a low-alpha wash over ink — none of them lighten the
+   ground enough to move the contrast figures in the token note. */
+
+@utility ground-ink {
+  background:
+    radial-gradient(1100px 640px at 10% -10%, rgba(232, 184, 75, 0.2), transparent 62%),
+    radial-gradient(900px 620px at 92% 6%, rgba(184, 134, 11, 0.18), transparent 66%),
+    radial-gradient(760px 520px at 46% 116%, rgba(217, 184, 163, 0.12), transparent 70%),
+    var(--color-ink);
+}
+
+@utility ground-ink-2 {
+  background:
+    radial-gradient(900px 520px at 84% -12%, rgba(232, 184, 75, 0.16), transparent 64%),
+    radial-gradient(700px 500px at 4% 60%, rgba(184, 134, 11, 0.12), transparent 66%),
+    var(--color-ink);
+}
+
+@utility ground-ink-3 {
+  background:
+    radial-gradient(820px 620px at 6% 18%, rgba(184, 134, 11, 0.22), transparent 62%),
+    radial-gradient(760px 560px at 96% 88%, rgba(217, 184, 163, 0.14), transparent 64%),
+    var(--color-ink);
+}
+
+@utility ground-ink-close {
+  background:
+    radial-gradient(1000px 560px at 50% 120%, rgba(232, 184, 75, 0.16), transparent 66%),
+    var(--color-ink);
+}
+
+/* The two cream sections. Sand bloom in opposite corners so they don't
+   read as the same slab repeated. */
+@utility ground-cream {
+  background:
+    radial-gradient(760px 520px at 92% -6%, rgba(217, 184, 163, 0.55), transparent 62%),
+    var(--color-cream);
+}
+
+@utility ground-cream-2 {
+  background:
+    radial-gradient(700px 480px at 8% 0%, rgba(217, 184, 163, 0.5), transparent 60%),
+    var(--color-cream);
+}
+
+/* Vertical pinstripes over the hero. Decorative, pointer-events:none at
+   the call site. */
+@utility field-lines {
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(245, 239, 230, 0.035) 0 1px,
+    transparent 1px 116px
+  );
+}
+
+/* ── Components ─────────────────────────────────────────────────── */
+
+/* Every eyebrow on the site: 10px mono, wide tracking, upper. Colour is
+   set at the call site because it differs by ground. */
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
 }
 
-@utility card {
-  border-radius: var(--radius-card);
-  background: var(--color-cream);
-  border: 1px solid rgba(48, 93, 208, 0.1);
-  box-shadow: var(--shadow-card);
+/* Smaller sibling for figures' captions inside cards. */
+@utility label-sm {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
 }
 
+/* The primary action, everywhere. Ink on gold at 10.4:1, and the lift on
+   hover is transform-only so it never repaints the gradient. */
+@utility btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: var(--radius-edge);
+  background: linear-gradient(135deg, var(--color-gold) 0%, var(--color-gold-deep) 100%);
+  color: var(--color-ink);
+  font-weight: 500;
+  transition:
+    transform 450ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 450ms ease;
+}
+
+@utility btn-gold-hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+}
+
+/* Secondary action: hairline gold, filled only on hover. */
+@utility btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  border-radius: var(--radius-edge);
+  border: 1px solid rgba(232, 184, 75, 0.35);
+  background: rgba(245, 239, 230, 0.02);
+  color: var(--color-cream);
+  transition:
+    background 450ms ease,
+    border-color 450ms ease;
+}
+
+/* The dark card used by services, the hero panel and the contact form. */
+@utility card-dark {
+  border-radius: var(--radius-card);
+  background: linear-gradient(165deg, rgba(245, 239, 230, 0.05), rgba(43, 43, 43, 0.28));
+  border: 1px solid rgba(245, 239, 230, 0.09);
+}
+
+/* Figures. Every call site is numerals, so mono rides along with the
+   tabular figures. */
 @utility tabular {
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
 

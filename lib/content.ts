@@ -1,420 +1,431 @@
 /**
- * All site copy lives here. Voice: brand ("Olatunbosun", "we"), never
- * first-person singular. Address the reader as "you".
+ * All site copy lives here.
+ *
+ * VOICE — first person singular. This is one trader speaking, not a firm:
+ * "I trade", never "we offer". Plain, unhurried, and never promissory. No
+ * sentence on this site may imply a return, a guarantee or a track record
+ * that has not been evidenced.
+ *
+ * This is a brand, not a personal page — there is no portrait anywhere on
+ * the site and none should be added.
  *
  * PLACEHOLDERS — must be replaced before launch:
- *   · contact.* (email, phone, every social handle)
- *   · performance.stats  — no verified figures were supplied
- *   · testimonials       — deliberately empty; never fabricate these
+ *   · contactPage.emailNote — confirm the address is live and delete the note
+ * There are deliberately no performance figures, no client counts and no
+ * testimonials anywhere in this file. Do not invent them.
  */
 
 export const brand = {
-  name: "Olatunbosun",
-  role: "Trader",
+  /** Wordmark line 1. */
+  name: "Olatunbosunbtc",
+  /** Wordmark line 2, sitting under the name at wide tracking. */
+  role: "Exchange",
+  /** Full form, for prose, legal lines and metadata. */
+  full: "Olatunbosunbtc Exchange",
+  /** The letter inside the rotated square of the mark. */
+  monogram: "O",
+  since: "2021",
+};
+
+export const seo = {
+  title: `${brand.full} — Independent Bitcoin & Digital Asset Trader`,
+  description: `${brand.full} is an independent trader active in Bitcoin and digital asset markets since ${brand.since}, offering trading services and direct client support. Get in touch by email, phone or WhatsApp.`,
+  ogDescription: `Independent trader in Bitcoin and digital asset markets since ${brand.since}. Trading services and direct client support.`,
 };
 
 export const contact = {
-  email: "hello@olatunbosun.com",
-  phone: "+000 000 0000",
-  phoneHref: "tel:+0000000000",
+  email: "hello@olatunbosunbtc.com",
+  /** Display form. */
+  phone: "+234 705 749 7045",
+  phoneHref: "tel:+2347057497045",
+  /** E.164, for structured data. */
+  phoneE164: "+2347057497045",
+  /** Digits only, no plus — the form wa.me links take. */
+  whatsapp: "2347057497045",
+};
+
+export const contactHref = {
+  phone: contact.phoneHref,
+  whatsapp: `https://wa.me/${contact.whatsapp}`,
+  email: `mailto:${contact.email}`,
 };
 
 export const navLinks = [
-  { label: "Home", href: "#top" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Experience", href: "#experience" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/#about" },
+  { label: "Services", href: "/#services" },
+  { label: "Experience", href: "/#experience" },
+  { label: "How It Works", href: "/#process" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
-export const primaryCta = { label: "Contact Me", href: "#contact" };
+export const primaryCta = { label: "Get in Touch", href: "/contact" };
+
+/* ── Hero ──────────────────────────────────────────────────────────────── */
 
 export const hero = {
-  status: "Available for new clients",
-  note: "Replies within one working day",
-  headlineTop: "Professional trading.",
-  headlineItalic: "Clear process.",
-  headlineEnd: "Trusted service.",
-  lead: "Olatunbosun works directly with clients who want considered market analysis, structured mentorship and an honest second opinion — not a platform, and not a promise.",
-  primary: { label: "Contact Me", href: "#contact" },
-  secondary: { label: "View Services", href: "#services" },
+  eyebrow: "Independent Trader · Bitcoin · Digital Assets",
+  headlineTop: "Patient in the market.",
+  headlineItalic: "Present for the client.",
+  lead: `I have traded Bitcoin and digital assets since ${brand.since} — through the quiet stretches as much as the loud ones. Alongside my own trading I take on client work, and I keep the communication direct: you speak to me, not a queue.`,
+  primary: primaryCta,
+  secondary: { label: "Explore Services", href: "#services" },
 };
 
-/** Static credential strip under the hero. Deliberately not a marquee. */
-export const credentials = [
-  { label: "Trading since", value: "2016" },
-  { label: "Focus", value: "Bitcoin & major FX" },
-  { label: "Delivery", value: "Written analysis" },
-  { label: "Access", value: "Direct, no queue" },
+/**
+ * The hero chart card. The series is illustrative of the *shape* of a
+ * market — it is not live data and not a published call, and the card says
+ * so on its face. Do not relabel it as anything else without wiring a real
+ * data source behind it.
+ */
+export const heroPanel = {
+  instrument: "BTC / USD",
+  disclaimer: ["Illustrative", "Not live data"],
+  facts: [
+    { label: "Focus", value: "Bitcoin" },
+    { label: "Active since", value: brand.since },
+    { label: "Approach", value: "Risk first" },
+  ],
+  glass: {
+    kicker: "Market insight",
+    line: "Structure over noise.",
+  },
+};
+
+/** How long each carousel slide holds before advancing. */
+export const SLIDE_INTERVAL_MS = 6500;
+
+/**
+ * The hero carousel. Four faces of the same card — the chart, the method,
+ * the week, and what working together looks like.
+ *
+ * Every one of these is a statement about PROCESS. None of them may become
+ * a number, a return, a call or a claim: the card sits above the fold and
+ * is the most-read thing on the site.
+ */
+export const heroSlides = [
+  {
+    id: "structure",
+    /** Tab label. `kicker` and `title` are the card's own two header lines. */
+    name: "Market structure",
+    kicker: "Market structure",
+    title: heroPanel.instrument,
+    kind: "chart" as const,
+  },
+  {
+    id: "method",
+    name: "The method",
+    kicker: "How I trade",
+    title: "Four rules",
+    kind: "list" as const,
+    lead: "Four rules, applied the same way every session.",
+    rows: [
+      { label: "Discipline", value: "The plan decides" },
+      { label: "Risk", value: "Downside costed first" },
+      { label: "Patience", value: "Sitting out is a position" },
+      { label: "Consistency", value: "Same method, every session" },
+    ],
+  },
+  {
+    id: "week",
+    name: "A week's work",
+    kicker: "A week's work",
+    title: "Waiting well",
+    kind: "notes" as const,
+    lead: "Illustrative of the shape of a week — not a record of trades.",
+    notes: [
+      { day: "Mon", title: "Range intact above support", note: "Nothing to force" },
+      { day: "Tue", title: "Volume thinning into the highs", note: "Watching for a failed push" },
+      { day: "Wed", title: "Reclaim attempt, size kept small", note: "Level held on retest" },
+      { day: "Thu", title: "No clear read — sitting out", note: "Said so plainly" },
+    ],
+  },
+  {
+    id: "working",
+    name: "Working together",
+    kicker: "Working together",
+    title: "Direct, one to one",
+    kind: "list" as const,
+    lead: "No account to open, no platform to sign up for.",
+    rows: [
+      { label: "First reply", value: "Usually within a day" },
+      { label: "Terms", value: "In writing, before anything starts" },
+      { label: "Payment", value: "Never through this site" },
+      { label: "Contact", value: "Direct, one to one" },
+    ],
+  },
 ];
 
-/** Three facts sitting under the hero CTAs. */
-export const heroFacts = [
-  { label: "First reply", value: "Within one working day" },
-  { label: "Terms", value: "Agreed in writing" },
-  { label: "Client list", value: "Kept small" },
-];
+export const focusStrip = {
+  kicker: "Focused on",
+  items: ["Bitcoin", "Digital assets", "Market analysis", "Client service"],
+  note: `Est. ${brand.since}`,
+};
+
+/* ── About ─────────────────────────────────────────────────────────────── */
 
 export const about = {
   kicker: "About",
-  rail: "Market analysis & mentorship",
-  headlineTop: "We trade our own book,",
-  headlineItalic: "and work with a small number of clients.",
-  lead: "Olatunbosun began trading properly in 2016, after two years of losing money slowly and learning exactly why. Most of the process used today came out of that period — written analysis, sizing rules that are actually followed, and the habit of saying plainly when there is no read.",
+  headline: "More than the market.",
   body: [
-    "The focus is Bitcoin and the major FX pairs, traded discretionarily and around levels. This is not a signal service and it does not manage anyone else's money. What is on offer is analysis, process and time — explained clearly enough that you are able to disagree with it.",
-    "Clients come here because they want a real person to talk to. You deal with the same trader from the first message to the last. The client list is kept small on purpose, because the service stops being worth paying for the moment it turns into a mailing list.",
+    `I started trading Bitcoin in ${brand.since} and have been in the market every year since. The early lessons were expensive and useful in equal measure: position size matters more than conviction, and the fastest way to lose an account is to need a trade to work.`,
+    "What I do now is unglamorous by design. I follow a small number of setups, I size them the same way every time, and I sit out the sessions that don't offer anything. Most of the work is waiting well.",
+    "Clients get the same plainness. I tell you what I can do, what I can't, and what the risk looks like before anything starts — and you always deal with me directly.",
   ],
   meta: [
-    { label: "Approach", value: "Discretionary, level-based" },
-    { label: "Focus", value: "Bitcoin and major FX" },
-    { label: "Working since", value: "2016" },
+    { label: "Since", value: brand.since },
+    { label: "Primary market", value: "Bitcoin" },
+    { label: "Contact", value: "Direct" },
   ],
 };
 
+/* ── Services ──────────────────────────────────────────────────────────── */
+
 export type Service = {
   /** Key into the icon map in services-section.tsx */
-  icon: string;
+  icon: "trend" | "bars" | "target";
   name: string;
   blurb: string;
-  forWho: string;
-  receives: string[];
 };
 
 export const servicesIntro = {
   kicker: "Services",
-  headlineTop: "What you can actually",
-  headlineItalic: "hire us for.",
-  lead: "Five services, priced individually. Each one is scoped in writing before it starts, so you know what you are getting and what it costs.",
-  cta: "Discuss a Service",
-};
-
-export const services: Service[] = [
-  {
-    icon: "chart",
-    name: "Market Analysis",
-    blurb:
-      "A written read on the instruments you trade — the levels being watched, what would invalidate them, and where the risk sits.",
-    forWho: "Traders who want a considered second opinion before they commit.",
-    receives: [
-      "Written analysis of up to three instruments",
-      "Marked-up charts with the levels and the reasoning",
-      "A follow-up message to answer questions on it",
-    ],
-  },
-  {
-    icon: "mentor",
-    name: "One-to-One Mentorship",
-    blurb:
-      "Structured sessions built around your actual trading, not a generic syllabus. Work starts with what you are doing now and fixes it in order of what is costing you most.",
-    forWho:
-      "Newer traders, and experienced ones stuck in a pattern they can see but cannot break.",
-    receives: [
-      "Scheduled one-to-one sessions",
-      "A written plan you keep, updated as you go",
-      "Direct access between sessions for questions",
-    ],
-  },
-  {
-    icon: "review",
-    name: "Trade Reviews",
-    blurb:
-      "You send your recent trades — entries, exits, the reasoning at the time. What comes back is an honest written review of what held up and what did not.",
-    forWho:
-      "Active traders who suspect the problem is in their execution rather than their ideas.",
-    receives: [
-      "Written review of an agreed number of trades",
-      "Specific, prioritised changes to make",
-      "A short call to walk through the review",
-    ],
-  },
-  {
-    icon: "risk",
-    name: "Risk & Position Sizing Review",
-    blurb:
-      "A look at how much you are actually risking, how correlated your positions are, and whether your sizing matches the account you are trading.",
-    forWho: "Anyone holding several positions who has never checked what they add up to.",
-    receives: [
-      "Written review of current exposure and sizing",
-      "A sizing framework matched to your account",
-      "Clear rules you can apply on your own",
-    ],
-  },
-  {
-    icon: "briefing",
-    name: "Weekly Market Briefing",
-    blurb:
-      "A written briefing each week covering what is being watched and why — including the weeks where the honest answer is that the picture is unclear.",
-    forWho: "Clients who want to stay informed without a standing engagement.",
-    receives: [
-      "One written briefing per week",
-      "Levels and context for the coming week",
-      "Reply access for follow-up questions",
-    ],
-  },
-];
-
-export const experience = {
-  kicker: "Experience",
-  headline:
-    "A record of the work, not a sales figure. Historical only — nothing here indicates future results.",
-  /**
-   * PLACEHOLDER FIGURES. No verified records were supplied for these. Replace
-   * with real numbers that can be evidenced, or delete the section entirely —
-   * the on-page note below stays until they are verified.
-   */
-  stats: [
-    { value: 9, decimals: 0, suffix: "+", label: "Years trading" },
-    { value: 140, decimals: 0, suffix: "+", label: "Clients worked with" },
-    { value: 600, decimals: 0, suffix: "+", label: "Sessions delivered" },
-    { value: 24, decimals: 0, suffix: "h", label: "Typical reply time" },
-  ],
-  disclaimerNote:
-    "Figures shown are placeholders pending verified records. Any performance information published here is historical and does not indicate future results.",
-};
-
-export const howItWorks = {
-  kicker: "How it works",
-  headlineTop: "Four steps,",
-  headlineItalic: "no account required.",
-  steps: [
-    {
-      title: "Get in touch",
-      body: "Send a message through the form on this site, WhatsApp, Telegram or email — whichever you already use. It arrives directly, not in a queue.",
-    },
-    {
-      title: "Discuss your needs",
-      body: "Tell us what you are looking for and you will get an honest answer on whether it is something we can help with, and what it would involve.",
-    },
-    {
-      title: "Confirm the service",
-      body: "Scope, terms, timeline and payment method are agreed in writing before anything begins. No open-ended arrangements.",
-    },
-    {
-      title: "The work begins",
-      body: "The agreed service is carried out and you are kept informed throughout. If something changes, or a call turns out to be wrong, you hear it here first.",
-    },
-  ],
-};
-
-export const trust = {
-  kicker: "Why work with us",
-  headlineTop: "Reasons to feel",
-  headlineItalic: "comfortable getting in touch.",
-  lead: "No badges, no certifications that were not earned, and no numbers that cannot be evidenced. These are the things we can stand behind.",
-  points: [
-    {
-      title: "You deal with the trader directly",
-      body: "Every message, every session and every piece of analysis comes from the same person you first spoke to. There is no support queue and no account manager in between.",
-    },
-    {
-      title: "Terms are agreed before anything starts",
-      body: "Scope, timeline, price and payment method go in writing first. You know exactly what you are buying before you pay for it.",
-    },
-    {
-      title: "You are told when the read is not there",
-      body: "Some weeks the market offers nothing clear. You will be told that, rather than handed a manufactured view to justify the invoice.",
-    },
-    {
-      title: "Written first, spoken second",
-      body: "Analysis and reviews arrive in writing so you can return to them, check them against what actually happened, and hold us to what was said.",
-    },
-    {
-      title: "Reachable on the channels you already use",
-      body: "WhatsApp, Telegram, Instagram or email. Use whichever is easiest — they all reach the same person.",
-    },
-    {
-      title: "Realistic expectations, stated up front",
-      body: "There is no certainty on sale here, no guaranteed return and no system that cannot lose. Trading carries real risk and you will be told so plainly.",
-    },
-  ],
-};
-
-export type Testimonial = {
-  name: string;
-  quote: string;
-  service?: string;
+  headline: "What I actually do.",
+  lead: "A short list, kept honest. If something you need isn't here, ask — I'd rather refer you on than overreach.",
 };
 
 /**
- * DELIBERATELY EMPTY. The testimonials section renders nothing until real,
- * client-approved reviews are added here. Do not invent entries.
+ * Three, on purpose. A fourth (mentoring, managed accounts, signals) can be
+ * added when there is a real one to describe — do not pad this list.
  */
-export const testimonials: Testimonial[] = [];
+export const services: Service[] = [
+  {
+    icon: "trend",
+    name: "Bitcoin & digital asset trading",
+    blurb:
+      "Active participation in Bitcoin and a small number of selected digital assets, traded to a defined plan with position sizing set in advance. No promises of return — only a clear method and clear risk.",
+  },
+  {
+    icon: "bars",
+    name: "Market analysis",
+    blurb:
+      "The reading behind the trading — levels, structure and context, explained in plain terms so you understand why a decision was made.",
+  },
+  {
+    icon: "target",
+    name: "Client support",
+    blurb:
+      "Reachable on phone, WhatsApp or email. Questions answered by me, in normal language, for as long as we work together.",
+  },
+];
+
+/* ── Philosophy ────────────────────────────────────────────────────────── */
+
+export const philosophy = {
+  kicker: "Philosophy",
+  headline: "Four rules I don't break.",
+  rules: [
+    {
+      label: "Discipline",
+      title: "The plan decides, not the mood",
+      body: "Entry, size and exit are written before the position exists.",
+    },
+    {
+      label: "Risk",
+      title: "Downside gets the first look",
+      body: "What it costs to be wrong is decided before what it might earn.",
+    },
+    {
+      label: "Patience",
+      title: "Not every move is an invitation",
+      body: "Sitting out is a position. Most weeks it's the right one.",
+    },
+    {
+      label: "Consistency",
+      title: "Same method, every session",
+      body: "Boring repetition compounds. Improvisation doesn't.",
+    },
+  ],
+};
+
+/* ── Experience ────────────────────────────────────────────────────────── */
+
+/**
+ * NO PERFORMANCE CLAIMS. These rows describe where the time goes, nothing
+ * more. If verified figures are ever supplied they belong here with their
+ * basis stated — never as bare numbers.
+ */
+export const experience = {
+  kicker: "Experience",
+  headline: "Experience & market focus.",
+  lead: "No performance claims on this page. What follows is simply where I spend my time and how long I've been doing it.",
+  link: { label: "Ask about specifics", href: "/contact" },
+  rows: [
+    { label: "Active since", value: brand.since },
+    { label: "Primary market", value: "Bitcoin / USD" },
+    { label: "Also traded", value: "Selected digital assets" },
+    { label: "Specialisation", value: "Risk-defined swing entries" },
+    { label: "Client contact", value: "Direct, one to one" },
+  ],
+};
+
+export const marketSection = {
+  kicker: "The market I watch most",
+  headline: "Bitcoin, over cycles.",
+  note: "Illustrative chart. Decorative only — not live data, not a recommendation.",
+  ticks: [brand.since, "2022", "2023", "2024", "2025", "Today"],
+};
+
+/* ── How it works ──────────────────────────────────────────────────────── */
+
+export const process = {
+  kicker: "How it works",
+  headline: "Four steps, no mystery.",
+  steps: [
+    {
+      title: "Reach out",
+      body: "Call, WhatsApp or email. Tell me roughly what you're looking for.",
+    },
+    {
+      title: "Talk it through",
+      body: "We go over the service, the risk, what's realistic and what it costs. No pressure to continue.",
+    },
+    {
+      title: "Agree and begin",
+      body: "Terms confirmed in writing first — including payment details, which are only ever arranged directly with me.",
+    },
+    {
+      title: "Stay in contact",
+      body: "Updates and answers throughout. You'll always know where things stand.",
+    },
+  ],
+  cta: {
+    title: "Ready to get started?",
+    body: "There's nothing to pay on this website. Speak to me first, we confirm the service in writing, and payment details are arranged privately after that — never through a form or a wallet address posted publicly.",
+    action: { label: "Start a conversation", href: "/contact" },
+  },
+};
+
+/* ── FAQ ───────────────────────────────────────────────────────────────── */
 
 export const faqIntro = {
   kicker: "Frequently asked",
-  headlineTop: "The questions",
-  headlineItalic: "people actually ask.",
-  lead: "If what you need is not answered here, send the question over. A straight question gets a straight answer.",
+  headline: "The questions people actually ask.",
+  lead: "If what you need isn't answered here, send the question over. A straight question gets a straight answer.",
 };
 
 export const faqs = [
   {
-    q: "What services do you offer?",
-    a: "Five: written market analysis, one-to-one mentorship, trade reviews, risk and position sizing reviews, and a weekly written market briefing. Each is scoped and priced individually — there is no subscription tier or package you have to buy into.",
+    q: "What exactly do you offer?",
+    a: "Three things: trading in Bitcoin and a small number of selected digital assets, the market analysis behind it, and direct support while we work together. There is no subscription, no tier list and no package you have to buy into.",
   },
   {
-    q: "How does the process work?",
-    a: "You get in touch, the requirement is discussed properly, the scope and price are confirmed in writing, you approve it, and the work begins. Four steps, and you can stop at any of the first three at no cost.",
+    q: "Do you guarantee a return?",
+    a: "No, and treat anyone who does as a warning sign. Trading carries a genuine risk of losing money, including all of it. What I can offer is a defined method, risk stated in advance, and an honest account of what happened.",
   },
   {
-    q: "How do I contact you?",
-    a: "Through the form on this page, or directly on WhatsApp, Telegram, Instagram or email. They all reach the same person. The form is usually fastest because it sets out what you need before the conversation starts.",
+    q: "How do I get in touch?",
+    a: "Phone, WhatsApp or email — all three reach me directly, and the numbers on this site are the only ones that are mine. There is no support queue and no one answering on my behalf.",
   },
   {
-    q: "What payment methods do you accept?",
-    a: "Bank transfer and the common digital payment methods. The method and the amount are agreed in writing before the work starts, and you receive an invoice. Client funds are never held for trading, and no client account is ever traded on your behalf.",
+    q: "How do payments work?",
+    a: "Nothing is charged through this website. Terms and payment details are agreed with me directly and confirmed in writing before anything begins. No wallet address is ever posted publicly, and any that appears in my name elsewhere is not mine.",
   },
   {
-    q: "How long does the process take?",
-    a: "Analysis and reviews are typically returned within two to three working days of the brief being agreed. Mentorship runs to a schedule set with you. If something will take longer, you are told before you commit, not after.",
+    q: "How quickly do you reply?",
+    a: "Usually within a day. If I'm going to be slower than that, you'll be told rather than left waiting.",
   },
   {
-    q: "What information do I need to provide?",
-    a: "For analysis: the instruments you trade and your timeframe. For a review: your recent trades and the thinking behind them at the time. For mentorship: an honest account of where you are. Nothing sensitive — account credentials are never needed and will never be requested.",
+    q: "What information do you need from me?",
+    a: "Enough to understand what you're asking for, and no more. Account credentials are never needed and will never be requested — if anyone asks you for them in my name, that is not me.",
   },
   {
-    q: "What are the risks involved?",
-    a: "Trading carries a genuine risk of losing money, including all of it. Nothing provided here removes that risk or guarantees a result. Analysis is opinion and can be wrong. Every decision taken on your account remains yours, and you should only trade with money you can afford to lose.",
+    q: "Can I ask questions before committing?",
+    a: "Please do. Ask about the method, the risk, the cost, or how a specific situation would be handled. If a short conversation doesn't leave you comfortable, that is a good reason not to proceed, and I'd rather you didn't.",
   },
   {
-    q: "How do you communicate with clients?",
-    a: "Primarily in writing, so there is a record you can return to. Calls where a conversation is genuinely faster. Messages are answered personally, usually within a working day, and you are told in advance if that will be slower.",
-  },
-  {
-    q: "How can I verify your service?",
-    a: "Ask direct questions before paying anything — about the approach, how a specific situation would be handled, or what was called wrong recently. A short conversation tells you more than a wall of testimonials. If those questions cannot be answered plainly, do not hire us.",
-  },
-  {
-    q: "What happens after I make contact?",
-    a: "You get a personal reply, usually within a working day, with questions about what you need. There is no automated sequence, no sales call booked into a funnel, and no obligation to proceed.",
+    q: "How can I verify it's really you?",
+    a: "Confirm anything unexpected by phone on the number listed on this site before you act on it. Impersonation is common in this market — a message, an address or an account carrying my name means nothing until you have checked it against the details here.",
   },
 ];
+
+/* ── Closing ───────────────────────────────────────────────────────────── */
 
 export const finalCta = {
-  headlineTop: "Ready to discuss",
-  headlineItalic: "your trading needs?",
-  body: "Get in touch directly and let's work out which service is right for you — or whether you need one at all.",
-  cta: { label: "Contact Us", href: "#contact" },
+  headlineTop: "Ready to talk it",
+  headlineItalic: "through?",
+  body: "Get in touch directly. We'll work out whether what you need is something I can help with — and I'll say so plainly if it isn't.",
+  action: { label: "Get in Touch", href: "/contact" },
 };
 
-export const contactIntro = {
+export const riskDisclaimer = {
+  heading: "Risk disclaimer",
+  body: "Trading carries a substantial risk of loss, including the loss of your entire capital. Nothing on this site is investment advice, a recommendation, or an offer to buy or sell any asset, and no outcome is guaranteed. Any charts shown here are illustrative and decorative — they are not live data and not a published call. Every trading decision on your own account remains yours. Trade only with capital you can afford to lose.",
+};
+
+export const footer = {
+  blurb: `Independent trading in Bitcoin and digital assets since ${brand.since}. Stay connected. Stay informed.`,
+  links: [
+    { label: "Home", href: "/#top" },
+    { label: "Services", href: "/#services" },
+    { label: "FAQ", href: "/#faq" },
+    { label: "Risk disclaimer", href: "/#disclaimer" },
+  ],
+  legal: `Trading involves risk of loss. Nothing on this site is financial advice.`,
+};
+
+/* ── Contact page ──────────────────────────────────────────────────────── */
+
+export const contactPage = {
+  title: `Contact — ${brand.full} | Independent Bitcoin Trader`,
+  description: `Contact ${brand.full} directly by phone, WhatsApp, email or written enquiry. Independent Bitcoin and digital asset trader, active since ${brand.since}.`,
+  ogDescription:
+    "Speak directly with an independent Bitcoin and digital asset trader. Phone, WhatsApp, email or written enquiry.",
   kicker: "Contact",
-  headlineTop: "Contact us.",
-  headlineItalic: "Let's talk.",
-  lead: "Have a question or interested in working together? Send a message and let's discuss what you need.",
-};
-
-/** PLACEHOLDER HANDLES — replace every href before launch. */
-export const channels = [
-  {
-    icon: "whatsapp-logo",
-    name: "WhatsApp",
-    handle: "Message directly",
-    href: "https://wa.me/0000000000",
+  headline: "Let's talk.",
+  lead: "Have a question or want to discuss a service? Reach out directly. I answer my own messages, usually within a day.",
+  /** PLACEHOLDER — confirm the address is live, then delete this note. */
+  emailNote:
+    "The email address above is a placeholder — send me the real one and I'll swap it in. No payment is ever taken through this site.",
+  channels: [
+    {
+      icon: "phone" as const,
+      label: "Phone",
+      value: contact.phone,
+      href: contactHref.phone,
+    },
+    {
+      icon: "whatsapp" as const,
+      label: "WhatsApp",
+      value: "Message me on WhatsApp",
+      href: contactHref.whatsapp,
+    },
+    {
+      icon: "mail" as const,
+      label: "Email",
+      value: contact.email,
+      href: contactHref.email,
+    },
+  ],
+  form: {
+    heading: "Send an enquiry",
+    lead: "A few details are enough. I'll reply on whichever channel you prefer.",
+    replyOptions: ["WhatsApp", "Phone call", "Email"],
+    submit: "Send enquiry",
+    privacy:
+      "Your details are used only to reply to this enquiry. Trading carries risk of loss; nothing here is financial advice.",
   },
-  {
-    icon: "telegram-logo",
-    name: "Telegram",
-    handle: "@placeholder",
-    href: "https://t.me/placeholder",
-  },
-  {
-    icon: "instagram-logo",
-    name: "Instagram",
-    handle: "@placeholder",
-    href: "https://instagram.com/placeholder",
-  },
-  {
-    icon: "envelope-simple",
-    name: "Email",
-    handle: contact.email,
-    href: `mailto:${contact.email}`,
-  },
-  {
-    icon: "phone",
-    name: "Phone",
-    handle: contact.phone,
-    href: contact.phoneHref,
-  },
-] as const;
-
-export const contactMethods = ["Email", "WhatsApp", "Telegram", "Instagram", "Phone call"];
-
-export const serviceOptions = [
-  ...services.map((s) => s.name),
-  "Not sure yet — need advice",
-];
-
-export const footerColumns = [
-  {
-    heading: "Site",
-    links: navLinks.map((l) => ({ label: l.label, href: l.href })),
-  },
-  {
-    heading: "Services",
-    links: services.map((s) => ({ label: s.name, href: "#services" })),
-  },
-];
-
-export const footerBlurb =
-  "Market analysis, mentorship and trade reviews, delivered directly to a small number of clients.";
-
-export const riskDisclaimer =
-  "Trading carries a substantial risk of loss, including the loss of your entire capital. Nothing on this site is investment advice, a recommendation, or an offer to buy or sell any asset, and no outcome is guaranteed. Any performance information shown is historical and does not indicate future results. Services provided are analysis, education and review only — client funds are never held or traded on a client's behalf. All trading decisions remain your own. Trade only with capital you can afford to lose.";
-
-/* ── Hero panel ────────────────────────────────────────────────────────── */
-
-export const SLIDE_INTERVAL_MS = 6000;
-
-export const slides = [
-  { id: "analysis", name: "Market analysis" },
-  { id: "record", name: "Historical record" },
-  { id: "notes", name: "This week's notes" },
-  { id: "working", name: "Working together" },
-];
-
-/** Illustrative of the format, not a published call. */
-export const analysisPanel = {
-  instrument: "BTC / USD",
-  timeframe: "4H",
-  summary: "Range holding. Watching the reclaim.",
-  levels: [
-    { label: "Invalidation", value: "66,900" },
-    { label: "Key level", value: "68,400" },
-    { label: "Upside target", value: "71,200" },
+  assurances: [
+    {
+      title: "No payments here",
+      body: "Nothing is charged through this website. Anything to do with payment is agreed with me directly, in writing, first.",
+    },
+    {
+      title: "Verify it's me",
+      body: "Only the number and address on this page are mine. If a message or wallet address arrives in my name elsewhere, confirm it by phone before acting.",
+    },
+    {
+      title: "Ask anything",
+      body: "Risk, method, cost, timelines. If a service isn't right for you, I'll say so — that's a better outcome for both of us.",
+    },
   ],
 };
-
-export const recordPanel = {
-  label: "Historical — not indicative of future results",
-  caption: "Illustrative equity curve. Verified records supplied on request.",
-  rows: [
-    { label: "Period", value: "Rolling 12 months" },
-    { label: "Approach", value: "Discretionary" },
-    { label: "Basis", value: "Own capital" },
-  ],
-};
-
-export const notesPanel = [
-  {
-    day: "Mon",
-    title: "Range still intact above support",
-    note: "No reason to force a position",
-  },
-  { day: "Tue", title: "Volume thinning into the highs", note: "Watching for a failed push" },
-  { day: "Wed", title: "Reclaim attempt, size kept small", note: "Level held on retest" },
-  { day: "Thu", title: "No clear read — sitting out", note: "Written up as such" },
-];
-
-export const workingPanel = [
-  { label: "First reply", value: "Within one working day" },
-  { label: "Delivery", value: "In writing, always" },
-  { label: "Scope", value: "Agreed before you pay" },
-  { label: "Client list", value: "Kept deliberately small" },
-];
-
-export const workingPanelNote =
-  "No accounts to open and no platform to sign up for. You send a message, the work is agreed, and it starts.";

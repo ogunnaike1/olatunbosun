@@ -1,17 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import { contact, contactMethods, serviceOptions } from "@/lib/content";
+import { contact, contactPage } from "@/lib/content";
 
 const FIELD =
-  "w-full rounded-btn border border-deep/15 bg-stone px-4 py-3.5 text-[15px] text-deep transition-colors duration-300 focus:border-deep focus:bg-cream focus:outline-none";
-const LABEL = "block text-[11px] font-bold text-deep";
+  "w-full rounded-edge border border-cream/[0.14] bg-ink/50 px-4 py-3.5 text-[15px] text-cream transition-colors duration-300 focus:border-gold focus:outline-none";
+const LABEL = "label-sm text-[#8e877c]";
 
 /**
- * No backend is wired up. On submit this composes a pre-filled email to
+ * No inbox is wired up. On submit this composes a pre-filled email to
  * `contact.email` and hands off to the visitor's mail client, so the form
- * works from day one. Replace `handleSubmit` with a POST to a real endpoint
- * (or a server action) when one exists — markup and validation stay as-is.
+ * is useful from day one — and the note underneath says plainly that phone
+ * or WhatsApp is faster. Replace `handleSubmit` with a POST to a real
+ * endpoint when one exists; the markup and validation stay as they are.
  */
 export function ContactForm() {
   const [sent, setSent] = useState(false);
@@ -23,109 +24,120 @@ export function ContactForm() {
     const body = [
       `Name: ${data.get("name")}`,
       `Email: ${data.get("email")}`,
-      `Preferred contact method: ${data.get("method")}`,
-      `Service of interest: ${data.get("service")}`,
+      `Phone / WhatsApp: ${data.get("phone") || "—"}`,
+      `Preferred reply: ${data.get("channel")}`,
       "",
       `${data.get("message")}`,
     ].join("\n");
 
     window.location.href = `mailto:${contact.email}?subject=${encodeURIComponent(
-      `Enquiry — ${data.get("service")}`,
+      "Enquiry from olatunbosunbtc.com",
     )}&body=${encodeURIComponent(body)}`;
     setSent(true);
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-      <div>
-        <label className={LABEL} htmlFor="cf-name">
-          Name
-        </label>
-        <input
-          id="cf-name"
-          name="name"
-          required
-          autoComplete="name"
-          className={`${FIELD} mt-2`}
-        />
-      </div>
+    <form
+      onSubmit={handleSubmit}
+      className="rounded-card border border-gold/[0.24] p-[clamp(24px,3vw,42px)] backdrop-blur-[8px]"
+      style={{
+        background: "linear-gradient(165deg, rgba(245,239,230,.06), rgba(43,43,43,.42))",
+        boxShadow: "var(--shadow-panel), inset 0 1px 0 rgba(245,239,230,.08)",
+      }}
+    >
+      <h2 className="m-0 text-[clamp(27px,2.7vw,34px)] leading-[1.1] tracking-[-0.012em] text-cream">
+        {contactPage.form.heading}
+      </h2>
+      <p className="mt-3 max-w-[42ch] text-[14.5px] leading-[1.7] text-mute">
+        {contactPage.form.lead}
+      </p>
 
-      <div>
-        <label className={LABEL} htmlFor="cf-email">
-          Email
+      <div className="mt-8 grid gap-4.5 tab:grid-cols-2">
+        <label className="flex flex-col gap-2.5">
+          <span className={LABEL}>Name</span>
+          <input
+            name="name"
+            required
+            autoComplete="name"
+            placeholder="Your name"
+            className={FIELD}
+          />
         </label>
-        <input
-          id="cf-email"
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
-          className={`${FIELD} mt-2`}
-        />
-      </div>
 
-      <div
-        className="grid gap-6"
-        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}
-      >
-        <div>
-          <label className={LABEL} htmlFor="cf-method">
-            Preferred contact method
-          </label>
-          <select id="cf-method" name="method" className={`${FIELD} mt-2`} defaultValue="Email">
-            {contactMethods.map((method) => (
-              <option key={method} value={method}>
-                {method}
+        <label className="flex flex-col gap-2.5">
+          <span className={LABEL}>Email</span>
+          <input
+            name="email"
+            type="email"
+            required
+            autoComplete="email"
+            placeholder="you@example.com"
+            className={FIELD}
+          />
+        </label>
+
+        <label className="flex flex-col gap-2.5">
+          <span className={LABEL}>
+            Phone / WhatsApp <span className="tracking-[0.04em] normal-case">(optional)</span>
+          </span>
+          <input
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            placeholder="Include country code"
+            className={FIELD}
+          />
+        </label>
+
+        <label className="flex flex-col gap-2.5">
+          <span className={LABEL}>Preferred reply</span>
+          <select name="channel" className={`${FIELD} appearance-none`}>
+            {contactPage.form.replyOptions.map((option) => (
+              <option key={option} value={option} className="bg-char text-cream">
+                {option}
               </option>
             ))}
           </select>
-        </div>
-
-        <div>
-          <label className={LABEL} htmlFor="cf-service">
-            Service interested in
-          </label>
-          <select
-            id="cf-service"
-            name="service"
-            className={`${FIELD} mt-2`}
-            defaultValue={serviceOptions[0]}
-          >
-            {serviceOptions.map((service) => (
-              <option key={service} value={service}>
-                {service}
-              </option>
-            ))}
-          </select>
-        </div>
+        </label>
       </div>
 
-      <div>
-        <label className={LABEL} htmlFor="cf-message">
-          Message
-        </label>
+      <label className="mt-4.5 flex flex-col gap-2.5">
+        <span className={LABEL}>What would you like to discuss?</span>
         <textarea
-          id="cf-message"
           name="message"
           rows={5}
           required
-          className={`${FIELD} mt-2.5 resize-y`}
+          placeholder="A sentence or two is fine."
+          className={`${FIELD} resize-y leading-[1.62]`}
         />
-      </div>
+      </label>
 
-      <div className="mt-1 flex flex-wrap items-center gap-6">
-        <button
-          type="submit"
-          className="rounded-btn bg-deep px-8 py-4 text-[14px] font-bold text-white transition-colors duration-300 hover:bg-deep-2"
+      <button
+        type="submit"
+        className="btn-gold mt-7 w-full cursor-pointer justify-center border-0 px-5.5 py-4.5 text-[15px] hover:btn-gold-hover"
+      >
+        {contactPage.form.submit}
+        <span aria-hidden="true" className="font-mono text-xs">
+          →
+        </span>
+      </button>
+
+      {sent && (
+        <div
+          role="status"
+          className="mt-4.5 border border-gold/40 bg-gold/[0.09] p-4"
         >
-          Send Message
-        </button>
-        <p aria-live="polite" className="m-0 max-w-[30ch] text-[13.5px] text-deep">
-          {sent
-            ? "Your mail app should have opened with the message ready to send."
-            : "Or use any channel listed — they all reach the same person."}
-        </p>
-      </div>
+          <div className="label-sm text-gold">Handed to your mail app</div>
+          <p className="mt-2 text-sm leading-[1.65] text-[#d9cfc0]">
+            Your email client should have opened with the enquiry ready to send. If it
+            didn&apos;t, phone or WhatsApp reaches me fastest.
+          </p>
+        </div>
+      )}
+
+      <p className="mt-4.5 text-[12.5px] leading-[1.75] text-[#6e6862]">
+        {contactPage.form.privacy}
+      </p>
     </form>
   );
 }

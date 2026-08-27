@@ -11,6 +11,15 @@ export function ProcessSection() {
           <h2 id="proc-h" className="mt-6 text-h2 balance">
             {process.headline}
           </h2>
+          <Link
+            href={process.link.href}
+            className="mt-7 inline-flex items-center gap-2.5 border-b border-accent-2/40 pb-1.5 text-[14.5px] text-on-alt transition-colors duration-300 hover:border-accent-2 hover:text-accent-2"
+          >
+            {process.link.label}
+            <span aria-hidden="true" className="font-mono text-xs text-accent-2">
+              →
+            </span>
+          </Link>
         </Reveal>
 
         <ol

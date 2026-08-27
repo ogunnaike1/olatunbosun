@@ -55,8 +55,8 @@ export const navLinks = [
   { label: "About", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Experience", href: "/experience" },
-  { label: "How It Works", href: "/#process" },
-  { label: "FAQ", href: "/#faq" },
+  { label: "How It Works", href: "/how-it-works" },
+  { label: "FAQ", href: "/faq" },
 ];
 
 export const primaryCta = { label: "Let's Trade", href: "/contact" };
@@ -472,6 +472,8 @@ export const marketSection = {
 export const process = {
   kicker: "How it works",
   headline: "Four steps, no mystery.",
+  /** The home section is the summary; the page carries the detail. */
+  link: { label: "What happens at each step", href: "/how-it-works" },
   steps: [
     {
       title: "Reach out",
@@ -497,12 +499,101 @@ export const process = {
   },
 };
 
+/**
+ * The How It Works page. The four steps at length, then the two things a
+ * cautious person needs before they send anyone money: how payment is
+ * handled, and what they will never be asked for.
+ *
+ * The security section is not decoration. Impersonation is the common harm
+ * in this market, and these four lines are the ones that protect a reader
+ * from someone pretending to be him. Do not trim them.
+ */
+export const howItWorksPage = {
+  title: `How It Works — ${brand.full} | Getting Started`,
+  description: `From first message to ongoing contact: what happens at each step, how terms and payment are agreed, and what you will never be asked for.`,
+  ogDescription:
+    "What happens at each step, how terms and payment are agreed, and what you will never be asked for.",
+  kicker: "How it works",
+  headlineTop: "From first message",
+  headlineItalic: "to first trade.",
+  lead: "Four steps, and you can stop at any of the first three at no cost. Nothing starts until the scope and the risk are in writing and you have said yes to both.",
+  steps: {
+    kicker: "Step by step",
+    /** Paired by index with `process.steps`. */
+    detail: [
+      {
+        expect: "A reply from me, usually within a day",
+        body: "Phone, WhatsApp or email — whichever you already use. A sentence or two about what you're looking for is enough to start; you don't need to arrive with a plan.",
+      },
+      {
+        expect: "An honest read on whether this is a fit",
+        body: "We go through the method, the risk, what is realistic and what it costs. This is the point where I say so if what you need isn't something I can help with — and there is no cost and no pressure to continue.",
+      },
+      {
+        expect: "Scope, terms and risk, in writing",
+        body: "Nothing is charged through this website. The scope is written down, a figure is agreed against it, and payment details are arranged directly with me after that — never through a form, and never through a wallet address posted publicly.",
+      },
+      {
+        expect: "The same person, start to finish",
+        body: "Updates as things move, answers when you ask, and a straight account when something goes against us. You will always know where things stand.",
+      },
+    ],
+  },
+  safety: {
+    kicker: "Before you send anyone anything",
+    headline: "What you'll never be asked for.",
+    lead: "Impersonation is the common danger in this market, and it usually arrives politely. These four hold whoever is asking — including anyone using my name.",
+    items: [
+      {
+        title: "Your account credentials",
+        body: "Not a password, not a seed phrase, not a recovery code, not 2FA. Never, for any reason. Anyone asking is not me.",
+      },
+      {
+        title: "A payment through this website",
+        body: "There is no checkout here and no wallet address published anywhere on this site. Payment is arranged directly, after terms are agreed in writing.",
+      },
+      {
+        title: "A decision inside the hour",
+        body: "Nothing here expires. Urgency is a pressure tactic, not a market condition — if you're being rushed, that alone is your answer.",
+      },
+      {
+        title: "Silence about it",
+        body: "Nothing about this arrangement needs to be kept secret. Check anything unexpected by phone, on the number on this site, before you act on it.",
+      },
+    ],
+  },
+  cta: {
+    title: "Start with a question.",
+    body: "You can stop after any of the first three steps at no cost. The first one is just a message.",
+    action: primaryCta,
+  },
+};
+
 /* ── FAQ ───────────────────────────────────────────────────────────────── */
 
 export const faqIntro = {
   kicker: "Frequently asked",
   headline: "The questions people actually ask.",
   lead: "If what you need isn't answered here, send the question over. A straight question gets a straight answer.",
+  /** The home section shows the same list; the page is its permanent home. */
+  link: { label: "All the questions", href: "/faq" },
+};
+
+export const faqPage = {
+  title: `FAQ — ${brand.full} | Questions About Trading & Working Together`,
+  description:
+    "Straight answers on what is offered, guarantees, payment, reply times, what information is needed, and how to verify you are dealing with the real account.",
+  ogDescription:
+    "Straight answers on the offer, guarantees, payment, reply times and verifying who you are dealing with.",
+  kicker: "FAQ",
+  headlineTop: "Straight questions,",
+  headlineItalic: "straight answers.",
+  lead: "The ones that come up most, answered as they would be answered on the phone. If yours isn't here, send it — a question I can't answer plainly is worth knowing about.",
+  closing: {
+    title: "Still asking?",
+    body: "Send the question over. There's no obligation attached to it, and you'll get a real answer rather than a brochure.",
+    action: primaryCta,
+  },
 };
 
 export const faqs = [
@@ -559,7 +650,7 @@ export const footer = {
   links: [
     { label: "Home", href: "/#top" },
     { label: "Services", href: "/services" },
-    { label: "FAQ", href: "/#faq" },
+    { label: "FAQ", href: "/faq" },
     { label: "Risk disclaimer", href: "/#disclaimer" },
   ],
   legal: `Trading involves risk of loss. Nothing on this site is financial advice.`,

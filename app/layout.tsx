@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Bodoni_Moda, Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 import { WhatsAppButton } from "@/components/whatsapp-button";
-import { brand, contact, seo } from "@/lib/content";
+import { brand, contact, seo, SITE_URL } from "@/lib/content";
 import "./globals.css";
 
 // Three families, three jobs, no overlap. Bodoni carries every headline
@@ -30,9 +30,15 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  // Without this, OG and canonical URLs stay relative and social scrapers
+  // resolve them against whatever host served the page — including preview
+  // deployments. Every page's metadata inherits it.
+  metadataBase: new URL(SITE_URL),
   title: seo.title,
   description: seo.description,
+  alternates: { canonical: "/" },
   openGraph: {
+    url: SITE_URL,
     type: "website",
     siteName: brand.full,
     title: seo.title,
@@ -53,6 +59,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   name: brand.full,
+  url: SITE_URL,
   description: seo.ogDescription,
   foundingDate: brand.since,
   // The WhatsApp number, which is the only channel. `sameAs` carries the

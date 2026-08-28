@@ -27,6 +27,13 @@ export const brand = {
   since: "2021",
 };
 
+/**
+ * The canonical origin. Registered at Spaceship; it must match the wordmark
+ * exactly, because the site's impersonation advice tells people to check
+ * anything unexpected against "the number published on this site".
+ */
+export const SITE_URL = "https://olatunbosunbtc.com";
+
 export const seo = {
   title: `${brand.full} — Independent Bitcoin & Digital Asset Trader`,
   description: `${brand.full} is an independent trader active in Bitcoin and digital asset markets since ${brand.since}, trading to a defined plan with direct client contact throughout. Reach me on WhatsApp.`,

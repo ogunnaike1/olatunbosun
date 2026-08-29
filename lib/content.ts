@@ -132,8 +132,22 @@ export const SLIDE_INTERVAL_MS = 6500;
  */
 export const heroSlides = [
   {
-    id: "structure",
+    id: "brand",
     /** Tab label. `kicker` and `title` are the card's own two header lines. */
+    name: "Olatunbosunbtc",
+    kicker: brand.full,
+    title: "Since " + brand.since,
+    kind: "image" as const,
+    src: "https://res.cloudinary.com/dhmqhless/image/upload/v1787950950/olatunbosun2_smtmxt.jpg",
+    /**
+     * PLACEHOLDER ALT TEXT — replace with a description of what the image
+     * actually shows. Screen readers and search engines read this, and a
+     * generic label is barely better than none.
+     */
+    alt: `${brand.full} — independent Bitcoin and digital asset trader`,
+  },
+  {
+    id: "structure",
     name: "Market structure",
     kicker: "Market structure",
     title: heroPanel.instrument,
@@ -278,12 +292,23 @@ export type Service = {
   includes: string[];
 };
 
+/**
+ * Shared by the home section and the service page, so the two never drift.
+ *
+ * PLACEHOLDER ALT TEXT — replace with a description of what the image
+ * actually shows. Screen readers and search engines read this.
+ */
+export const serviceImage = {
+  src: "https://res.cloudinary.com/dhmqhless/image/upload/v1787950951/olatunbosun_yd7eio.jpg",
+  alt: `${brand.full} — Bitcoin and digital asset trading`,
+};
+
 export const servicesIntro = {
   kicker: "Service",
   headline: "What I actually do.",
   lead: "One thing. The analysis and the contact that come with it are part of the work, not extras sold alongside it — and if what you need is something else, ask. I'd rather refer you on than overreach.",
   /** The home section is the summary; the page carries the detail. */
-  link: { label: "See what it includes", href: "/services" },
+  link: { label: "See What It Includes", href: "/services" },
 };
 
 /**

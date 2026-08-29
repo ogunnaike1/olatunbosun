@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { heroPanel, heroSlides, SLIDE_INTERVAL_MS } from "@/lib/content";
 
@@ -107,6 +108,36 @@ function NotesSlide({
 }
 
 /**
+ * The opening slide. `fill` inside a fixed-aspect box, so the image never
+ * dictates the card's height — a slide that changed the card's size would
+ * shove the whole hero around on every advance.
+ *
+ * The wide ratio is 56:30 — the chart's own viewBox — so the image slide
+ * and the chart slide render at exactly the same height. On phones it
+ * switches to 4:3, which fills the card's minimum height rather than
+ * leaving a letterbox strip with dead space under it.
+ *
+ * `sizes` matters here: the card is roughly half the viewport on desktop
+ * but nearly full width on a phone, and without it Next would ship the
+ * desktop candidate to mobile.
+ */
+function ImageSlide({ src, alt }: { src: string; alt: string }) {
+  return (
+    <div className="relative aspect-4/3 w-full overflow-hidden rounded-[3px] tab:aspect-56/30">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        // The hero is above the fold on every page it appears on.
+        priority
+        sizes="(max-width: 1060px) 92vw, 46vw"
+        className="object-cover"
+      />
+    </div>
+  );
+}
+
+/**
  * The hero card, as a carousel of four faces.
  *
  * Auto-advance is a convenience, not the interface: it stops on hover, on
@@ -167,9 +198,11 @@ export function HeroPanel() {
               {slide.title}
             </div>
           </div>
-          {/* The disclaimer belongs to the two slides that depict a market.
-              On the process slides there is nothing to mistake for data. */}
-          {slide.kind !== "list" && (
+          {/* The disclaimer belongs only to the slides that depict a market.
+              On the photograph and the process slides there is nothing that
+              could be mistaken for data, and a stray "not live data" label
+              there would just read as noise. */}
+          {(slide.kind === "chart" || slide.kind === "notes") && (
             <div className="label-sm text-right leading-[1.8] text-on-base-4">
               {heroPanel.disclaimer.map((line) => (
                 <div key={line}>{line}</div>
@@ -202,11 +235,12 @@ export function HeroPanel() {
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               className="focus-visible:outline-none"
             >
-              {slide.kind !== "chart" && (
+              {(slide.kind === "list" || slide.kind === "notes") && (
                 <p className="mt-0 mb-4 max-w-[42ch] text-[13.5px] leading-[1.6] text-on-base-3">
                   {slide.lead}
                 </p>
               )}
+              {slide.kind === "image" && <ImageSlide src={slide.src} alt={slide.alt} />}
               {slide.kind === "chart" && <ChartSlide animate={!reduced} />}
               {slide.kind === "list" && <ListSlide rows={slide.rows} />}
               {slide.kind === "notes" && <NotesSlide notes={slide.notes} />}

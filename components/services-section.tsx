@@ -1,7 +1,8 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Kicker, Reveal } from "@/components/reveal";
 import { ServiceIcon } from "@/components/service-icons";
-import { services, servicesIntro } from "@/lib/content";
+import { serviceImage, services, servicesIntro } from "@/lib/content";
 
 /**
  * ONE service, so this is a single feature block rather than a card grid —
@@ -28,15 +29,31 @@ export function ServicesSection() {
             <p className="mt-6 max-w-[36ch] text-body text-on-base-3">
               {servicesIntro.lead}
             </p>
+            {/* A button rather than the underlined link this used to be —
+                it's the section's one action, and ghost keeps it from
+                competing with the gold "Let's Trade" in the header. */}
             <Link
               href={servicesIntro.link.href}
-              className="mt-7 inline-flex items-center gap-2.5 border-b border-accent/40 pb-1.5 text-[14.5px] text-on-base transition-colors duration-300 hover:border-accent hover:text-accent"
+              className="btn-ghost mt-8 px-7 py-4 text-[15px] hover:border-accent hover:bg-accent/[0.08]"
             >
               {servicesIntro.link.label}
               <span aria-hidden="true" className="font-mono text-xs text-accent">
                 →
               </span>
             </Link>
+
+            {/* Sits under the action on wide screens, where the left column
+                would otherwise run out of content well before the card on
+                the right does. */}
+            <div className="relative mt-10 hidden aspect-16/10 w-full overflow-hidden rounded-card border border-on-base/[0.12] nav:block">
+              <Image
+                src={serviceImage.src}
+                alt={serviceImage.alt}
+                fill
+                sizes="42vw"
+                className="object-cover"
+              />
+            </div>
           </Reveal>
 
           <Reveal

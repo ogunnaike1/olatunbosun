@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Kicker, Reveal } from "@/components/reveal";
 import { ServiceIcon } from "@/components/service-icons";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { brand, services, servicesPage } from "@/lib/content";
+import { brand, serviceImage, services, servicesPage } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: servicesPage.title,
@@ -18,10 +19,10 @@ export const metadata: Metadata = {
 };
 
 /**
- * The three services at length, then cost, then a way in. Each service is
- * one full-width row rather than a card: on a page there is room to say
- * who it is for and what is actually handed over, which is the whole
- * reason this page exists over the home section's three cards.
+ * The service at length, then cost, then a way in. It renders as one
+ * full-width row rather than a card: on a page there is room to say who it
+ * is for and what is actually handed over, which is the whole reason this
+ * page exists over the home section's summary.
  */
 export default function ServicesPage() {
   return (
@@ -66,6 +67,18 @@ export default function ServicesPage() {
                     <h2 className="mt-5 max-w-[16ch] text-[clamp(28px,3.2vw,42px)] leading-[1.06] tracking-[-0.016em] balance text-on-base">
                       {service.name}
                     </h2>
+
+                    {/* Fills the left column, which otherwise runs out of
+                        content long before the detail beside it does. */}
+                    <div className="relative mt-8 aspect-4/3 w-full overflow-hidden rounded-card border border-on-base/[0.12] tab:aspect-16/10">
+                      <Image
+                        src={serviceImage.src}
+                        alt={serviceImage.alt}
+                        fill
+                        sizes="(max-width: 1060px) 92vw, 44vw"
+                        className="object-cover"
+                      />
+                    </div>
                   </div>
 
                   <div>

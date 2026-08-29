@@ -8,9 +8,22 @@ import {
   useSpring,
 } from "motion/react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Wordmark } from "@/components/wordmark";
 import { brand, contact, contactHref, navLinks, primaryCta } from "@/lib/content";
+
+/**
+ * Which nav entry is the page you're on.
+ *
+ * Nav hrefs carry hashes ("/#top"), so the fragment is stripped before
+ * comparing — the Home entry points at the hero anchor but is "current"
+ * for the whole home page.
+ */
+function isActive(href: string, pathname: string) {
+  const path = href.split("#")[0] || "/";
+  return path === pathname;
+}
 
 /**
  * Fixed, and transparent at rest — the hero's own gradient is the header's
@@ -18,6 +31,7 @@ import { brand, contact, contactHref, navLinks, primaryCta } from "@/lib/content
  * hairline and a shorter height. All three transition together.
  */
 export function SiteHeader() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const reduced = useReducedMotion();
@@ -102,15 +116,30 @@ export function SiteHeader() {
           aria-label="Primary"
           className="hidden items-center gap-[clamp(18px,2.3vw,32px)] whitespace-nowrap nav:flex"
         >
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="text-[13.5px] text-on-base-2 transition-colors duration-300 hover:text-on-base"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const active = isActive(link.href, pathname);
+            return (
+              <Link
+                key={link.label}
+                href={link.href}
+                aria-current={active ? "page" : undefined}
+                className={`relative text-[13.5px] transition-colors duration-300 ${
+                  active ? "text-on-base" : "text-on-base-2 hover:text-on-base"
+                }`}
+              >
+                {link.label}
+                {/* A gold hairline under the current page — the same rule
+                    that opens every section kicker, so the marker reads as
+                    part of the system rather than a browser default. */}
+                {active && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute -bottom-1.5 left-0 h-px w-full bg-accent"
+                  />
+                )}
+              </Link>
+            );
+          })}
           <Link
             href={primaryCta.href}
             className="btn-gold px-[22px] py-3 text-[13px] tracking-[0.01em] hover:btn-gold-hover"
@@ -158,16 +187,28 @@ export function SiteHeader() {
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
             <nav aria-label="Mobile" className="flex flex-col">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="border-b border-on-base/[0.08] py-4 font-display text-[27px] text-on-base"
-                >
-                  {link.label}
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const active = isActive(link.href, pathname);
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                    className={`flex items-center gap-3.5 border-b border-on-base/[0.08] py-4 font-display text-[27px] ${
+                      active ? "text-accent" : "text-on-base"
+                    }`}
+                  >
+                    {/* At this size an underline reads as an accident, so
+                        the current page takes the accent colour and a dot
+                        instead — the same mark as the wordmark's apex. */}
+                    {active && (
+                      <span aria-hidden="true" className="size-1.5 rounded-full bg-accent" />
+                    )}
+                    {link.label}
+                  </Link>
+                );
+              })}
               <Link
                 href={primaryCta.href}
                 onClick={() => setOpen(false)}

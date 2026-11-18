@@ -453,3 +453,8 @@
 @utility pretty {
   text-wrap: pretty;
 }
+
+/* Temporarily hide the entire site (every page). Remove this rule to restore. */
+body > * {
+  display: none !important;
+}
